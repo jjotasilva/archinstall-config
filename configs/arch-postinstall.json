@@ -164,7 +164,8 @@
         "man-db",
         "man-pages",
         "plocate",
-        "wget"
+        "wget",
+        "base-devel"
     ],
     "parallel_downloads": 0,
     "profile_config": {
