@@ -130,7 +130,7 @@
                         "type": "primary"
                     }
                 ],
-                "wipe": false
+                "wipe": true
             }
         ]
     },
