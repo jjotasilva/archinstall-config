@@ -27,9 +27,7 @@
         "grep -qxF 'include \"/usr/share/nano/*.nanorc\"' /etc/nanorc || echo 'include \"/usr/share/nano/*.nanorc\"' >> /etc/nanorc",
         "sed -i 's/^#Color/Color/' /etc/pacman.conf",
         "grep -qxF 'ILoveCandy' /etc/pacman.conf || sed -i '/^Color/a ILoveCandy' /etc/pacman.conf",
-        "sed -i 's/^#\\?ParallelDownloads.*/ParallelDownloads = 20/' /etc/pacman.conf",
-        "grep -qxF '# Custom bash prompt via kirsle.net/wizards/ps1.html' /etc/skel/.bashrc || echo '# Custom bash prompt via kirsle.net/wizards/ps1.html' >> /etc/skel/.bashrc",
-        "grep -qxF 'export PS1=\"\\[\\$(tput bold)\\]\\[\\$(tput setaf 2)\\][\\u@\\h \\W]\\\\$ \\[\\$(tput sgr0)\\]\"' /etc/skel/.bashrc || echo 'export PS1=\"\\[\\$(tput bold)\\]\\[\\$(tput setaf 2)\\][\\u@\\h \\W]\\\\$ \\[\\$(tput sgr0)\\]\"' >> /etc/skel/.bashrc"
+        "sed -i 's/^#\\?ParallelDownloads.*/ParallelDownloads = 20/' /etc/pacman.conf"
     ],
     "disk_config": {
         "btrfs_options": {
