@@ -23,7 +23,8 @@
         "rm -rf /efi/grub || true",
         "grub-install --target=x86_64-efi --efi-directory=/efi --boot-directory=/boot --bootloader-id=arch",
         "grub-mkconfig -o /boot/grub/grub.cfg",
-        "grep -qxF 'alias ll=\"ls -lh --color=auto\"' /etc/bash.bashrc || echo 'alias ll=\"ls -lh --color=auto\"' >> /etc/bash.bashrc"
+        "grep -qxF 'alias ll=\"ls -lh --color=auto\"' /etc/bash.bashrc || echo 'alias ll=\"ls -lh --color=auto\"' >> /etc/bash.bashrc",
+        "grep -qxF 'include \"/usr/share/nano/*.nanorc\"' /etc/nanorc || echo 'include \"/usr/share/nano/*.nanorc\"' >> /etc/nanorc"
     ],
     "disk_config": {
         "btrfs_options": {
