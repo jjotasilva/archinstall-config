@@ -188,11 +188,5 @@
         "enabled": true
     },
     "timezone": "America/Sao_Paulo",
-    "version": "3.0.15",
-    "users": [
-        {
-            "username": "james",
-            "sudo": true
-        }
-    ]
+    "version": "3.0.15"
 }
