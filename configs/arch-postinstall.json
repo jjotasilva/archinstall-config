@@ -177,18 +177,13 @@
         "libreoffice-fresh",
         "libreoffice-fresh-pt-br",
         "kcalc",
-        "discord",
         "okular",
         "unzip",
         "zip",
-        "p7zip",
-        "unrar",
-        "tar",
-        "gzip",
-        "bzip2",
-        "xz",
-        "zstd",
-        "noto-fonts-cjk"
+        "noto-fonts-cjk",
+        "rsync",
+        "net-tools",
+        "dnsutils"
     ],
     "parallel_downloads": 0,
     "profile_config": {
