@@ -166,6 +166,7 @@
         "firefox",
         "git",
         "intel-ucode",
+        "man",
         "man-db",
         "man-pages",
         "plocate",
