@@ -187,7 +187,8 @@
         "gzip",
         "bzip2",
         "xz",
-        "zstd"
+        "zstd",
+        "noto-fonts-cjk"
     ],
     "parallel_downloads": 0,
     "profile_config": {
