@@ -14,7 +14,7 @@
     "auth_config": null,
     "bootloader_config": {
         "bootloader": "Grub",
-        "removable": true,
+        "removable": false,
         "uki": false
     },
     "custom_commands": [
