@@ -180,6 +180,8 @@
         "okular",
         "unzip",
         "zip",
+        "unrar",
+        "p7zip",
         "noto-fonts-cjk",
         "rsync",
         "net-tools",
