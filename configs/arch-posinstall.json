@@ -183,7 +183,8 @@
         "noto-fonts-cjk",
         "rsync",
         "net-tools",
-        "dnsutils"
+        "dnsutils",
+        "firewalld"
     ],
     "parallel_downloads": 0,
     "profile_config": {
