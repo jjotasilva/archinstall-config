@@ -29,7 +29,8 @@
         "grep -qxF 'ILoveCandy' /etc/pacman.conf || sed -i '/^Color/a ILoveCandy' /etc/pacman.conf",
         "sed -i 's/^#\\?ParallelDownloads.*/ParallelDownloads = 20/' /etc/pacman.conf",
         "systemctl enable --now fstrim.timer",
-        "systemctl enable --now firewalld.service"
+        "systemctl enable --now firewalld.service",
+        "systemctl enable --now power-profiles-daemon"
     ],
     "disk_config": {
         "btrfs_options": {
@@ -189,7 +190,9 @@
         "net-tools",
         "dnsutils",
         "firewalld",
-        "rclone"
+        "rclone",
+        "power-profiles-daemon",
+        "fastfetch"
     ],
     "parallel_downloads": 0,
     "profile_config": {
