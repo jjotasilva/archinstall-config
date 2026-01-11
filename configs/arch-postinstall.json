@@ -188,7 +188,8 @@
         "rsync",
         "net-tools",
         "dnsutils",
-        "firewalld"
+        "firewalld",
+        "rclone"
     ],
     "parallel_downloads": 0,
     "profile_config": {
