@@ -192,7 +192,8 @@
         "firewalld",
         "rclone",
         "power-profiles-daemon",
-        "fastfetch"
+        "fastfetch",
+        "dnsmasq"
     ],
     "parallel_downloads": 0,
     "profile_config": {
