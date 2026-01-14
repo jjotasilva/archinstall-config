@@ -193,7 +193,9 @@
         "rclone",
         "power-profiles-daemon",
         "fastfetch",
-        "dnsmasq"
+        "dnsmasq",
+        "net-tools",
+        "bind"
     ],
     "parallel_downloads": 0,
     "profile_config": {
