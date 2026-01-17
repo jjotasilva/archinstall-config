@@ -195,7 +195,8 @@
         "fastfetch",
         "dnsmasq",
         "net-tools",
-        "bind"
+        "bind",
+        "firefox-i18n-pt-br"
     ],
     "parallel_downloads": 0,
     "profile_config": {
