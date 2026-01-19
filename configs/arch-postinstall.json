@@ -196,7 +196,7 @@
         "dnsmasq",
         "net-tools",
         "bind",
-        "firefox-i18n-pt-br"
+        "mission-center"
     ],
     "parallel_downloads": 0,
     "profile_config": {
