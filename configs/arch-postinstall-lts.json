@@ -154,7 +154,9 @@
     },
     "ntp": true,
     "packages": [
-        "firefox"
+        "firefox",
+        "firefox-i18n-pt-br",
+        "linux-lts-headers"
     ],
     "parallel_downloads": 0,
     "profile_config": {
