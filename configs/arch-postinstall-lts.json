@@ -18,7 +18,6 @@
         "uki": false
     },
     "custom_commands": [
-        "lsattr -d /var/lib/libvirt/images || true",
         "chattr -VR +C /var/lib/libvirt/images || true",
         "rm -rf /efi/grub || true",
         "grub-install --target=x86_64-efi --efi-directory=/efi --boot-directory=/boot --bootloader-id=arch",
