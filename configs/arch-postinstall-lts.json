@@ -18,19 +18,9 @@
         "uki": false
     },
     "custom_commands": [
-        "lsattr -d /var/lib/libvirt/images || true",
-        "chattr -VR +C /var/lib/libvirt/images || true",
         "rm -rf /efi/grub || true",
         "grub-install --target=x86_64-efi --efi-directory=/efi --boot-directory=/boot --bootloader-id=arch",
-        "grub-mkconfig -o /boot/grub/grub.cfg",
-        "grep -qxF 'alias ll=\"ls -lh --color=auto\"' /etc/bash.bashrc || echo 'alias ll=\"ls -lh --color=auto\"' >> /etc/bash.bashrc",
-        "grep -qxF 'include \"/usr/share/nano/*.nanorc\"' /etc/nanorc || echo 'include \"/usr/share/nano/*.nanorc\"' >> /etc/nanorc",
-        "sed -i 's/^#Color/Color/' /etc/pacman.conf",
-        "grep -qxF 'ILoveCandy' /etc/pacman.conf || sed -i '/^Color/a ILoveCandy' /etc/pacman.conf",
-        "sed -i 's/^#\\?ParallelDownloads.*/ParallelDownloads = 20/' /etc/pacman.conf",
-        "systemctl enable --now fstrim.timer",
-        "systemctl enable --now firewalld.service",
-        "systemctl enable --now power-profiles-daemon"
+        "grub-mkconfig -o /boot/grub/grub.cfg"
     ],
     "disk_config": {
         "btrfs_options": {
@@ -164,37 +154,7 @@
     },
     "ntp": true,
     "packages": [
-        "linux-lts-headers",
-        "bash-completion",
-        "curl",
-        "firefox",
-        "git",
-        "intel-ucode",
-        "man",
-        "man-db",
-        "man-pages",
-        "plocate",
-        "wget",
-        "base-devel",
-        "nano-syntax-highlighting",
-        "gwenview",
-        "libreoffice-fresh",
-        "libreoffice-fresh-pt-br",
-        "kcalc",
-        "okular",
-        "unzip",
-        "zip",
-        "unrar",
-        "p7zip",
-        "noto-fonts-cjk",
-        "rsync",
-        "net-tools",
-        "dnsutils",
-        "firewalld",
-        "rclone",
-        "power-profiles-daemon",
-        "fastfetch",
-        "dnsmasq"
+        "firefox"
     ],
     "parallel_downloads": 0,
     "profile_config": {
