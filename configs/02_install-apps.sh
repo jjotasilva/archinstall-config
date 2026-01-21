@@ -33,6 +33,7 @@ sudo pacman -S --needed \
   net-tools \
   dnsutils \
   dnsmasq \
-  reflector
+  reflector \
+  mission-center
 
 
