@@ -61,6 +61,7 @@ need_pkgs=()
 
 pacman -Q firewalld >/dev/null 2>&1 || need_pkgs+=("firewalld")
 pacman -Q power-profiles-daemon >/dev/null 2>&1 || need_pkgs+=("power-profiles-daemon")
+pacman -Q gamemode >/dev/null 2>&1 || need_pkgs+=("gamemode")
 
 if [ "${#need_pkgs[@]}" -gt 0 ]; then
   sudo pacman -S --needed "${need_pkgs[@]}"
