@@ -183,7 +183,8 @@
         "upower",
         "python-pyqt6",
         "alsa-utils",
-        "pavucontrol"
+        "pavucontrol",
+        "dmidecode"
     ],
     "parallel_downloads": 0,
     "profile_config": {
