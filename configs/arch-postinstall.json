@@ -179,7 +179,8 @@
         "firefox-i18n-pt-br",
         "linux-lts-headers",
         "firewalld",
-        "power-profiles-daemon"
+        "power-profiles-daemon",
+        "upower"
     ],
     "parallel_downloads": 0,
     "profile_config": {
