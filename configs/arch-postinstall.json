@@ -180,7 +180,8 @@
         "linux-lts-headers",
         "firewalld",
         "power-profiles-daemon",
-        "upower"
+        "upower",
+        "python-pyqt6"
     ],
     "parallel_downloads": 0,
     "profile_config": {
