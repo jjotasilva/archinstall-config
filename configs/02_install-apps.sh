@@ -34,6 +34,10 @@ sudo pacman -S --needed \
   dnsutils \
   dnsmasq \
   reflector \
-  mission-center
+  mission-center \
+  steam \
+  mangohud \
+  goverlay \
+  gamemode
 
 
