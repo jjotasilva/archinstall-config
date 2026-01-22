@@ -181,7 +181,9 @@
         "firewalld",
         "power-profiles-daemon",
         "upower",
-        "python-pyqt6"
+        "python-pyqt6",
+        "alsa-utils",
+        "pavucontrol"
     ],
     "parallel_downloads": 0,
     "profile_config": {
