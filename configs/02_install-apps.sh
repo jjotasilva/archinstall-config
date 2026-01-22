@@ -4,7 +4,7 @@ echo " "
 echo "---------------------"
 echo "Atualizando sistema..."
 
-sudo pacman -Suy
+sudo pacman -Syu
 
 echo " "
 echo "---------------------"
@@ -40,4 +40,27 @@ sudo pacman -S --needed \
   goverlay \
   gamemode
 
+# -------------------------------------------------------------------
+# 9) Instalação de apps via AUR
+# -------------------------------------------------------------------
+echo
+echo "---------------------"
+echo "Instalando aplicativos via AUR..."
+
+# Detecta helper AUR (paru ou yay)
+if command -v paru >/dev/null 2>&1; then
+  AUR_HELPER="paru"
+elif command -v yay >/dev/null 2>&1; then
+  AUR_HELPER="yay"
+else
+  echo "Erro: nenhum helper AUR encontrado (paru ou yay)."
+  exit 1
+fi
+
+echo "Usando helper AUR: $AUR_HELPER"
+
+$AUR_HELPER -S --needed --noconfirm \
+  brave-bin \
+  vscodium-bin \
+  heroic-games-launcher-bin
 
