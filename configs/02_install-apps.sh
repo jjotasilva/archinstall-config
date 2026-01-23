@@ -22,7 +22,6 @@ sudo pacman -S --needed \
   libreoffice-fresh-br \
   dolphin-plugins \
   okular \
-  transmission-qt \
   gwenview \
   kcalc \
   unrar \
