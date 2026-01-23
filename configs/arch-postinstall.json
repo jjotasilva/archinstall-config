@@ -141,7 +141,7 @@
             }
         ]
     },
-    "hostname": "archlinux",
+    "hostname": "archlinux-kvm",
     "kernels": [
         "linux"
     ],
