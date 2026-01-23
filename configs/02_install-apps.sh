@@ -19,7 +19,7 @@ sudo pacman -S --needed \
   rclone \
   obs-studio \
   libreoffice-fresh \
-  libreoffice-fresh-br \
+  libreoffice-fresh-pt-br \
   dolphin-plugins \
   okular \
   gwenview \
