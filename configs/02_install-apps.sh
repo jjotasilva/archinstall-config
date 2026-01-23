@@ -33,6 +33,7 @@ sudo pacman -S --needed \
   dnsmasq \
   reflector \
   mission-center \
+  pavucontrol \
   vlc \
   vlc-plugins-all \
   steam \
