@@ -33,6 +33,8 @@ sudo pacman -S --needed \
   dnsmasq \
   reflector \
   mission-center \
+  vlc \
+  vlc-plugins-all \
   steam \
   mangohud \
   goverlay \
