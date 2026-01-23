@@ -167,6 +167,7 @@
         "man-db",
         "man-pages",
         "plocate",
+        "intel-ucode",
         "git",
         "curl",
         "wget",
