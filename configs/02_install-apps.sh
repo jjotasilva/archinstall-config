@@ -61,5 +61,5 @@ $AUR_HELPER -S --needed --noconfirm \
   brave-bin \
   vscodium-bin \
   heroic-games-launcher-bin \
-  protonplus
-
+  protonplus \
+  sshpilot
