@@ -23,7 +23,6 @@ sudo pacman -S --needed \
   dolphin-plugins \
   okular \
   transmission-qt \
-  intel-ucode \
   gwenview \
   kcalc \
   unrar \
