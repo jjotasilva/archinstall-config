@@ -22,7 +22,7 @@ sudo pacman -S --needed \
   libreoffice-fresh-pt-br \
   dolphin-plugins \
   okular \
-  gwenview \
+  gthumb \
   kcalc \
   unrar \
   p7zip \
