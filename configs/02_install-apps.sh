@@ -36,6 +36,7 @@ sudo pacman -S --needed \
   pavucontrol \
   vlc \
   vlc-plugins-all \
+  lact \
   steam \
   mangohud \
   goverlay \
