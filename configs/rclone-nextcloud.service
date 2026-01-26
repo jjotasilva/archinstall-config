@@ -1,0 +1,34 @@
+#nano ~/.config/systemd/user/rclone-nextcloud.service
+#mkdir -p ~/nextcloud ~/.config/systemd/user ~/.cache/rclone-nextcloud
+#systemctl --user daemon-reload && systemctl --user enable --now rclone-nextcloud.service
+
+[Unit]
+Description=Rclone Mount Nextcloud (WebDAV) + RC Web UI
+After=default.target
+
+[Service]
+ExecStart=/usr/bin/rclone mount nextcloud: %h/nextcloud \
+--vfs-cache-mode full \
+--vfs-cache-max-age 24h \
+--vfs-cache-max-size 100G \
+--cache-dir %h/.cache/rclone-nextcloud \
+--dir-cache-time 72h \
+--timeout 10s \
+--contimeout 5s \
+--low-level-retries 1 \
+--retries 1
+#--rc \
+#--rc-addr 127.0.0.1:5572 \
+#--rc-no-auth \
+#--rc-web-gui
+
+# Opcional:
+# --no-check-certificate
+# --bwlimit 50M
+
+ExecStop=/bin/fusermount -u %h/nextcloud
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=default.target
