@@ -1,0 +1,53 @@
+[Unit]
+Description=Rclone Mount Nextcloud (WebDAV)
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+
+# Garante diretórios
+ExecStartPre=/usr/bin/mkdir -p %h/nextcloud %h/.cache/rclone-nextcloud
+
+# Força limpeza de qualquer estado FUSE antigo (mesmo invisível)
+ExecStartPre=/bin/sh -lc 'fusermount3 -uz "%h/nextcloud" 2>/dev/null || true; umount -l "%h/nextcloud" 2>/dev/null || true'
+
+# Mount (offline-friendly)
+ExecStart=/usr/bin/rclone mount nextcloud: %h/nextcloud \
+  --disable-http2 \
+  --vfs-fast-fingerprint \
+  --vfs-cache-mode full \
+  --cache-dir %h/.cache/rclone-nextcloud \
+  --vfs-cache-max-size 150G \
+  --vfs-cache-max-age 72h \
+  --vfs-write-back 10s \
+  --vfs-read-ahead 128M \
+  --vfs-read-chunk-size 32M \
+  --vfs-read-chunk-size-limit 256M \
+  --buffer-size 64M \
+  --dir-cache-time 15m \
+  --poll-interval 0 \
+  --timeout 10s \
+  --contimeout 5s \
+  --low-level-retries 1 \
+  --retries 1 \
+  --retries-sleep 2s \
+  --transfers 4 \
+  --checkers 8 \
+  --umask 022 \
+  --allow-other \
+  --log-level INFO \
+  --log-file %h/.cache/rclone-nextcloud/rclone.log
+
+# Garante que o mount realmente existe; se não existir, falha o serviço (pra reiniciar)
+ExecStartPost=/bin/sh -lc 'for i in 1 2 3 4 5; do mountpoint -q "%h/nextcloud" && exit 0; sleep 1; done; exit 1'
+
+# Stop (limpeza forte)
+ExecStop=/bin/sh -lc 'fusermount3 -uz "%h/nextcloud" 2>/dev/null || true; umount -l "%h/nextcloud" 2>/dev/null || true'
+
+Restart=on-failure
+RestartSec=10
+TimeoutStopSec=20
+
+[Install]
+WantedBy=default.target
