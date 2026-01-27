@@ -1,0 +1,92 @@
+============================================================
+Instalação KVM / Libvirt no Arch Linux (Boas Práticas)
+============================================================
+
+1) Instalar pacotes necessários
+------------------------------------------------------------
+sudo pacman -S --needed \
+  qemu-full \
+  libvirt \
+  virt-install \
+  virt-manager \
+  virt-viewer \
+  edk2-ovmf \
+  swtpm \
+  qemu-img \
+  guestfs-tools \
+  libosinfo \
+  libguestfs
+
+
+2) Habilitar o libvirt (modo recomendado: socket)
+------------------------------------------------------------
+sudo systemctl enable --now libvirtd.socket
+sudo systemctl enable --now virtlogd.socket
+sudo systemctl start libvirtd.socket
+sudo systemctl start virtlogd.socket
+sudo systemctl status libvirtd.socket
+
+
+3) Ativar rede padrão do libvirt (NAT)
+------------------------------------------------------------
+sudo systemctl enable --now virtnetworkd.service
+sudo virsh net-autostart default
+sudo virsh net-start default
+
+
+4) Ativar IOMMU no GRUB
+------------------------------------------------------------
+Editar o arquivo:
+sudo nano /etc/default/grub
+
+Para CPU Intel:
+GRUB_CMDLINE_LINUX="... intel_iommu=on iommu=pt"
+
+Para CPU AMD:
+GRUB_CMDLINE_LINUX="... amd_iommu=on iommu=pt"
+
+Observação:
+- Mantenha os outros parâmetros existentes (quiet, splash, etc)
+- Apenas acrescente os parâmetros acima
+
+
+5) Regerar configuração do GRUB
+------------------------------------------------------------
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+
+
+6) Adicionar usuário ao grupo libvirt
+------------------------------------------------------------
+sudo usermod -aG libvirt $USER
+
+IMPORTANTE:
+Após esse passo, faça logout/login ou reinicie o sistema.
+
+
+7) (Opcional) Definir URI padrão do libvirt
+------------------------------------------------------------
+Evita uso acidental de qemu:///session
+
+echo "export LIBVIRT_DEFAULT_URI='qemu:///system'" >> ~/.bashrc
+source ~/.bashrc
+
+
+8) Verificações finais
+------------------------------------------------------------
+systemctl status libvirtd.socket --no-pager
+virsh list --all
+virsh net-list --all
+
+
+9) Validar se o IOMMU está ativo
+------------------------------------------------------------
+dmesg | grep -i iommu | head
+
+
+Resultado esperado:
+- virt-manager abre sem erro
+- Rede NAT funcionando
+- Suporte a UEFI (OVMF)
+- TPM virtual disponível
+- Ambiente pronto para GPU passthrough
+============================================================
