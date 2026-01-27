@@ -24,12 +24,14 @@ sudo systemctl enable --now libvirtd.socket
 sudo systemctl enable --now virtlogd.socket
 sudo systemctl start libvirtd.socket
 sudo systemctl start virtlogd.socket
-sudo systemctl status libvirtd.socket
+sudo systemctl status libvirtd.socket virtlogd.socket
 
 
 3) Ativar rede padrão do libvirt (NAT)
 ------------------------------------------------------------
 sudo systemctl enable --now virtnetworkd.service
+sudo systemctl start virtnetworkd.service
+sudo systemctl status virtnetworkd.service
 sudo virsh net-autostart default
 sudo virsh net-start default
 
