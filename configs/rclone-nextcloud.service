@@ -1,0 +1,35 @@
+[Unit]
+Description=Rclone Mount Nextcloud (WebDAV)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+
+ProtectHome=no
+PrivateTmp=no
+NoNewPrivileges=no
+
+ExecStartPre=/usr/bin/install -d -m 700 %h/.cache/rclone-nextcloud/vfs
+ExecStartPre=/usr/bin/install -d -m 755 %h/nextcloud
+
+ExecStart=/usr/bin/rclone mount nextcloud: %h/nextcloud \
+  --vfs-cache-mode full \
+  --vfs-cache-max-age 24h \
+  --vfs-cache-max-size 100G \
+  --cache-dir %h/.cache/rclone-nextcloud \
+  --vfs-read-ahead 64M \
+  --buffer-size 32M \
+  --timeout 10s \
+  --contimeout 5s \
+  --low-level-retries 1 \
+  --retries 1 \
+  --retries-sleep 2s \
+  --log-level INFO
+
+ExecStop=/bin/fusermount3 -uz %h/nextcloud
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=default.target
