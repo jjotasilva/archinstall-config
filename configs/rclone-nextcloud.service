@@ -1,3 +1,5 @@
+
+
 [Unit]
 Description=Rclone Mount Nextcloud (WebDAV)
 After=network-online.target
@@ -33,3 +35,13 @@ RestartSec=5
 
 [Install]
 WantedBy=default.target
+
+# nano ~/.config/systemd/user/rclone-nextcloud.service 
+# mkdir -p ~/nextcloud ~/.config/systemd/user ~/.cache/rclone-nextcloud 
+# systemctl --user daemon-reload && systemctl --user enable --now rclone-nextcloud.service 
+
+# TSHOOT 
+
+# systemctl --user daemon-reload 
+# systemctl --user restart rclone-nextcloud.service 
+# systemctl --user status rclone-nextcloud.service --no-pager -l
