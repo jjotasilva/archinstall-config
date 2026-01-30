@@ -1,5 +1,6 @@
 ============================================================
-Instalação KVM / Libvirt no Arch Linux (Boas Práticas)
+Instalação KVM / Libvirt no Arch Linux (Boas Práticas) - MODERNO
+(virtqemud / virtnetworkd / virtlogd / virtstoraged)
 ============================================================
 
 1) Instalar pacotes necessários
@@ -18,22 +19,29 @@ sudo pacman -S --needed \
   libguestfs
 
 
-2) Habilitar o libvirt (modo recomendado: socket)
+2) Habilitar libvirt (modo moderno: sockets do stack modular)
 ------------------------------------------------------------
-sudo systemctl enable --now libvirtd.socket
+# Desliga o legado (evita conflito)
+sudo systemctl disable --now libvirtd.service libvirtd.socket 2>/dev/null || true
+
+# Sockets do stack moderno
+sudo systemctl enable --now virtqemud.socket
+sudo systemctl enable --now virtnetworkd.socket
 sudo systemctl enable --now virtlogd.socket
-sudo systemctl start libvirtd.socket
-sudo systemctl start virtlogd.socket
-sudo systemctl status libvirtd.socket virtlogd.socket
+sudo systemctl enable --now virtstoraged.socket
+
+# Checagem
+systemctl status virtqemud.socket virtnetworkd.socket virtlogd.socket virtstoraged.socket --no-pager
 
 
 3) Ativar rede padrão do libvirt (NAT)
 ------------------------------------------------------------
-sudo systemctl enable --now virtnetworkd.service
-sudo systemctl start virtnetworkd.service
-sudo systemctl status virtnetworkd.service
-sudo virsh net-autostart default
-sudo virsh net-start default
+# Rede default (NAT)
+sudo virsh -c qemu:///system net-autostart default || true
+sudo virsh -c qemu:///system net-start default || true
+
+# Checagem
+sudo virsh -c qemu:///system net-list --all
 
 
 4) Ativar IOMMU no GRUB
@@ -65,19 +73,24 @@ IMPORTANTE:
 Após esse passo, faça logout/login ou reinicie o sistema.
 
 
-7) (Opcional) Definir URI padrão do libvirt
+7) Definir URI padrão do libvirt (recomendado)
 ------------------------------------------------------------
-Evita uso acidental de qemu:///session
+# Melhor que .bashrc: funciona para CLI e GUI sem depender de shell
+mkdir -p ~/.config/libvirt
 
-echo "export LIBVIRT_DEFAULT_URI='qemu:///system'" >> ~/.bashrc
-source ~/.bashrc
+cat <<'EOF' > ~/.config/libvirt/libvirt.conf
+uri_default = "qemu:///system"
+EOF
+
+# Checagem rápida
+virsh list --all
 
 
 8) Verificações finais
 ------------------------------------------------------------
-systemctl status libvirtd.socket --no-pager
+systemctl status virtqemud.socket --no-pager
 virsh list --all
-virsh net-list --all
+sudo virsh net-list --all
 
 
 9) Validar se o IOMMU está ativo
