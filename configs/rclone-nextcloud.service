@@ -17,16 +17,25 @@ ExecStartPre=/usr/bin/install -d -m 755 %h/nextcloud
 
 ExecStart=/usr/bin/rclone mount nextcloud: %h/nextcloud \
   --vfs-cache-mode full \
-  --vfs-cache-max-age 24h \
+  --vfs-cache-max-age 168h \
   --vfs-cache-max-size 100G \
   --cache-dir %h/.cache/rclone-nextcloud \
-  --vfs-read-ahead 64M \
-  --buffer-size 32M \
-  --timeout 10s \
-  --contimeout 5s \
-  --low-level-retries 1 \
-  --retries 1 \
-  --retries-sleep 2s \
+  --vfs-read-ahead 128M \
+  --buffer-size 64M \
+  --timeout 10m \
+  --contimeout 1m \
+  --vfs-write-back 2m \
+  --retries 20 \
+  --low-level-retries 50 \
+  --retries-sleep 10s \
+  --transfers 1 \
+  --checkers 4 \
+  --disable-http2 \
+  --tpslimit 4 \
+  --rc \
+  --rc-addr 127.0.0.1:5572 \
+  --rc-no-auth \
+  --rc-web-gui \
   --log-level INFO
 
 ExecStop=/bin/fusermount3 -uz %h/nextcloud
