@@ -30,6 +30,7 @@ sudo pacman -S --needed \
   p7zip \
   noto-fonts-cjk \
   rsync \
+  cpu-x \
   net-tools \
   dnsutils \
   dnsmasq \
@@ -66,6 +67,7 @@ echo "Usando helper AUR: $AUR_HELPER"
 $AUR_HELPER -S --needed --noconfirm \
   brave-bin \
   vscodium-bin \
+  ttf-ms-fonts \
   heroic-games-launcher-bin \
   protonplus \
   sshpilot \
