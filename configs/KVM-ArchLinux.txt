@@ -1,9 +1,10 @@
-============================================================
-Instalação KVM / Libvirt no Arch Linux (Boas Práticas)
-============================================================
+############################################################
+# Instalação KVM / Libvirt no Arch Linux (Boas Práticas)
+############################################################
 
-1) Instalar pacotes necessários
-------------------------------------------------------------
+############################################################
+# 1) Instalar pacotes necessários
+############################################################
 sudo pacman -S --needed \
   qemu-full \
   libvirt \
@@ -15,109 +16,157 @@ sudo pacman -S --needed \
   libosinfo \
   libguestfs
 
-Observações:
-- qemu-img já vem no qemu-full (não é necessário instalar separado)
-- libguestfs já inclui as ferramentas (guestfs-tools é opcional)
+# Observações:
+# - qemu-img já vem no qemu-full
+# - libguestfs já inclui as ferramentas (guestfs-tools é opcional)
 
 
-2) Habilitar libvirt (modo recomendado: socket)
-------------------------------------------------------------
-sudo systemctl enable --now libvirtd.socket virtlogd.socket
+############################################################
+# 2) Habilitar libvirt (modo recomendado: socket)
+############################################################
+# No Arch Linux moderno, o libvirt usa socket activation.
+# NÃO habilite serviços diretamente.
 
-Validar:
-systemctl status libvirtd.socket virtlogd.socket --no-pager
+sudo systemctl enable --now \
+  virtqemud.socket \
+  virtnetworkd.socket \
+  virtlogd.socket
+
+# Validar:
+systemctl status virtqemud.socket virtnetworkd.socket virtlogd.socket --no-pager
+
+# Observações:
+# - NÃO habilite libvirtd.service
+# - NÃO habilite virtqemud.service
+# - Os serviços sobem automaticamente quando necessários
 
 
-3) Rede padrão do libvirt (NAT)
-------------------------------------------------------------
-A maioria das instalações já cria a rede "default".
-Validar e ativar manualmente:
+############################################################
+# 3) Rede padrão do libvirt (NAT)
+############################################################
+# A maioria das instalações já cria a rede "default".
 
 sudo virsh net-list --all
 
-Se estiver inativa:
+# Se estiver inativa:
 sudo virsh net-start default
 sudo virsh net-autostart default
 
-Observação:
-- Não é obrigatório gerenciar virtnetworkd manualmente em setups comuns
-- libvirtd.socket já lida com isso na maioria dos casos
+# Observações:
+# - A bridge padrão será criada como virbr0
+# - virbr0 em state DOWN é NORMAL quando não há VMs ativas
+# - A rede sobe automaticamente ao ligar a primeira VM
 
 
-4) Ativar IOMMU no GRUB
-------------------------------------------------------------
-Editar:
+############################################################
+# 4) Ativar IOMMU no GRUB
+############################################################
 sudo nano /etc/default/grub
 
-Adicionar APENAS os parâmetros abaixo ao final da linha existente.
+# Adicionar APENAS ao final da linha existente:
 
-Para CPU Intel:
-GRUB_CMDLINE_LINUX_DEFAULT="... intel_iommu=on iommu=pt"
+# Intel:
+# GRUB_CMDLINE_LINUX_DEFAULT="... intel_iommu=on iommu=pt"
 
-Para CPU AMD:
-GRUB_CMDLINE_LINUX_DEFAULT="... amd_iommu=on iommu=pt"
+# AMD:
+# GRUB_CMDLINE_LINUX_DEFAULT="... amd_iommu=on iommu=pt"
 
-Observações:
-- Não remova parâmetros existentes (quiet, loglevel, etc)
-- Use GRUB_CMDLINE_LINUX_DEFAULT (boa prática no Arch)
+# Observações:
+# - Não remover parâmetros existentes
+# - Use GRUB_CMDLINE_LINUX_DEFAULT (boa prática Arch)
 
 
-5) Regerar configuração do GRUB
-------------------------------------------------------------
+############################################################
+# 5) Regerar configuração do GRUB
+############################################################
 sudo grub-mkconfig -o /boot/grub/grub.cfg
 
-Reinicie o sistema após esse passo.
+# Reboot obrigatório após esse passo
 
 
-6) Adicionar usuário ao grupo libvirt
-------------------------------------------------------------
+############################################################
+# 6) Adicionar usuário ao grupo libvirt
+############################################################
 sudo usermod -aG libvirt $USER
 
-IMPORTANTE:
-É obrigatório fazer logout/login ou reboot para aplicar o grupo.
+# IMPORTANTE:
+# Logout/login ou reboot obrigatório para aplicar o grupo
 
 
-7) Definir URI padrão do libvirt (recomendado)
-------------------------------------------------------------
-Evita uso acidental de qemu:///session
-Método moderno e compatível com KDE / Wayland:
+############################################################
+# 7) Definir URI padrão do libvirt (recomendado)
+############################################################
+# Evita uso acidental de qemu:///session
 
 mkdir -p ~/.config/environment.d
-printf "LIBVIRT_DEFAULT_URI=qemu:///system\n" > ~/.config/environment.d/99-libvirt.conf
+printf "LIBVIRT_DEFAULT_URI=qemu:///system\n" \
+  > ~/.config/environment.d/99-libvirt.conf
 
-Depois:
-logout/login (ou reboot)
+# Depois:
+# logout/login ou reboot
 
 
-8) Verificações finais (permissão e serviços)
-------------------------------------------------------------
-systemctl status libvirtd.socket --no-pager
+############################################################
+# 8) Firewalld (APENAS se estiver ativo)
+############################################################
+# Este passo é necessário SOMENTE se o firewalld estiver rodando.
 
-Teste de permissão (SEM sudo):
+systemctl status firewalld --no-pager
+
+# Se estiver ativo, garantir que a zona libvirt exista:
+sudo install -Dm644 \
+  /usr/lib/firewalld/zones/libvirt.xml \
+  /etc/firewalld/zones/libvirt.xml
+
+sudo firewall-cmd --reload
+
+# Amarrar a bridge virbr0 à zona libvirt:
+sudo firewall-cmd --zone=libvirt --add-interface=virbr0
+sudo firewall-cmd --zone=libvirt --add-interface=virbr0 --permanent
+sudo firewall-cmd --reload
+
+# Validar:
+firewall-cmd --get-active-zones
+
+# Observações:
+# - NÃO desative o firewalld
+# - NÃO mova virbr0 para zonas public ou trusted
+# - Essa é a integração correta libvirt + firewalld
+
+
+############################################################
+# 9) Verificações finais
+############################################################
+# Sockets:
+systemctl status virtqemud.socket virtnetworkd.socket --no-pager
+
+# Teste de permissão (SEM sudo):
 virsh -c qemu:///system list --all
 
-Rede:
+# Rede:
 virsh net-list --all
 
 
-9) Validar IOMMU
-------------------------------------------------------------
-Para AMD:
-dmesg | grep -E "AMD-Vi|IOMMU" -i
+############################################################
+# 10) Validar IOMMU
+############################################################
+# AMD:
+dmesg | grep -Ei "AMD-Vi|IOMMU"
 
-Para Intel:
-dmesg | grep -E "DMAR|IOMMU" -i
+# Intel:
+dmesg | grep -Ei "DMAR|IOMMU"
 
-Ver grupos IOMMU (essencial para passthrough):
+# Ver grupos IOMMU (essencial para passthrough):
 find /sys/kernel/iommu_groups/ -type l
 
 
-Resultado esperado:
-------------------------------------------------------------
-- virt-manager abre sem erro
-- virsh funciona sem sudo
-- Rede NAT ativa
-- OVMF disponível (UEFI)
-- TPM virtual funcional
-- Sistema pronto para passthrough de GPU
-============================================================
+############################################################
+# Resultado esperado
+############################################################
+# - virt-manager abre sem erro
+# - virsh funciona sem sudo
+# - Rede NAT ativa
+# - OVMF disponível (UEFI)
+# - TPM virtual funcional
+# - Host pronto para passthrough de GPU
+############################################################
