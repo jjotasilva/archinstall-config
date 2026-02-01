@@ -37,6 +37,7 @@ sudo pacman -S --needed \
   pavucontrol \
   vlc \
   vlc-plugins-all \
+  ffmpegthumbs \
   qbittorrent \
   lact \
   steam \
