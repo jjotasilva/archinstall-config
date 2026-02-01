@@ -1,6 +1,5 @@
 ============================================================
-Instalação KVM / Libvirt no Arch Linux (Boas Práticas) - MODERNO
-(virtqemud / virtnetworkd / virtlogd / virtstoraged)
+Instalação KVM / Libvirt no Arch Linux (Boas Práticas)
 ============================================================
 
 1) Instalar pacotes necessários
@@ -13,56 +12,61 @@ sudo pacman -S --needed \
   virt-viewer \
   edk2-ovmf \
   swtpm \
-  qemu-img \
-  guestfs-tools \
   libosinfo \
   libguestfs
 
+Observações:
+- qemu-img já vem no qemu-full (não é necessário instalar separado)
+- libguestfs já inclui as ferramentas (guestfs-tools é opcional)
 
-2) Habilitar libvirt (modo moderno: sockets do stack modular)
+
+2) Habilitar libvirt (modo recomendado: socket)
 ------------------------------------------------------------
-# Desliga o legado (evita conflito)
-sudo systemctl disable --now libvirtd.service libvirtd.socket 2>/dev/null || true
+sudo systemctl enable --now libvirtd.socket virtlogd.socket
 
-# Sockets do stack moderno
-sudo systemctl enable --now virtqemud.socket
-sudo systemctl enable --now virtnetworkd.socket
-sudo systemctl enable --now virtlogd.socket
-sudo systemctl enable --now virtstoraged.socket
-
-# Checagem
-systemctl status virtqemud.socket virtnetworkd.socket virtlogd.socket virtstoraged.socket --no-pager
+Validar:
+systemctl status libvirtd.socket virtlogd.socket --no-pager
 
 
-3) Ativar rede padrão do libvirt (NAT)
+3) Rede padrão do libvirt (NAT)
 ------------------------------------------------------------
-# Rede default (NAT)
-sudo virsh -c qemu:///system net-autostart default || true
-sudo virsh -c qemu:///system net-start default || true
+A maioria das instalações já cria a rede "default".
+Validar e ativar manualmente:
 
-# Checagem
-sudo virsh -c qemu:///system net-list --all
+sudo virsh net-list --all
+
+Se estiver inativa:
+sudo virsh net-start default
+sudo virsh net-autostart default
+
+Observação:
+- Não é obrigatório gerenciar virtnetworkd manualmente em setups comuns
+- libvirtd.socket já lida com isso na maioria dos casos
 
 
 4) Ativar IOMMU no GRUB
 ------------------------------------------------------------
-Editar o arquivo:
+Editar:
 sudo nano /etc/default/grub
 
+Adicionar APENAS os parâmetros abaixo ao final da linha existente.
+
 Para CPU Intel:
-GRUB_CMDLINE_LINUX="... intel_iommu=on iommu=pt"
+GRUB_CMDLINE_LINUX_DEFAULT="... intel_iommu=on iommu=pt"
 
 Para CPU AMD:
-GRUB_CMDLINE_LINUX="... amd_iommu=on iommu=pt"
+GRUB_CMDLINE_LINUX_DEFAULT="... amd_iommu=on iommu=pt"
 
-Observação:
-- Mantenha os outros parâmetros existentes (quiet, splash, etc)
-- Apenas acrescente os parâmetros acima
+Observações:
+- Não remova parâmetros existentes (quiet, loglevel, etc)
+- Use GRUB_CMDLINE_LINUX_DEFAULT (boa prática no Arch)
 
 
 5) Regerar configuração do GRUB
 ------------------------------------------------------------
 sudo grub-mkconfig -o /boot/grub/grub.cfg
+
+Reinicie o sistema após esse passo.
 
 
 6) Adicionar usuário ao grupo libvirt
@@ -70,38 +74,50 @@ sudo grub-mkconfig -o /boot/grub/grub.cfg
 sudo usermod -aG libvirt $USER
 
 IMPORTANTE:
-Após esse passo, faça logout/login ou reinicie o sistema.
+É obrigatório fazer logout/login ou reboot para aplicar o grupo.
 
 
 7) Definir URI padrão do libvirt (recomendado)
 ------------------------------------------------------------
-# Melhor que .bashrc: funciona para CLI e GUI sem depender de shell
-mkdir -p ~/.config/libvirt
+Evita uso acidental de qemu:///session
+Método moderno e compatível com KDE / Wayland:
 
-cat <<'EOF' > ~/.config/libvirt/libvirt.conf
-uri_default = "qemu:///system"
-EOF
+mkdir -p ~/.config/environment.d
+printf "LIBVIRT_DEFAULT_URI=qemu:///system\n" > ~/.config/environment.d/99-libvirt.conf
 
-# Checagem rápida
-virsh list --all
+Depois:
+logout/login (ou reboot)
 
 
-8) Verificações finais
+8) Verificações finais (permissão e serviços)
 ------------------------------------------------------------
-systemctl status virtqemud.socket --no-pager
-virsh list --all
-sudo virsh net-list --all
+systemctl status libvirtd.socket --no-pager
+
+Teste de permissão (SEM sudo):
+virsh -c qemu:///system list --all
+
+Rede:
+virsh net-list --all
 
 
-9) Validar se o IOMMU está ativo
+9) Validar IOMMU
 ------------------------------------------------------------
-dmesg | grep -i iommu | head
+Para AMD:
+dmesg | grep -E "AMD-Vi|IOMMU" -i
+
+Para Intel:
+dmesg | grep -E "DMAR|IOMMU" -i
+
+Ver grupos IOMMU (essencial para passthrough):
+find /sys/kernel/iommu_groups/ -type l
 
 
 Resultado esperado:
+------------------------------------------------------------
 - virt-manager abre sem erro
-- Rede NAT funcionando
-- Suporte a UEFI (OVMF)
-- TPM virtual disponível
-- Ambiente pronto para GPU passthrough
+- virsh funciona sem sudo
+- Rede NAT ativa
+- OVMF disponível (UEFI)
+- TPM virtual funcional
+- Sistema pronto para passthrough de GPU
 ============================================================
