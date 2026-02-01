@@ -117,16 +117,8 @@ previas > setar  "arquivos de video (ffmpegthumbs)", em Confirmações >  Setar 
 menu contexto > setar "comandos copiar, mover para", "excluir" e o que mais precisar
 
 ::Desativar mitigação de split-lock (split_lock_detect=off) via grub
-sudo nano /etc/default/grub
-GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet amdgpu.ppfeaturemask=0xffffffff split_lock_detect=off"
-sudo grub-mkconfig -o /boot/grub/grub.cfg
+echo 'kernel.split_lock_mitigate=0' | sudo tee /etc/sysctl.d/99-splitlock.conf >/dev/null
 
 #Validar
-cat /proc/cmdline | grep split_lock
-split_lock_detect=off
-
-ou
-
-sysctl kernel.split_lock_mitigate
+sudo sysctl --system
 kernel.split_lock_mitigate = 0
-
