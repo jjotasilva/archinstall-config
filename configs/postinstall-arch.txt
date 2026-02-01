@@ -15,11 +15,6 @@ sudo systemctl enable --now qemu-guest-agent.service spice-vdagentd.service
 ::LIbreoffice + language pack pt-br
 sudo pacman -S libreoffice-fresh libreoffice-fresh-pt-br
 
-::Fontes Microsoft
-yay -S ttf-ms-fonts
-
-fc-list | grep -i arial
-
 ::Archinstall
 loadkeys br-abnt2 #comando para alterar layout do teclado
 curl -LO https://raw.githubusercontent.com/jjotasilva/archinstall-config/main/configs/arch-postinstall.json
@@ -76,25 +71,7 @@ sudo grub-mkconfig -o /boot/grub/grub.cfg
 Arch Linux, with Linux linux
 Arch Linux, with Linux linux-lts
 
-::ArchLinux Games
-sudo pacman -S mangohud goverlay gamemode
-yay -S heroic-games-launcher-bin
-systemctl --user enable --now gamemoded
-systemctl --user status gamemoded
-
-Se estiver apresentando esse erro no status:
-
-pkexec: Error executing command as another user: Not authorized
-Failed to update split_lock_mitigate
-
-Criei o arquivo abaixo:
-
-nano ~/.config/gamemode.ini
-
---
-[general]
-disable_split_lock_mitigate=true
---
+::Disable disable_split_lock_mitigate
 
 systemctl --user restart gamemoded
 
@@ -143,3 +120,14 @@ menu contexto > setar "comandos copiar, mover para", "excluir" e o que mais prec
 sudo nano /etc/default/grub
 GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet amdgpu.ppfeaturemask=0xffffffff split_lock_detect=off"
 sudo grub-mkconfig -o /boot/grub/grub.cfg
+
+ou
+
+Criei o arquivo abaixo:
+
+nano ~/.config/gamemode.ini
+
+--
+[general]
+disable_split_lock_mitigate=true
+--
