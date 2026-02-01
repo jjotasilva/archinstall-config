@@ -121,13 +121,12 @@ sudo nano /etc/default/grub
 GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet amdgpu.ppfeaturemask=0xffffffff split_lock_detect=off"
 sudo grub-mkconfig -o /boot/grub/grub.cfg
 
+#Validar
+cat /proc/cmdline | grep split_lock
+split_lock_detect=off
+
 ou
 
-Criei o arquivo abaixo:
+sysctl kernel.split_lock_mitigate
+kernel.split_lock_mitigate = 0
 
-nano ~/.config/gamemode.ini
-
---
-[general]
-disable_split_lock_mitigate=true
---
