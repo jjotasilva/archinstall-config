@@ -41,7 +41,6 @@ sudo pacman -S --needed \
   lact \
   steam \
   mangohud \
-  goverlay \
   gamemode
 
 # -------------------------------------------------------------------
@@ -68,4 +67,5 @@ $AUR_HELPER -S --needed --noconfirm \
   vscodium-bin \
   heroic-games-launcher-bin \
   protonplus \
-  sshpilot
+  sshpilot \
+  mangojuice
