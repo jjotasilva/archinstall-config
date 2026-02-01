@@ -14,6 +14,7 @@ sudo pacman -S --needed \
   zip \
   unzip \
   ffmpeg \
+  ffmpegthumbs \
   ntfs-3g \
   discord \
   rclone \
@@ -37,7 +38,6 @@ sudo pacman -S --needed \
   pavucontrol \
   vlc \
   vlc-plugins-all \
-  ffmpegthumbs \
   qbittorrent \
   lact \
   steam \
