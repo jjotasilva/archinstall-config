@@ -24,6 +24,16 @@ echo
 echo "OK. Configuração aplicada."
 echo "Faça logout/login (ou reboot) para a sessão gráfica herdar as variáveis."
 
+# --------------------------------------------------------------------
+# VALIDAR
+# --------------------------------------------------------------------
+# echo $AMD_VULKAN_ICD
+# echo $MESA_SHADER_CACHE_MAX_SIZE
+#
+# SAIDA
+#
+# RADV
+# 12G
 # -------------------------------------------------------------------
 # DESINSTALAÇÃO (manual)
 # -------------------------------------------------------------------
