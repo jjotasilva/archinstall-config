@@ -1,0 +1,145 @@
+::Libirt KVM permissão diretorio btrfs
+lsattr -d /var/lib/libvirt/images #lista permissão
+chattr -VR +C /var/lib/libvirt/images
+lsattr -d /var/lib/libvirt/images #lista permissão 
+
+::reflector #espelho repositorios
+sudo pacman -S reflector
+sudo cp -p /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bkp
+reflector --verbose --latest 5 --sort rate --save /etc/pacman.d/mirrorlist
+
+::SPICE Proxmox
+sudo pacman -S qemu-guest-agent spice-vdagent
+sudo systemctl enable --now qemu-guest-agent.service spice-vdagentd.service
+
+::LIbreoffice + language pack pt-br
+sudo pacman -S libreoffice-fresh libreoffice-fresh-pt-br
+
+::Fontes Microsoft
+yay -S ttf-ms-fonts
+
+fc-list | grep -i arial
+
+::Archinstall
+loadkeys br-abnt2 #comando para alterar layout do teclado
+curl -LO https://raw.githubusercontent.com/jjotasilva/archinstall-config/main/configs/arch-postinstall.json
+
+archinstall --config arch-postinstall.json
+archinstall --config arch-postinstall.json --creds user_credentials.json
+archinstall --config arch-postinstall.json --silent
+
+
+::commit github no archinstall
+pacman -Sy --noconfirm git
+git clone https://github.com/SEU_USUARIO/archinstall-config.git
+cp /root/archinstall.json archinstall-config/
+cd archinstall-config
+git add archinstall.json
+git commit -m "archinstall base config"
+git push
+
+user: jjotasilva
+passwd: senha do Token
+
+::Add repositorio UAR
+sudo pacman -S --needed base-devel git
+cd ~ && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si --noconfirm
+
+::PARU (RECOMENDADO)
+sudo pacman -S --needed base-devel git
+cd ~
+git clone https://aur.archlinux.org/paru.git
+cd paru
+makepkg -si
+
+::Identificar outras partições de inicialização (Dualboot)
+sudo pacman -S --needed os-prober
+sudo nano /etc/default/grub
+GRUB_DISABLE_OS_PROBER=false #Adicione ou edite
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+
+::habilitar fstrim
+sudo systemctl enable --now fstrim.timer
+sudo systemctl status fstrim.timer
+
+::habilitar perfil de bateria
+sudo pacman -S power-profiles-daemon
+sudo systemctl enable --now power-profiles-daemon
+
+::INSTALL KERNEL ARCHLINUX
+sudo pacman -S linux-lts linux-lts-headers #para kernel lts
+sudo pacman -S linux linux-headers #para kernel default
+sudo mkinitcpio -P
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+
+#na tela de grub selecionar:
+Arch Linux, with Linux linux
+Arch Linux, with Linux linux-lts
+
+::ArchLinux Games
+sudo pacman -S mangohud goverlay gamemode
+yay -S heroic-games-launcher-bin
+systemctl --user enable --now gamemoded
+systemctl --user status gamemoded
+
+Se estiver apresentando esse erro no status:
+
+pkexec: Error executing command as another user: Not authorized
+Failed to update split_lock_mitigate
+
+Criei o arquivo abaixo:
+
+nano ~/.config/gamemode.ini
+
+--
+[general]
+disable_split_lock_mitigate=true
+--
+
+systemctl --user restart gamemoded
+
+steam command:
+gamemoderun mangohud %command%
+
+Heroic launcher games:
+Habilitar nas configurações
+
+::Resize disco btrfs
+sudo cfdisk /dev/nvme0n1
+
+Selecione a partição Btrfs (30G)
+Escolha Resize
+Tamanho total livre 
+Write → yes
+Quit
+
+sudo btrfs filesystem resize max /
+
+::Subvolume Brave / Mozilla
+
+ls -la
+mv -v ~/.config/BraveSoftware ~/.config/BraveSoftware-old
+sudo btrfs subvolume create ~/.config/BraveSoftware
+sudo chown -Rv $USER: ~/.config/BraveSoftware
+sudo cp -arv ~/.config/BraveSoftware-old/. ~/.config/BraveSoftware
+sudo rm -rf ~/.config/BraveSoftware-old/
+sudo btrfs subvolume list /
+
+ls -la
+mv -v ~/.mozilla/ ~/.mozilla-old
+sudo btrfs subvolume create ~/.mozilla
+sudo chown -Rv $USER: ~/.mozilla
+cp -arv ~/.mozilla-old/. ~/.mozilla
+rm -rf ~/.mozilla-old/
+sudo btrfs subvolume list /
+
+::Dolphin
+Configurar > Configurar Dolphin:
+interface >  Setar "/home/james"
+previas > setar  "arquivos de video (ffmpegthumbs)", em Confirmações >  Setar "Excluir arquivos e pastas"
+menu contexto > setar "comandos copiar, mover para", "excluir" e o que mais precisar
+
+::Desativar mitigação de split-lock (split_lock_detect=off) via grub
+sudo nano /etc/default/grub
+GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet amdgpu.ppfeaturemask=0xffffffff split_lock_detect=off"
+sudo grub-mkconfig -o /boot/grub/grub.cfg
