@@ -187,7 +187,7 @@
     ],
     "parallel_downloads": 0,
     "profile_config": {
-        "gfx_driver": "All open-source",
+        "gfx_driver": "intel (open-source)",
         "greeter": "sddm",
         "profile": {
             "custom_settings": {
