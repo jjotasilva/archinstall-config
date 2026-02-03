@@ -176,6 +176,7 @@
         "firefox",
         "firefox-i18n-pt-br",
         "firewalld",
+        "firewall-applet",
         "power-profiles-daemon",
         "upower",
         "python-pyqt6",
