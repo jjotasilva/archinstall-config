@@ -29,7 +29,8 @@
         "sed -i 's/^#\\?ParallelDownloads.*/ParallelDownloads = 20/' /etc/pacman.conf",
         "systemctl enable --now fstrim.timer",
         "systemctl enable --now firewalld.service",
-        "systemctl enable --now power-profiles-daemon"
+        "systemctl enable --now power-profiles-daemon",
+        "systemctl enable --now qemu-guest-agent.service"
     ],
     "disk_config": {
         "btrfs_options": {
@@ -181,7 +182,8 @@
         "upower",
         "python-pyqt6",
         "alsa-utils",
-        "dmidecode"
+        "dmidecode",
+        "qemu-guest-agent"
     ],
     "parallel_downloads": 0,
     "profile_config": {
