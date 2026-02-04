@@ -1,7 +1,9 @@
 ::Libirt KVM permissão diretorio btrfs
-lsattr -d /var/lib/libvirt/images #lista permissão
+# Aplicar permissão
 chattr -VR +C /var/lib/libvirt/images
-lsattr -d /var/lib/libvirt/images #lista permissão 
+
+# listar permissão
+lsattr -d /var/lib/libvirt/images 
 ----------------------------------------------------------------------------------------------------------------
 ::reflector #espelho repositorios
 sudo pacman -S reflector
