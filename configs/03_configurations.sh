@@ -13,23 +13,23 @@ fi
 # -------------------------------------------------------------------
 # 5) Reflector: espelhos de repositório
 # -------------------------------------------------------------------
-echo
-echo "---------------------"
-echo "Configurando mirrorlist (reflector)..."
+#echo
+#echo "---------------------"
+#echo "Configurando mirrorlist (reflector)..."
+#
+#if ! command -v reflector >/dev/null 2>&1; then
+#  sudo pacman -S --needed reflector
+#fi
+#
+#if [ ! -f /etc/pacman.d/mirrorlist.bkp ]; then
+#  sudo cp -p /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bkp
+#fi
+#
+#sudo reflector --verbose --latest 5 --sort rate --save /etc/pacman.d/mirrorlist
 
-if ! command -v reflector >/dev/null 2>&1; then
-  sudo pacman -S --needed reflector
-fi
-
-if [ ! -f /etc/pacman.d/mirrorlist.bkp ]; then
-  sudo cp -p /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bkp
-fi
-
-sudo reflector --verbose --latest 5 --sort rate --save /etc/pacman.d/mirrorlist
-
-# -------------------------------------------------------------------
-# 6) Bash prompt customizado (PS1)
-# -------------------------------------------------------------------
+ -------------------------------------------------------------------
+ 6) Bash prompt customizado (PS1)
+ -------------------------------------------------------------------
 echo
 echo "---------------------"
 echo "Configurando PS1 no ~/.bashrc..."
