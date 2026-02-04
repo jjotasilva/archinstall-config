@@ -2,20 +2,20 @@
 lsattr -d /var/lib/libvirt/images #lista permissão
 chattr -VR +C /var/lib/libvirt/images
 lsattr -d /var/lib/libvirt/images #lista permissão 
-
+----------------------------------------------------------------------------------------------------------------
 ::reflector #espelho repositorios
 sudo pacman -S reflector
 sudo cp -p /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bkp
 reflector --verbose --latest 5 --sort rate --save /etc/pacman.d/mirrorlist
-
+----------------------------------------------------------------------------------------------------------------
 ::SPICE Proxmox
 sudo pacman -S qemu-guest-agent spice-vdagent
 sudo systemctl enable --now qemu-guest-agent.service spice-vdagentd.service
-
+----------------------------------------------------------------------------------------------------------------
 ::LIbreoffice + language pack pt-br
 sudo pacman -S libreoffice-fresh libreoffice-fresh-pt-br
-
-::Archinstall
+----------------------------------------------------------------------------------------------------------------
+::Archinstall GitHub
 loadkeys br-abnt2 #comando para alterar layout do teclado
 curl -LO https://raw.githubusercontent.com/jjotasilva/archinstall-config/main/configs/arch-postinstall.json
 
@@ -35,7 +35,7 @@ git push
 
 user: jjotasilva
 passwd: senha do Token
-
+---------------------------------------------------------------------------------------------------------------
 ::Add repositorio UAR
 sudo pacman -S --needed base-devel git
 cd ~ && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si --noconfirm
@@ -46,21 +46,21 @@ cd ~
 git clone https://aur.archlinux.org/paru.git
 cd paru
 makepkg -si
-
+---------------------------------------------------------------------------------------------------------------
 ::Identificar outras partições de inicialização (Dualboot)
 sudo pacman -S --needed os-prober
 sudo nano /etc/default/grub
 GRUB_DISABLE_OS_PROBER=false #Adicione ou edite
 sudo grub-mkconfig -o /boot/grub/grub.cfg
-
+---------------------------------------------------------------------------------------------------------------
 ::habilitar fstrim
 sudo systemctl enable --now fstrim.timer
 sudo systemctl status fstrim.timer
-
+---------------------------------------------------------------------------------------------------------------
 ::habilitar perfil de bateria
 sudo pacman -S power-profiles-daemon
 sudo systemctl enable --now power-profiles-daemon
-
+---------------------------------------------------------------------------------------------------------------
 ::INSTALL KERNEL ARCHLINUX
 sudo pacman -S linux-lts linux-lts-headers #para kernel lts
 sudo pacman -S linux linux-headers #para kernel default
@@ -70,7 +70,7 @@ sudo grub-mkconfig -o /boot/grub/grub.cfg
 #na tela de grub selecionar:
 Arch Linux, with Linux linux
 Arch Linux, with Linux linux-lts
-
+---------------------------------------------------------------------------------------------------------------
 ::GAMEMODE
 
 systemctl --user restart gamemoded
@@ -80,7 +80,7 @@ gamemoderun mangohud %command%
 
 Heroic launcher games:
 Habilitar nas configurações
-
+---------------------------------------------------------------------------------------------------------------
 ::Resize disco btrfs
 sudo cfdisk /dev/nvme0n1
 
@@ -91,7 +91,7 @@ Write → yes
 Quit
 
 sudo btrfs filesystem resize max /
-
+---------------------------------------------------------------------------------------------------------------
 ::Subvolume Brave / Mozilla
 
 ls -la
@@ -109,16 +109,91 @@ sudo chown -Rv $USER: ~/.mozilla
 cp -arv ~/.mozilla-old/. ~/.mozilla
 rm -rf ~/.mozilla-old/
 sudo btrfs subvolume list /
-
+---------------------------------------------------------------------------------------------------------------
 ::Dolphin
 Configurar > Configurar Dolphin:
 interface >  Setar "/home/james"
 previas > setar  "arquivos de video (ffmpegthumbs)", em Confirmações >  Setar "Excluir arquivos e pastas"
 menu contexto > setar "comandos copiar, mover para", "excluir" e o que mais precisar
-
+---------------------------------------------------------------------------------------------------------------
 ::Desativar mitigação de split-lock (split_lock_detect=off) via grub
 echo 'kernel.split_lock_mitigate=0' | sudo tee /etc/sysctl.d/99-splitlock.conf >/dev/null
 
 #Validar
 sudo sysctl --system
 kernel.split_lock_mitigate = 0
+---------------------------------------------------------------------------------------------------------------
+::DESATIVAR ipv6
+# Criar arquivo sysctl para desativar IPv6 globalmente
+sudo tee /etc/sysctl.d/99-disable-ipv6.conf >/dev/null <<'EOF'
+net.ipv6.conf.all.disable_ipv6 = 1
+net.ipv6.conf.default.disable_ipv6 = 1
+net.ipv6.conf.lo.disable_ipv6 = 1
+EOF
+
+# Aplicar as configurações
+sudo sysctl --system
+
+# Reiniciar
+sudo reboot
+
+# Validar se IPv6 foi desativado (deve retornar 1)
+cat /proc/sys/net/ipv6/conf/all/disable_ipv6
+
+# Validar se não existe mais endereço IPv6 (deve vir vazio)
+ip -6 addr
+---------------------------------------------------------------------------------------------------------------
+:: FORMATAR DISCO E MONTAR
+# 1) Criar/editar partição com cfdisk
+sudo cfdisk /dev/sda
+# Dentro do cfdisk:
+# - Delete (excluir) partições antigas (se necessário)
+# - New (nova) -> usar tamanho total
+# - Type -> Linux filesystem
+# - Write -> yes
+# - Quit
+
+# 2) Validar se a partição foi criada
+lsblk -f
+
+# 3) Formatar a partição em EXT4 e definir label
+sudo mkfs.ext4 -L disk-dados /dev/sda1
+
+# 4) Criar ponto de montagem
+sudo mkdir -p /mnt/disk-dados
+
+# 5) Montar manualmente para testar
+sudo mount /dev/sda1 /mnt/disk-dados
+
+# 6) Confirmar se montou
+df -h | grep sda
+
+# 7) Pegar UUID do disco
+sudo blkid /dev/sda1
+
+# 8) Editar fstab para montar automaticamente no boot
+sudo nano /etc/fstab
+
+# Adicionar no final do arquivo:
+# UUID=2db45c18-e2a4-449f-897b-37d34141181c  /mnt/disk-dados  ext4  defaults,noatime  0  2
+
+# 9) Recarregar systemd (se aparecer aviso após editar fstab)
+sudo systemctl daemon-reload
+
+# 10) Testar montagem automática sem reiniciar
+sudo umount /mnt/disk-dados
+sudo mount -a
+
+# 11) Validar montagem novamente
+df -h | grep sda
+
+# 12) Ajustar permissões para permitir escrita pelo usuário
+sudo chown -R $USER:$USER /mnt/disk-dados
+
+# 13) Testar criação de arquivo
+touch /mnt/disk-dados/teste.txt
+ls -l /mnt/disk-dados/teste.txt
+
+# 14) Validar final
+lsblk -f | grep sda
+---------------------------------------------------------------------------------------------------------------
