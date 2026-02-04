@@ -71,7 +71,7 @@ sudo grub-mkconfig -o /boot/grub/grub.cfg
 Arch Linux, with Linux linux
 Arch Linux, with Linux linux-lts
 
-::Disable disable_split_lock_mitigate
+::GAMEMODE
 
 systemctl --user restart gamemoded
 
