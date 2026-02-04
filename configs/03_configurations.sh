@@ -71,6 +71,7 @@ fi
 sudo systemctl enable --now fstrim.timer
 sudo systemctl enable --now firewalld.service
 sudo systemctl enable --now power-profiles-daemon.service
+sudo systemctl enable --now systemd-resolved
 sudo systemctl enable --now systemd-timesyncd
 systemctl --user enable --now gamemoded
 
