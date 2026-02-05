@@ -199,3 +199,4 @@ ls -l /mnt/disk-dados/teste.txt
 # 14) Validar final
 lsblk -f | grep sda
 ---------------------------------------------------------------------------------------------------------------
+Smart VideoWallpaper Reborn - KDE Slide Wallpaper animado
