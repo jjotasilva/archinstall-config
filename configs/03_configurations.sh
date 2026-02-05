@@ -59,7 +59,7 @@ echo "Validando pacotes e habilitando servicos..."
 # Instala firewalld e power-profiles-daemon se nao estiverem instalados
 need_pkgs=()
 
-pacman -Q firewalld >/dev/null 2>&1 || need_pkgs+=("firewalld")
+# pacman -Q firewalld >/dev/null 2>&1 || need_pkgs+=("firewalld")
 pacman -Q power-profiles-daemon >/dev/null 2>&1 || need_pkgs+=("power-profiles-daemon")
 pacman -Q gamemode >/dev/null 2>&1 || need_pkgs+=("gamemode")
 
@@ -69,10 +69,10 @@ fi
 
 # Habilitar timers/servicos (enable --now e idempotente)
 sudo systemctl enable --now fstrim.timer
-sudo systemctl enable --now firewalld.service
+# sudo systemctl enable --now firewalld.service
 sudo systemctl enable --now power-profiles-daemon.service
-sudo systemctl enable --now systemd-resolved
-# sudo systemctl enable --now systemd-timesyncd
+# sudo systemctl enable --now systemd-resolved
+sudo systemctl enable --now systemd-timesyncd
 systemctl --user enable --now gamemoded
 
 echo
