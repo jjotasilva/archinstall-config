@@ -43,6 +43,7 @@ sudo pacman -S --needed \
   lact \
   steam \
   mangohud \
+# goverlay \
   gamemode
 
 # -------------------------------------------------------------------
