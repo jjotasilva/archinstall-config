@@ -28,7 +28,6 @@
         "grep -qxF 'ILoveCandy' /etc/pacman.conf || sed -i '/^Color/a ILoveCandy' /etc/pacman.conf",
         "sed -i 's/^#\\?ParallelDownloads.*/ParallelDownloads = 20/' /etc/pacman.conf",
         "systemctl enable --now fstrim.timer",
-        "systemctl enable --now firewalld.service",
         "systemctl enable --now power-profiles-daemon"
     ],
     "disk_config": {
@@ -175,8 +174,6 @@
         "base-devel",
         "firefox",
         "firefox-i18n-pt-br",
-        "firewalld",
-        "firewall-applet",
         "power-profiles-daemon",
         "upower",
         "python-pyqt6",
