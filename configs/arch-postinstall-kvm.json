@@ -26,9 +26,12 @@
         "sed -i 's/^#Color/Color/' /etc/pacman.conf",
         "grep -qxF 'ILoveCandy' /etc/pacman.conf || sed -i '/^Color/a ILoveCandy' /etc/pacman.conf",
         "sed -i 's/^#\\?ParallelDownloads.*/ParallelDownloads = 20/' /etc/pacman.conf",
+        "install -Dm644 /dev/null /etc/systemd/timesyncd.conf",
+        "printf '%s\n' '[Time]' 'NTP=a.st1.ntp.br b.st1.ntp.br c.st1.ntp.br d.st1.ntp.br' 'FallbackNTP=a.ntp.br b.ntp.br c.ntp.br' > /etc/systemd/timesyncd.conf",
         "systemctl enable --now fstrim.timer",
         "systemctl enable --now firewalld.service",
         "systemctl enable --now power-profiles-daemon",
+        "systemctl enable --now systemd-timesyncd",
         "systemctl enable --now qemu-guest-agent.service",
         "systemctl enable --now spice-vdagentd.service"
     ],
