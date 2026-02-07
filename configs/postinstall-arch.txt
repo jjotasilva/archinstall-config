@@ -1,9 +1,9 @@
-::Libirt KVM permissão diretorio btrfs
-# Aplicar permissão
-chattr -VR +C /var/lib/libvirt/images
-
+::Libirt KVM - Validar permissão no subvolume btrfs @images
 # listar permissão
 lsattr -d /var/lib/libvirt/images 
+
+# Se o subvolume existir e a saida fo diferente de "lsattr -d /var/lib/libvirt/images" rodar o comando abaixo:
+chattr -VR +C /var/lib/libvirt/images
 ----------------------------------------------------------------------------------------------------------------
 ::Validar serviços habilitados durante instalado do "archinstall-custom.json"
 sudo systemctl status fstrim.timer power-profiles-daemon systemd-timesyncd --no-pager
