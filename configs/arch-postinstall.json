@@ -175,7 +175,6 @@
         "firefox",
         "firefox-i18n-pt-br",
         "power-profiles-daemon",
-        "upower",
         "python-pyqt6",
         "alsa-utils",
         "dmidecode"
