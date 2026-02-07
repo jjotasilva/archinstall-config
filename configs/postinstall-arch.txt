@@ -8,6 +8,20 @@ lsattr -d /var/lib/libvirt/images
 ::Validar serviços habilitados durante instalado do "archinstall-custom.json"
 sudo systemctl status fstrim.timer power-profiles-daemon --no-pager
 ----------------------------------------------------------------------------------------------------------------
+::Validar NTP
+timedatectl timesync-status
+
+#Se não estiver com os servidores br, configurar conform abaixo:
+sudo nano /etc/systemd/timesyncd.conf
+--------------
+[Time]
+NTP=a.ntp.br b.ntp.br c.ntp.br
+FallbackNTP=pool.ntp.org
+--------------
+sudo systemctl restart systemd-timesyncd
+#Validar
+timedatectl timesync-status
+----------------------------------------------------------------------------------------------------------------
 ::reflector #espelho repositorios
 sudo pacman -S reflector
 sudo cp -p /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bkp
