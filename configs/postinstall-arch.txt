@@ -7,6 +7,9 @@ lsattr -d /var/lib/libvirt/images
 ----------------------------------------------------------------------------------------------------------------
 ::Validar serviços habilitados durante instalado do "archinstall-custom.json"
 sudo systemctl status fstrim.timer power-profiles-daemon systemd-timesyncd --no-pager
+
+::Validar serviços habilitados durante instalado do "archinstall-custom-kvm.json"
+sudo systemctl status fstrim.timer power-profiles-daemon systemd-timesyncd spice-vdagentd.service qemu-guest-agent.service --no-pager
 ----------------------------------------------------------------------------------------------------------------
 ::Validar NTP
 timedatectl timesync-status
