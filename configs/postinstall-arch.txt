@@ -5,12 +5,15 @@ chattr -VR +C /var/lib/libvirt/images
 # listar permissão
 lsattr -d /var/lib/libvirt/images 
 ----------------------------------------------------------------------------------------------------------------
+::Validar serviços habilitados durante instalado do "archinstall-custom.json"
+sudo systemctl status fstrim.timer power-profiles-daemon --no-pager
+----------------------------------------------------------------------------------------------------------------
 ::reflector #espelho repositorios
 sudo pacman -S reflector
 sudo cp -p /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bkp
 reflector --verbose --latest 5 --sort rate --save /etc/pacman.d/mirrorlist
 ----------------------------------------------------------------------------------------------------------------
-::SPICE Proxmox
+::Install Spice Agent (Proxmox)
 sudo pacman -S qemu-guest-agent spice-vdagent
 sudo systemctl enable --now qemu-guest-agent.service spice-vdagentd.service
 ----------------------------------------------------------------------------------------------------------------
@@ -19,7 +22,7 @@ sudo pacman -S libreoffice-fresh libreoffice-fresh-pt-br
 ----------------------------------------------------------------------------------------------------------------
 ::Archinstall GitHub
 loadkeys br-abnt2 #comando para alterar layout do teclado
-curl -LO https://raw.githubusercontent.com/jjotasilva/archinstall-config/main/configs/arch-postinstall.json
+curl -LO https://raw.githubusercontent.com/jjotasilva/archinstall-config/main/configs/archinstall-custom.json
 
 archinstall --config arch-postinstall.json
 archinstall --config arch-postinstall.json --creds user_credentials.json
