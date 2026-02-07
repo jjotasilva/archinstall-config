@@ -6,7 +6,7 @@ chattr -VR +C /var/lib/libvirt/images
 lsattr -d /var/lib/libvirt/images 
 ----------------------------------------------------------------------------------------------------------------
 ::Validar serviços habilitados durante instalado do "archinstall-custom.json"
-sudo systemctl status fstrim.timer power-profiles-daemon --no-pager
+sudo systemctl status fstrim.timer power-profiles-daemon systemd-timesyncd --no-pager
 ----------------------------------------------------------------------------------------------------------------
 ::Validar NTP
 timedatectl timesync-status
