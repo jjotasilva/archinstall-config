@@ -1,0 +1,42 @@
+# ============================================================
+# ZSH + Oh-My-Zsh + Powerlevel10k + Plugins (Arch Linux)
+# (roteiro ajustado pra evitar rodar coisa no shell errado)
+# ============================================================
+
+# 1) Instalar pacotes necessários
+sudo pacman -S --needed zsh git curl wget ttf-jetbrains-mono-nerd ttf-meslo-nerd
+
+# 3) Definir ZSH como shell padrão (usa o caminho correto do sistema)
+chsh -s /bin/zsh ou direito do mouse no terminal > Em Geral altere o nome do perfil para "james", marque "perfil padrão". Em aparencia > selecione branco sobre preto > Em escolher selecione a fonte "MesloLGS Nerd Font", tamanho 11 ou o que agradar, aplicar, OK.
+
+# 4) Feche e abra o terminal e confirme que entrou no zsh:
+# echo $0
+# tem que retornar: zsh
+
+# 5) Instalar Oh-My-Zsh
+# (mantém seu ~/.zshrc se já existir e não tenta trocar shell nem abrir zsh sozinho)
+RUNZSH=no CHSH=no KEEP_ZSHRC=yes sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+# 6) Instalar o tema Powerlevel10k
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git \
+  ~/.oh-my-zsh/custom/themes/powerlevel10k
+
+# 7) Ativar o tema Powerlevel10k no ~/.zshrc
+sed -i 's/^ZSH_THEME=.*/ZSH_THEME="powerlevel10k\/powerlevel10k"/' ~/.zshrc
+
+# 8) Instalar plugins extras
+git clone https://github.com/zsh-users/zsh-autosuggestions \
+  ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git \
+  ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+
+# 9) Configurar plugins no ~/.zshrc
+# IMPORTANTE: zsh-syntax-highlighting sempre por último
+sed -i 's/^plugins=.*/plugins=(git colored-man-pages zsh-autosuggestions zsh-syntax-highlighting)/' ~/.zshrc
+
+# 10) Recarregar configurações (faça isso já dentro do zsh)
+source ~/.zshrc
+
+# 11) Configurar o Powerlevel10k
+p10k configure
