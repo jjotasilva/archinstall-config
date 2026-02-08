@@ -231,3 +231,12 @@ ls -l /mnt/disk-dados/teste.txt
 lsblk -f | grep sda
 ---------------------------------------------------------------------------------------------------------------
 Smart VideoWallpaper Reborn - KDE Slide Wallpaper animado
+---------------------------------------------------------------------------------------------------------------
+::LOGO Menu Iniciar Arch
+Clicar com o botão direito do mouse sobre o logo KDE iniciar > selecionar "Conf de lançador de aplicativos" > clicar no "icone" > navegar > navegar até: /usr/share/pixmaps/ > selecione: "archlinux-logo.svg" > OK > Aplicar OK
+---------------------------------------------------------------------------------------------------------------
+:: Trocar logo SDDM
+
+Configurações > cores e temas > tela de apresentação > baixar novos > baixe e aplique: Arch Simple Blue KDE 6
+
+
