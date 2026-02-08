@@ -180,7 +180,8 @@
         "power-profiles-daemon",
         "python-pyqt6",
         "alsa-utils",
-        "dmidecode"
+        "dmidecode",
+        "cloud-guest-utils"
     ],
     "parallel_downloads": 0,
     "profile_config": {
