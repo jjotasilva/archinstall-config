@@ -1,6 +1,6 @@
 Apos instalação usando "archinstall-custom.json":
 
-0) alterar icone iniciar para logo do archlinux > desativar aceleração de mouse > mudar de thema para breeze > add teclado profile abnt brasil > trocar tela de apresentação para logo do Archlinux > configurar sessão vazia na sessão de area de trabalho > opções de energia confome print salvo na pasta archlinux;
+0) alterar icone iniciar para logo do archlinux > desativar aceleração de mouse > mudar de thema para breeze > add teclado profile abnt brasil > trocar tela de apresentação para logo do Archlinux > configurar sessão vazia na sessão de area de trabalho > opções de energia confome print salvo na pasta archlinux > instalar plugin para wallpaper animado por video;
 1) rodar "pos-install-check.sh" e verficar se todos os itens estão OK;
 1.1) criar subvolume brave e firefox;
 2) configurar btrfs usando script 01_btrfs-config.sh;
@@ -8,11 +8,11 @@ Apos instalação usando "archinstall-custom.json":
 3.1) configurar opções dolphin;
 4) rodar script 03_configurations_v2.sh;
 4.0.1) configurar zsh;
-4.0.2) conifgurar rclone;
-4.1) configurar lact/steam/mangojuice;
+4.0.2) configurar rclone;
+4.1) configurar lact/steam/hroic/protonplus/mangojuice;
+4.2) desativar ipv6;
 5) configurar KVM - bridge com nmtui;
-6) desativar ipv6;
-7) configurar lact
+6) configurar lact
 ----------------------------------------------------------------------------------------------------------------
 ::Libirt KVM - Validar permissão no subvolume btrfs @images
 # listar permissão
