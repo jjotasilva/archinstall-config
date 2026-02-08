@@ -43,6 +43,7 @@ PACMAN_PKGS=(
   steam
   mangohud
   gamemode
+  gamescope
 )
 
 # Comentados (mantidos pra referência)
