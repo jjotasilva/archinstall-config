@@ -5,7 +5,7 @@ Apos instalação usando "archinstall-custom.json":
 2) configurar btrfs usando script 01_btrfs-config.sh;
 3) instalar apps usando install_apps_v2.sh;
 3.1) configurar opções dolphin;
-4) rodar script 03_configurations.sh;
+4) rodar script 03_configurations_v2.sh;
 4.0.1) configurar zsh;
 4.0.2) conifgurar rclone;
 4.1) configurar lact/steam/mangojuice;
