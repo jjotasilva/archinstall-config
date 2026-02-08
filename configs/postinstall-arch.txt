@@ -158,6 +158,38 @@ sudo chown -Rv $USER: ~/.mozilla
 cp -arv ~/.mozilla-old/. ~/.mozilla
 rm -rf ~/.mozilla-old/
 sudo btrfs subvolume list /
+
+Se o Mozzila estiver em ~/.config/mozilla 
+
+# 1) Feche o Firefox e confirme que não existe processo rodando
+pgrep -a firefox
+
+# (se não retornar nada, ok)
+
+# 2) Entre na pasta do Mozilla
+cd ~/.config/mozilla
+
+# 3) Faça backup da pasta atual do Firefox
+mv -v firefox firefox-old
+
+# 4) Crie o subvolume BTRFS para o Firefox
+sudo btrfs subvolume create firefox
+
+# 5) Ajuste permissão do subvolume
+sudo chown -R $USER:$USER firefox
+
+# 6) Volte os arquivos do backup para dentro do subvolume
+mv -v firefox-old/* firefox/
+
+# 7) Remova a pasta antiga vazia
+rmdir firefox-old
+
+# 8) Confirme que agora é um subvolume
+sudo btrfs subvolume show ~/.config/mozilla/firefox
+
+# 9) (opcional) Liste subvolumes e filtre firefox
+sudo btrfs subvolume list ~ | grep -i firefox
+
 ---------------------------------------------------------------------------------------------------------------
 ::Dolphin
 Configurar > Configurar Dolphin:
