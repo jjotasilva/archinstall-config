@@ -1,9 +1,18 @@
 Apos instalação usando "archinstall-custom.json":
 
+0) alterar icone iniciar para logo do archlinux > desativar aceleração de mouse > mudar de thema para breeze > add teclado profile abnt brasil > trocar tela de apresentação para logo do Archlinux > configurar sessão vazia na sessão de area de trabalho;
 1) rodar "pos-install-check.sh" e verficar se todos os itens estão OK;
 2) configurar btrfs usando script 01_btrfs-config.sh;
 3) instalar apps usando install_apps_v2.sh;
+3.1) configurar opções dolphin;
 4) rodar script 03_configurations.sh;
+4.0.1) configurar zsh;
+4.0.2) conifgurar rclone;
+4.1) configurar lact/steam/mangojuice;
+5) configurar zsh;
+6) configurar KVM;
+7) desativar ipv6;
+8) configurar lact
 ----------------------------------------------------------------------------------------------------------------
 ::Libirt KVM - Validar permissão no subvolume btrfs @images
 # listar permissão
