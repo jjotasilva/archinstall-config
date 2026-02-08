@@ -18,6 +18,7 @@ PACMAN_PKGS=(
   discord
   rclone
   obs-studio
+  luajit
   libreoffice-fresh
   libreoffice-fresh-pt-br
   dolphin-plugins
