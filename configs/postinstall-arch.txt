@@ -10,7 +10,7 @@ Apos instalação usando "archinstall-custom.json":
 4.0.2) conifgurar rclone;
 4.1) configurar lact/steam/mangojuice;
 5) configurar zsh;
-6) configurar KVM;
+6) configurar KVM - bridge com nmtui;
 7) desativar ipv6;
 8) configurar lact
 ----------------------------------------------------------------------------------------------------------------
