@@ -181,7 +181,8 @@
         "python-pyqt6",
         "alsa-utils",
         "dmidecode",
-        "cloud-guest-utils"
+        "cloud-guest-utils",
+        "os-prober"
     ],
     "parallel_downloads": 0,
     "profile_config": {
