@@ -186,6 +186,7 @@
         "python-pyqt6",
         "alsa-utils",
         "dmidecode",
+        "cloud-guest-utils",
         "qemu-guest-agent",
         "spice-vdagent"
     ],
