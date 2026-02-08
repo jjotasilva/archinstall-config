@@ -39,7 +39,7 @@ sudo pacman -S libreoffice-fresh libreoffice-fresh-pt-br
 ----------------------------------------------------------------------------------------------------------------
 ::Archinstall GitHub
 loadkeys br-abnt2 #comando para alterar layout do teclado
-curl -LO https://raw.githubusercontent.com/jjotasilva/archinstall-config/main/configs/archinstall-custom.json
+curl -LO https://raw.githubusercontent.com/jjotasilva/archinstall-config/main/configs/archinstall-custom.json    <========= <=========
 
 archinstall --config arch-postinstall.json
 archinstall --config arch-postinstall.json --creds user_credentials.json
