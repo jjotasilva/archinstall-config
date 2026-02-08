@@ -175,6 +175,26 @@ cat /proc/sys/net/ipv6/conf/all/disable_ipv6
 
 # Validar se não existe mais endereço IPv6 (deve vir vazio)
 ip -6 addr
+
+ou #RECOMENDADO
+
+sudo nano /etc/default/grub
+
+Em:
+GRUB_CMDLINE_LINUX_DEFAULT="..."
+
+Adicionar:
+
+ipv6.disable=1
+
+Exemplo:
+GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet ipv6.disable=1"
+
+Executar por fim:
+sudo grub-mkconfig -o /boot/grub/grub.cfg #requer reboot
+
+Validar com:
+ip a | grep -i inet6
 ---------------------------------------------------------------------------------------------------------------
 :: FORMATAR DISCO E MONTAR
 # 1) Criar/editar partição com cfdisk
