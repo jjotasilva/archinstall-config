@@ -11,3 +11,5 @@ https://raw.githubusercontent.com/folke/tokyonight.nvim/main/extras/konsole/toky
 
 wget -O ~/.local/share/konsole/TokyoNight-Day.colorscheme \
 https://raw.githubusercontent.com/folke/tokyonight.nvim/main/extras/konsole/tokyonight_day.colorscheme
+
+source ~/.zshrc ou source ~/.bashrc
