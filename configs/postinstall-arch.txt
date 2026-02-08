@@ -113,6 +113,16 @@ Write → yes
 Quit
 
 sudo btrfs filesystem resize max /
+
+ou
+
+sudo pacman -S --needed cloud-guest-utils
+sudo growpart /dev/nvme0n1 2 #user lsblk -f para ver o numero da partição onde está o "/", no meu caso nvme0n1p2
+sudo btrfs filesystem resize max /
+
+#Validar com:
+lsblk
+sudo btrfs filesystem usage /
 ---------------------------------------------------------------------------------------------------------------
 ::Subvolume Brave / Mozilla
 
