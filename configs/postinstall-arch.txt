@@ -203,7 +203,6 @@ interface >  Setar "/home/james"
 previas > setar  "arquivos de video (ffmpegthumbs)", em Confirmações >  Setar "Excluir arquivos e pastas"
 menu contexto > setar "comandos copiar, mover para", "excluir" e o que mais precisar
 ---------------------------------------------------------------------------------------------------------------
-::Desativar mitigação de split-lock (split_lock_detect=off) via grub
 echo 'kernel.split_lock_mitigate=0' | sudo tee /etc/sysctl.d/99-splitlock.conf >/dev/null
 
 #Validar
