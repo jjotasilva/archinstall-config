@@ -12,7 +12,7 @@ Apos instalação usando "archinstall-custom.json":
 4.1) configurar lact/steam/hroic/protonplus/mangojuice;
 4.2) desativar ipv6;
 5) configurar KVM - bridge com nmtui;
-6) configurar lact / shader booster / desativar kernel.split_lock_mitigate;
+6) configurar lact / shader booster / desativar kernel.split_lock_mitigate / osprobe (detectar windows);
 ----------------------------------------------------------------------------------------------------------------
 ::Libirt KVM - Validar permissão no subvolume btrfs @images
 # listar permissão
