@@ -44,7 +44,13 @@ timedatectl timesync-status
 ::reflector #espelho repositorios
 sudo pacman -S reflector
 sudo cp -p /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bkp
-reflector --verbose --latest 5 --sort rate --save /etc/pacman.d/mirrorlist
+sudo reflector \
+  --verbose \
+  --country Brazil \
+  --latest 5 \
+  --protocol https \
+  --sort rate \
+  --save /etc/pacman.d/mirrorlist
 ----------------------------------------------------------------------------------------------------------------
 ::Install Spice Agent (Proxmox)
 sudo pacman -S qemu-guest-agent spice-vdagent
