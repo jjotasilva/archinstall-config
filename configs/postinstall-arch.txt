@@ -104,7 +104,7 @@ Heroic launcher games:
 Habilitar nas configurações
 ---------------------------------------------------------------------------------------------------------------
 ::Resize disco btrfs
-sudo cfdisk /dev/nvme0n1
+sudo cfdisk /dev/sda
 
 Selecione a partição Btrfs (30G)
 Escolha Resize
@@ -114,14 +114,15 @@ Quit
 
 sudo btrfs filesystem resize max /
 
-ou
+ou #RECOMENDADO
 
 sudo pacman -S --needed cloud-guest-utils
-sudo growpart /dev/nvme0n1 2 #user lsblk -f para ver o numero da partição onde está o "/", no meu caso nvme0n1p2
+sudo parted -s /dev/sda unit GiB print free #mostra espaço não alocado ou "sudo cfdisk /dev/sda"
+sudo growpart /dev/sda 2 #use "df -h /" para ver o numero da partição onde está o "/", no meu caso nvme0n1p2
 sudo btrfs filesystem resize max /
 
 #Validar com:
-lsblk
+sudo parted -s /dev/sda unit GiB print free
 sudo btrfs filesystem usage /
 ---------------------------------------------------------------------------------------------------------------
 ::Subvolume Brave / Mozilla
