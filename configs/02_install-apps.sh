@@ -71,5 +71,6 @@ $AUR_HELPER -S --needed --noconfirm \
   ttf-ms-fonts \
   heroic-games-launcher-bin \
   protonplus \
-  sshpilot \
+# sshpilot \
+  termius \
   mangojuice
