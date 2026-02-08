@@ -57,6 +57,7 @@ AUR_PKGS=(
   protonplus
   termius
   mangojuice
+  obs-vkcapture-git
 )
 
 # Comentados (mantidos pra referência)
