@@ -177,6 +177,8 @@
         "base-devel",
         "firefox",
         "firefox-i18n-pt-br",
+        "firewalld",
+        "firewall-applet",
         "power-profiles-daemon",
         "python-pyqt6",
         "alsa-utils",
