@@ -18,7 +18,7 @@
         "uki": false
     },
     "custom_commands": [
-        "rm -rf /efi/grub || true",
+        "test -d /efi/grub && rm -rf /efi/grub || true",
         "grub-install --target=x86_64-efi --efi-directory=/efi --boot-directory=/boot --bootloader-id=arch",
         "grub-mkconfig -o /boot/grub/grub.cfg",
         "chattr -VR +C /var/lib/libvirt/images || true",
@@ -28,7 +28,7 @@
         "grep -qxF 'ILoveCandy' /etc/pacman.conf || sed -i '/^Color/a ILoveCandy' /etc/pacman.conf",
         "sed -i 's/^#\\?ParallelDownloads.*/ParallelDownloads = 20/' /etc/pacman.conf",
         "install -Dm644 /dev/null /etc/systemd/timesyncd.conf",
-        "printf '%s\n' '[Time]' 'NTP=a.st1.ntp.br b.st1.ntp.br c.st1.ntp.br d.st1.ntp.br' 'FallbackNTP=a.ntp.br b.ntp.br c.ntp.br' > /etc/systemd/timesyncd.conf",
+        "grep -qxF 'NTP=a.st1.ntp.br b.st1.ntp.br c.st1.ntp.br d.st1.ntp.br' /etc/systemd/timesyncd.conf || printf '%s\n' '[Time]' 'NTP=a.st1.ntp.br b.st1.ntp.br c.st1.ntp.br d.st1.ntp.br' 'FallbackNTP=a.ntp.br b.ntp.br c.ntp.br' > /etc/systemd/timesyncd.conf",
         "systemctl enable --now fstrim.timer",
         "systemctl enable --now power-profiles-daemon",
         "systemctl enable --now firewalld.service",
