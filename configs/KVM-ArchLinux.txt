@@ -30,7 +30,8 @@ sudo pacman -S --needed \
 sudo systemctl enable --now \
   virtqemud.socket \
   virtnetworkd.socket \
-  virtlogd.socket
+  virtlogd.socket \
+  virtstoraged.socket
 
 # Validar:
 systemctl status virtqemud.socket virtnetworkd.socket virtlogd.socket --no-pager
