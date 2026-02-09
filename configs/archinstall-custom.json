@@ -186,7 +186,8 @@
         "dmidecode",
         "cloud-guest-utils",
         "os-prober",
-        "wireless-regdb"
+        "wireless-regdb",
+        "usbutils"
     ],
     "parallel_downloads": 0,
     "profile_config": {
