@@ -182,7 +182,8 @@
         "alsa-utils",
         "dmidecode",
         "cloud-guest-utils",
-        "os-prober"
+        "os-prober",
+        "wireless-regdb"
     ],
     "parallel_downloads": 0,
     "profile_config": {
