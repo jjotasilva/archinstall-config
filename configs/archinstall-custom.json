@@ -25,6 +25,7 @@
         "grep -qxF 'alias ll=\"ls -lh --color=auto\"' /etc/bash.bashrc || echo 'alias ll=\"ls -lh --color=auto\"' >> /etc/bash.bashrc",
         "grep -qxF 'include \"/usr/share/nano/*.nanorc\"' /etc/nanorc || echo 'include \"/usr/share/nano/*.nanorc\"' >> /etc/nanorc",
         "sed -i 's/^#Color/Color/' /etc/pacman.conf",
+        "sed -i 's/^#\\?ParallelDownloads.*/ParallelDownloads = 20/' /etc/pacman.conf",
         "grep -qxF 'ILoveCandy' /etc/pacman.conf || sed -i '/^Color/a ILoveCandy' /etc/pacman.conf",
         "printf '%s\n' '[Time]' 'NTP=a.st1.ntp.br b.st1.ntp.br c.st1.ntp.br d.st1.ntp.br' 'FallbackNTP=a.ntp.br b.ntp.br c.ntp.br' > /etc/systemd/timesyncd.conf",
         "systemctl enable --now fstrim.timer",
