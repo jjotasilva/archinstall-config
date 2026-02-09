@@ -40,7 +40,6 @@ PACMAN_PKGS=(
   vlc-plugins-all
   qbittorrent
   lact
-  steam
   mangohud
   gamemode
   gamescope
