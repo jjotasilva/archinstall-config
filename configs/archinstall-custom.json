@@ -190,6 +190,7 @@
         "nvme-cli",
         "smartmontools",
         "fwupd",
+        "bluez",
         "cloud-guest-utils",
         "os-prober",
         "wireless-regdb",
