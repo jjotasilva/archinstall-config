@@ -31,11 +31,11 @@ sudo systemctl enable --now \
   virtqemud.socket \
   virtnetworkd.socket \
   virtlogd.socket \
-  virtstoraged.socket
+  virtstoraged.socket \
   virtnodedevd.socket
 
 # Validar:
-systemctl status virtqemud.socket virtnetworkd.socket virtlogd.socket --no-pager
+systemctl status virtqemud.socket virtnetworkd.socket virtlogd.socket virtstoraged.socket virtnodedevd.socket --no-pager
 
 # Observações:
 # - NÃO habilite libvirtd.service
