@@ -14,7 +14,7 @@ sudo pacman -S --needed \
   edk2-ovmf \
   swtpm \
   libosinfo \
-  libguestfs
+  libguestfs 
 
 # Observações:
 # - qemu-img já vem no qemu-full
@@ -32,6 +32,7 @@ sudo systemctl enable --now \
   virtnetworkd.socket \
   virtlogd.socket \
   virtstoraged.socket
+  virtnodedevd.socket
 
 # Validar:
 systemctl status virtqemud.socket virtnetworkd.socket virtlogd.socket --no-pager
