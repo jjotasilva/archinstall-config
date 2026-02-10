@@ -83,11 +83,9 @@ Refresh Package Database:
 ```bash
 sudo pacman -Syyu
 ```
-```
 
 ---
-
-### Firmware Updates  
+Firmware Updates:  
 ```bash
 sudo pacman -S fwupd fwupd-efi fwupd-docs
 fwupdmgr refresh
@@ -117,13 +115,6 @@ echo "i2c_dev" | sudo tee /etc/modules-load.d/i2c.conf
 sudo sensors-detect
 sudo systemctl restart sensord.service #opcional
 ```
----
-
-### Liquid Cooling (AIO)  
-```bash
-sudo pacman -S liquidctl
-```
-
 ---
 
 ### Power Management (KDE)  
