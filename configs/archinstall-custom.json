@@ -21,11 +21,7 @@
         "test -d /efi/grub && rm -rf /efi/grub || true",
         "grub-install --target=x86_64-efi --efi-directory=/efi --boot-directory=/boot --bootloader-id=arch",
         "grub-mkconfig -o /boot/grub/grub.cfg",
-        "chattr -VR +C /var/lib/libvirt/images || true",
-        "systemctl enable --now fstrim.timer",
-        "systemctl enable --now power-profiles-daemon",
-        "systemctl enable --now firewalld.service",
-        "systemctl enable --now systemd-timesyncd"
+        "chattr -VR +C /var/lib/libvirt/images || true"
     ],
     "disk_config": {
         "btrfs_options": {
