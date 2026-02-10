@@ -79,6 +79,12 @@ sudo reflector --verbose \
   --save /etc/pacman.d/mirrorlist
 ```
 
+Refresh Package Database:  
+```bash
+sudo pacman -Syy
+```
+```
+
 ---
 
 ### Firmware Updates  
