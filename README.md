@@ -90,12 +90,10 @@ Install dependencies:
 ```bash
 sudo pacman -S --needed fwupd fwupd-efi fwupd-docs
 
->_:
-```
 fwupdmgr refresh --force
 fwupdmgr get-updates
 sudo fwupdmgr update
-
+```
 ---
 
 ## 2. Services & Applications  
@@ -143,16 +141,6 @@ git clone https://aur.archlinux.org/yay.git
 cd yay && makepkg -si
 ```
 
-**Pamac (GUI):**  
-```bash
-yay -S libpamac-full pamac-all
-```
-
-**Octopi:**  
-```bash
-yay -S octopi
-```
-
 ---
 
 ### KDE Applications  
@@ -180,30 +168,14 @@ sudo pacman -S fuse fuse2fs fuseiso lvm2 dosfstools
 ---
 
 ### Browsers  
-**Firefox (Spanish locale):**  
+**Firefox (PT-BR locale):**  
 ```bash
-sudo pacman -S firefox firefox-i18n-es-es
+sudo pacman -S firefox firefox-i18n-pt-br
 ```
 
-**Vivaldi:**  
+**Brave:**  
 ```bash
-sudo pacman -S vivaldi vivaldi-ffmpeg-codecs
-```
-
----
-
-### Networking (mDNS)  
-```bash
-sudo pacman -S avahi nss-mdns
-sudo nano /etc/nsswitch.conf
-```
-Edit line:  
-```txt
-hosts: mymachines mdns_minimal [NOTFOUND=return] resolve [!UNAVAIL=return] files myhostname dns
-```
-Enable:  
-```bash
-sudo systemctl enable --now avahi-daemon
+paru -S brave-bin
 ```
 
 ---
@@ -248,50 +220,6 @@ sudo usermod -aG libvirt $USER
 sudo systemctl enable --now libvirtd
 sudo virsh net-start default
 sudo virsh net-autostart default
-```
-
-### Distrobox (Podman containers)  
-```bash
-sudo pacman -S podman distrobox
-systemctl --user enable --now podman.socket
-loginctl enable-linger $USER
-```
-
----
-
-## 5. Boot Splash (Plymouth)  
-
-```bash
-sudo pacman -S plymouth
-sudo nano /etc/mkinitcpio.conf
-```
-Add:  
-```txt
-HOOKS=(base udev plymouth autodetect microcode modconf kms keyboard keymap consolefont block filesystems fsck)
-```
-
-**GRUB:**  
-```bash
-sudo nano /etc/default/grub
-```
-```txt
-GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet splash"
-```
-```bash
-sudo grub-mkconfig -o /boot/grub/grub.cfg
-```
-
-**systemd-boot:**  
-```bash
-sudo nano /boot/loader/entries/*.conf
-```
-Add to `options`:  
-```txt
-quiet splash
-```
-
-```bash
-sudo mkinitcpio -P
 ```
 
 ---
@@ -442,20 +370,14 @@ sudo mkinitcpio -P
 yay -S heroic-games-launcher
 ```
 
-**Lutris + dependencies:**  
-```bash
-sudo pacman -S wine-staging giflib lib32-giflib libpng lib32-libpng libldap lib32-libldap gnutls lib32-gnutls mpg123 lib32-mpg123 openal lib32-openal v4l-utils lib32-v4l-utils libpulse lib32-libpulse libgpg-error lib32-libgpg-error alsa-plugins lib32-alsa-plugins alsa-lib lib32-alsa-lib libjpeg-turbo lib32-libjpeg-turbo sqlite lib32-sqlite libxcomposite lib32-libxcomposite libxinerama lib32-libgcrypt libgcrypt lib32-libxinerama ncurses lib32-ncurses opencl-icd-loader lib32-opencl-icd-loader libxslt lib32-libxslt libva lib32-libva gtk3 lib32-gtk3 gst-plugins-base-libs lib32-gst-plugins-base-libs vulkan-icd-loader lib32-vulkan-icd-loader cups samba
-sudo pacman -S lutris
-```
-
 **Steam:**  
 ```bash
 sudo pacman -S steam
 ```
 
-**Proton Tools:**  
+**ProtonPlus:**  
 ```bash
-yay -S protonup-qt protontricks
+paru -S protonplus
 ```
 
 **Xbox Controller Drivers:**  
@@ -466,6 +388,7 @@ yay -S xpadneo-dkms-git xone-dkms-git xone-dongle-firmware
 **GameMode:**  
 ```bash
 sudo pacman -S gamemode
+systemctl --user enable --now gamemoded
 ```
 Use with Steam launch options:  
 ```txt
@@ -542,22 +465,3 @@ Restart terminal and run:
 ```bash
 fastfetch
 ```
-
----
-
-## 12. Extra Quality-of-Life  
-
-### Pacman Full Sync  
-```bash
-sudo pacman -Syyu
-```
-
-### Sensors Detection  
-```bash
-sudo sensors-detect
-sudo systemctl restart sensord.service
-```
-
----
-
-✅ You now have a **fully optimized Arch Linux setup** with essential services, development tools, gaming, security, and customization.  
