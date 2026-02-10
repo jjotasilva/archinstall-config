@@ -109,7 +109,7 @@ sudo systemctl enable --now sensord.service #opcional
 
 Make permanent:  
 ```bash
-echo "i2c-dev" | sudo tee -a /etc/modules-load.d/i2c.conf
+echo "i2c-dev" | sudo tee /etc/modules-load.d/i2c.conf
 ```
 ### Sensors Detection  
 ```bash
