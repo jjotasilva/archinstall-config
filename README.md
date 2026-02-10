@@ -86,8 +86,10 @@ sudo pacman -Syyu
 
 ---
 ### Firmware Updates:  
+Install dependencies:  
 ```bash
 sudo pacman -S --needed fwupd fwupd-efi fwupd-docs
+```
 fwupdmgr refresh --force
 fwupdmgr get-updates
 sudo fwupdmgr update
