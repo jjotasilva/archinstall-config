@@ -68,15 +68,15 @@ Backup:
 sudo cp -p /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bkp
 ```
 
-Rank the **10 fastest mirrors**:  
+Rank the **10 fastest mirrors "South America"**:  
 ```bash
 sudo reflector --verbose \
   --continent "South America" \
+  --latest 50 \
   --protocol https \
   --sort rate \
   --number 10 \
   --save /etc/pacman.d/mirrorlist
-
 ```
 
 ---
