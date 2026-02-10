@@ -1,4 +1,5 @@
 #Snapper (BTRFS) _ Assistante - Usar script
+https://github.com/jjotasilva/archinstall-config/blob/main/configs/01_btrfs-config.sh
 --------------------------------------------------------------------------
 1)Configurar arquivo host
 sudo nano /etc/hosts
