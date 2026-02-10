@@ -81,7 +81,7 @@ sudo reflector --verbose \
 
 Refresh Package Database:  
 ```bash
-sudo pacman -Syy
+sudo pacman -Syyu
 ```
 ```
 
