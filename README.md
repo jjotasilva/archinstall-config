@@ -57,31 +57,26 @@ ILoveCandy
 
 ---
 
-### Faster Mirrorlist  
+### Reflector | Faster Mirrorlist  
 Install dependencies:  
 ```bash
-sudo pacman -S pacman-contrib
-```
-
-(Optional) Replace current mirrors with all available:  
-```bash
-curl https://archlinux.org/mirrorlist/all/ | sudo tee /etc/pacman.d/mirrorlist
+sudo pacman -S reflector
 ```
 
 Backup:  
 ```bash
-sudo cp /etc/pacman.d/mirrorlist{,.old}
-sudo cp /etc/pacman.d/mirrorlist{,.backup}
+sudo cp -p /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bkp
 ```
 
-Uncomment mirrors:  
+Rank the **10 fastest mirrors**:  
 ```bash
-sudo sed -i 's/^#Server/Server/' /etc/pacman.d/mirrorlist.backup
-```
+sudo reflector --verbose \
+  --continent "South America" \
+  --protocol https \
+  --sort rate \
+  --number 10 \
+  --save /etc/pacman.d/mirrorlist
 
-Rank the **6 fastest mirrors**:  
-```bash
-rankmirrors -n 6 /etc/pacman.d/mirrorlist.backup | sudo tee /etc/pacman.d/mirrorlist
 ```
 
 ---
