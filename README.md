@@ -89,11 +89,12 @@ sudo pacman -Syyu
 Install dependencies:  
 ```bash
 sudo pacman -S --needed fwupd fwupd-efi fwupd-docs
----
+
+>_:
+```
 fwupdmgr refresh --force
 fwupdmgr get-updates
 sudo fwupdmgr update
-```
 
 ---
 
