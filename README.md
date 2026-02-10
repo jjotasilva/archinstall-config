@@ -85,7 +85,7 @@ sudo pacman -Syyu
 ```
 
 ---
-Firmware Updates:  
+### Firmware Updates:  
 ```bash
 sudo pacman -S fwupd fwupd-efi fwupd-docs
 fwupdmgr refresh
