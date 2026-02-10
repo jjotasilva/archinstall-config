@@ -311,5 +311,9 @@ Clicar com o botão direito do mouse sobre o logo KDE iniciar > selecionar "Conf
 :: Trocar logo SDDM
 
 Configurações > cores e temas > tela de apresentação > baixar novos > baixe e aplique: Arch Simple Blue KDE 6
+---------------------------------------------------------------------------------------------------------------
+:: Corrigir escala de resolução do Onlyoffice
+onlyoffice-desktopeditors --force-scale=1
+---------------------------------------------------------------------------------------------------------------
 
 
