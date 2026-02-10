@@ -19,8 +19,8 @@ PACMAN_PKGS=(
   rclone
   obs-studio
   luajit
-  libreoffice-fresh
-  libreoffice-fresh-pt-br
+#  libreoffice-fresh
+#  libreoffice-fresh-pt-br
   dolphin-plugins
   okular
   gwenview
@@ -43,6 +43,7 @@ PACMAN_PKGS=(
   mangohud
   gamemode
   gamescope
+#  Steam #Instalar manualmente selecionando opções da placa grafica
 )
 
 # Comentados (mantidos pra referência)
@@ -57,7 +58,7 @@ AUR_PKGS=(
   protonplus
   termius
   mangojuice
-  obs-vkcapture-git
+  onlyoffice-bin
 )
 
 # Comentados (mantidos pra referência)
