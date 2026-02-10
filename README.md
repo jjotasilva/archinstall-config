@@ -102,7 +102,7 @@ sudo fwupdmgr update
 ```bash
 sudo pacman -S lm_sensors i2c-tools rrdtool
 sudo modprobe i2c_dev
-sudo systemctl enable --now sensord.service
+sudo systemctl enable --now sensord.service #opcional
 ```
 - Intel: `sudo modprobe i2c-i801`  
 - AMD: `sudo modprobe i2c-piix4`  
@@ -114,7 +114,7 @@ echo "i2c-dev" | sudo tee -a /etc/modules-load.d/i2c.conf
 ### Sensors Detection  
 ```bash
 sudo sensors-detect
-sudo systemctl restart sensord.service
+sudo systemctl restart sensord.service #opcional
 ```
 ---
 
