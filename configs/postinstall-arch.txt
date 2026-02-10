@@ -1,3 +1,135 @@
+1)Configurar arquivo host
+sudo nano /etc/hosts
+
+Substitua {hostname} pelo nome de sua máquina
+
+127.0.0.1  localhost {hostname}
+::1        localhost {hostname}
+--------------------------------------------------------------------------
+1.1) Criar alias
+#Edite sudo 
+nano /etc/bash.bashrc 
+
+#Adicione no final
+alias ll="ls -lh --color=auto"
+
+#Atualize 
+source ~/.bashrc
+--------------------------------------------------------------------------
+1.2) Habilitar fstrim (Discard disco)
+sudo systemctl enable --now fstrim.timer
+sudo systemctl status fstrim.timer --no-pager
+--------------------------------------------------------------------------
+1.3
+sudo pacman -S powerdevil power-profiles-daemon
+sudo systemctl enable --now power-profiles-daemon.service
+--------------------------------------------------------------------------
+1.4)
+--------------------------------------------------------------------------
+2) Configurar arquivo pacman.conf
+sudo nano /etc/pacman.conf
+
+# desmarque as opções
+Color
+ParallelDownloads = 10
+# Adcione
+ILoveCandy
+--------------------------------------------------------------------------
+3) Reflector | Configurar espelho
+#dependencia
+sudo pacman -S --needed reflector
+
+#Backup do arquivo original
+sudo cp -p /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bkp
+
+sudo reflector --verbose \
+  --continent "South America" \
+  --latest 50 \
+  --protocol https \
+  --sort rate \
+  --number 10 \
+  --save /etc/pacman.d/mirrorlist
+
+#Atualizar banco de dados
+sudo pacman -Syyu
+--------------------------------------------------------------------------
+4) Atualização de firmware
+#Dependencia
+sudo pacman -S --needed fwupd fwupd-efi fwupd-docs
+
+fwupdmgr refresh --force
+fwupdmgr get-updates
+sudo fwupdmgr update
+--------------------------------------------------------------------------
+5) Nano config
+#dependencia
+sudo pacman -S --needed nano-syntax-highlighting
+
+# Editar arquivo de configuração
+sudo nano /etc/nanorc
+
+#Adicione no fim do arquivo
+include "/usr/share/nano/*.nanorc"
+
+- CTRL + O (salvar)  
+- Enter (confirmar)  
+- CTRL + X (sair) 
+--------------------------------------------------------------------------
+6) Configurar sensores temperatura
+#Dependencia
+sudo pacman -S --needed lm_sensors i2c-tools rrdtool
+
+sudo modprobe i2c_dev
+sudo systemctl enable --now sensord.service #opcional
+
+- Intel: sudo modprobe i2c-i801
+- AMD: sudo modprobe i2c-piix4
+
+echo "i2c_dev" | sudo tee /etc/modules-load.d/i2c.conf
+
+sudo sensors-detect
+sudo systemctl restart sensord.service #opcional
+--------------------------------------------------------------------------
+7) Configurar NTP.br
+timedatectl timesync-status
+
+#Se não estiver com os servidores br, configurar conform abaixo:
+sudo nano /etc/systemd/timesyncd.conf
+--------------
+[Time]
+NTP=a.st1.ntp.br b.st1.ntp.br c.st1.ntp.br d.st1.ntp.br
+FallbackNTP=a.ntp.br b.ntp.br c.ntp.br
+--------------
+#Reiniciar o serviços
+sudo systemctl restart systemd-timesyncd
+#Validar
+timedatectl timesync-status
+--------------------------------------------------------------------------
+8) Habilitar perfil de bateria
+sudo pacman -S --needed powerdevil power-profiles-daemon
+sudo systemctl enable --now power-profiles-daemon
+--------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Apos instalação usando "archinstall-custom.json":
 
 0) alterar icone iniciar para logo do archlinux > desativar aceleração de mouse > mudar de thema para breeze > add teclado profile abnt brasil > trocar tela de apresentação para logo do Archlinux > configurar sessão vazia na sessão de area de trabalho > opções de energia confome print salvo na pasta archlinux > instalar plugin para wallpaper animado por video;
@@ -26,31 +158,6 @@ sudo systemctl status fstrim.timer power-profiles-daemon systemd-timesyncd --no-
 
 ::Validar serviços habilitados durante instalado do "archinstall-custom-kvm.json"
 sudo systemctl status fstrim.timer power-profiles-daemon systemd-timesyncd spice-vdagentd.service qemu-guest-agent.service --no-pager
-----------------------------------------------------------------------------------------------------------------
-::Validar NTP
-timedatectl timesync-status
-
-#Se não estiver com os servidores br, configurar conform abaixo:
-sudo nano /etc/systemd/timesyncd.conf
---------------
-[Time]
-NTP=a.ntp.br b.ntp.br c.ntp.br
-FallbackNTP=pool.ntp.org
---------------
-sudo systemctl restart systemd-timesyncd
-#Validar
-timedatectl timesync-status
-----------------------------------------------------------------------------------------------------------------
-::reflector #espelho repositorios
-sudo pacman -S reflector
-sudo cp -p /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bkp
-sudo reflector \
-  --verbose \
-  --country Brazil \
-  --latest 5 \
-  --protocol https \
-  --sort rate \
-  --save /etc/pacman.d/mirrorlist
 ----------------------------------------------------------------------------------------------------------------
 ::Install Spice Agent (Proxmox)
 sudo pacman -S qemu-guest-agent spice-vdagent
@@ -96,14 +203,6 @@ sudo pacman -S --needed os-prober
 sudo nano /etc/default/grub
 GRUB_DISABLE_OS_PROBER=false #Adicione ou edite
 sudo grub-mkconfig -o /boot/grub/grub.cfg
----------------------------------------------------------------------------------------------------------------
-::habilitar fstrim
-sudo systemctl enable --now fstrim.timer
-sudo systemctl status fstrim.timer
----------------------------------------------------------------------------------------------------------------
-::habilitar perfil de bateria
-sudo pacman -S power-profiles-daemon
-sudo systemctl enable --now power-profiles-daemon
 ---------------------------------------------------------------------------------------------------------------
 ::INSTALL KERNEL ARCHLINUX
 sudo pacman -S linux-lts linux-lts-headers #para kernel lts
