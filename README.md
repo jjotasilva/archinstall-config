@@ -111,7 +111,11 @@ Make permanent:
 ```bash
 echo "i2c-dev" | sudo tee -a /etc/modules-load.d/i2c.conf
 ```
-
+### Sensors Detection  
+```bash
+sudo sensors-detect
+sudo systemctl restart sensord.service
+```
 ---
 
 ### Liquid Cooling (AIO)  
