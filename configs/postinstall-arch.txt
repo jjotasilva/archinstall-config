@@ -1,3 +1,5 @@
+#Snapper (BTRFS) _ Assistante - Usar script
+--------------------------------------------------------------------------
 1)Configurar arquivo host
 sudo nano /etc/hosts
 
@@ -5,6 +7,14 @@ Substitua {hostname} pelo nome de sua máquina
 
 127.0.0.1  localhost {hostname}
 ::1        localhost {hostname}
+--------------------------------------------------------------------------
+1.0.1) Add repositorio UAR
+::PARU (RECOMENDADO)
+sudo pacman -S --needed base-devel git
+cd ~
+git clone https://aur.archlinux.org/paru.git
+cd paru
+makepkg -si
 --------------------------------------------------------------------------
 1.1) Criar alias
 #Edite sudo 
@@ -15,6 +25,13 @@ alias ll="ls -lh --color=auto"
 
 #Atualize 
 source ~/.bashrc
+--------------------------------------------------------------------------
+1.1.1) Libirt KVM - Validar permissão no subvolume btrfs @images
+# listar permissão
+lsattr -d /var/lib/libvirt/images 
+
+# Se o subvolume existir e a saida fo diferente de "lsattr -d /var/lib/libvirt/images" rodar o comando abaixo:
+chattr -VR +C /var/lib/libvirt/images
 --------------------------------------------------------------------------
 1.2) Habilitar fstrim (Discard disco)
 sudo systemctl enable --now fstrim.timer
@@ -109,113 +126,33 @@ timedatectl timesync-status
 sudo pacman -S --needed powerdevil power-profiles-daemon
 sudo systemctl enable --now power-profiles-daemon
 --------------------------------------------------------------------------
+9) habilitar Bluetooth
+sudo pacman -S --needed bluez bluez-utils
+sudo systemctl enable --now bluetooth
+--------------------------------------------------------------------------
+10) Desabilitar SplitLock
+echo 'kernel.split_lock_mitigate=0' | sudo tee /etc/sysctl.d/99-splitlock.conf >/dev/null
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Apos instalação usando "archinstall-custom.json":
-
-0) alterar icone iniciar para logo do archlinux > desativar aceleração de mouse > mudar de thema para breeze > add teclado profile abnt brasil > trocar tela de apresentação para logo do Archlinux > configurar sessão vazia na sessão de area de trabalho > opções de energia confome print salvo na pasta archlinux > instalar plugin para wallpaper animado por video;
-1) rodar "pos-install-check.sh" e verficar se todos os itens estão OK;
-1.1) criar subvolume brave e firefox;
-2) configurar btrfs usando script 01_btrfs-config.sh;
-3) instalar apps usando install_apps_v2.sh;
-3.1) configurar opções dolphin;
-4) rodar script 03_configurations_v2.sh;
-4.0.1) configurar zsh;
-4.0.2) configurar rclone;
-4.1) configurar lact/steam/hroic/protonplus/mangojuice;
-4.2) desativar ipv6;
-5) configurar KVM - bridge com nmtui;
-6) configurar lact / shader booster / desativar kernel.split_lock_mitigate / osprobe (detectar windows);
-----------------------------------------------------------------------------------------------------------------
-::Libirt KVM - Validar permissão no subvolume btrfs @images
-# listar permissão
-lsattr -d /var/lib/libvirt/images 
-
-# Se o subvolume existir e a saida fo diferente de "lsattr -d /var/lib/libvirt/images" rodar o comando abaixo:
-chattr -VR +C /var/lib/libvirt/images
-----------------------------------------------------------------------------------------------------------------
-::Validar serviços habilitados durante instalado do "archinstall-custom.json"
-sudo systemctl status fstrim.timer power-profiles-daemon systemd-timesyncd --no-pager
-
-::Validar serviços habilitados durante instalado do "archinstall-custom-kvm.json"
-sudo systemctl status fstrim.timer power-profiles-daemon systemd-timesyncd spice-vdagentd.service qemu-guest-agent.service --no-pager
-----------------------------------------------------------------------------------------------------------------
-::Install Spice Agent (Proxmox)
-sudo pacman -S qemu-guest-agent spice-vdagent
-sudo systemctl enable --now qemu-guest-agent.service spice-vdagentd.service
-----------------------------------------------------------------------------------------------------------------
-::LIbreoffice + language pack pt-br
-sudo pacman -S libreoffice-fresh libreoffice-fresh-pt-br
-----------------------------------------------------------------------------------------------------------------
-::Archinstall GitHub
-loadkeys br-abnt2 #comando para alterar layout do teclado
-curl -LO https://raw.githubusercontent.com/jjotasilva/archinstall-config/main/configs/archinstall-custom.json    <========= <=========
-
-archinstall --config arch-postinstall.json
-archinstall --config arch-postinstall.json --creds user_credentials.json
-archinstall --config arch-postinstall.json --silent
-
-
-::commit github no archinstall
-pacman -Sy --noconfirm git
-git clone https://github.com/SEU_USUARIO/archinstall-config.git
-cp /root/archinstall.json archinstall-config/
-cd archinstall-config
-git add archinstall.json
-git commit -m "archinstall base config"
-git push
-
-user: jjotasilva
-passwd: senha do Token
----------------------------------------------------------------------------------------------------------------
-::Add repositorio UAR
-sudo pacman -S --needed base-devel git
-cd ~ && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si --noconfirm
-
-::PARU (RECOMENDADO)
-sudo pacman -S --needed base-devel git
-cd ~
-git clone https://aur.archlinux.org/paru.git
-cd paru
-makepkg -si
----------------------------------------------------------------------------------------------------------------
-::Identificar outras partições de inicialização (Dualboot)
+#Validar
+sudo sysctl --system
+kernel.split_lock_mitigate = 0
+--------------------------------------------------------------------------
+11)Identificar outras partições de inicialização (Dualboot)
 sudo pacman -S --needed os-prober
 sudo nano /etc/default/grub
-GRUB_DISABLE_OS_PROBER=false #Adicione ou edite
-sudo grub-mkconfig -o /boot/grub/grub.cfg
----------------------------------------------------------------------------------------------------------------
-::INSTALL KERNEL ARCHLINUX
-sudo pacman -S linux-lts linux-lts-headers #para kernel lts
-sudo pacman -S linux linux-headers #para kernel default
-sudo mkinitcpio -P
-sudo grub-mkconfig -o /boot/grub/grub.cfg
 
-#na tela de grub selecionar:
-Arch Linux, with Linux linux
-Arch Linux, with Linux linux-lts
----------------------------------------------------------------------------------------------------------------
-::GAMEMODE
+#Adicone ou descomente
+GRUB_DISABLE_OS_PROBER=false 
 
+#Atualize grub
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+--------------------------------------------------------------------------
+12) GAMES
+#dependencia
+sudo pacman -S --needed gamemode steam
+paru -S --needed heroic-games-launcher-bin protonplus termius mangojuice
+
+#habilite o serviço
 systemctl --user restart gamemoded
 
 steam command:
@@ -223,8 +160,11 @@ gamemoderun mangohud %command%
 
 Heroic launcher games:
 Habilitar nas configurações
----------------------------------------------------------------------------------------------------------------
-::Resize disco btrfs
+
+#Xbox Controller Drivers:
+paru -S --needed xpadneo-dkms-git xone-dkms-git xone-dongle-firmware
+------------------------------------------------------------------------------
+13) Resize disco btrfs
 sudo cfdisk /dev/sda
 
 Selecione a partição Btrfs (30G)
@@ -245,8 +185,8 @@ sudo btrfs filesystem resize max /
 #Validar com:
 sudo parted -s /dev/sda unit GiB print free
 sudo btrfs filesystem usage /
----------------------------------------------------------------------------------------------------------------
-::Subvolume Brave / Mozilla
+------------------------------------------------------------------------------
+14) Criar Subvolume Brave / Mozilla
 
 ls -la
 mv -v ~/.config/BraveSoftware ~/.config/BraveSoftware-old
@@ -266,49 +206,34 @@ sudo btrfs subvolume list /
 
 Se o Mozzila estiver em ~/.config/mozilla 
 
-# 1) Feche o Firefox e confirme que não existe processo rodando
+#Feche o Firefox e confirme que não existe processo rodando
 pgrep -a firefox
 
-# (se não retornar nada, ok)
+#Entre na pasta do Mozilla
+cd ~/.config
 
-# 2) Entre na pasta do Mozilla
-cd ~/.config/mozilla
+#Faça backup da pasta atual do Firefox
+mv -v mozilla mozilla-old
 
-# 3) Faça backup da pasta atual do Firefox
-mv -v firefox firefox-old
+#Crie o subvolume BTRFS para o Firefox
+sudo btrfs subvolume create mozilla
 
-# 4) Crie o subvolume BTRFS para o Firefox
-sudo btrfs subvolume create firefox
+#Ajuste permissão do subvolume
+sudo chown -R $USER:$USER mozilla
 
-# 5) Ajuste permissão do subvolume
-sudo chown -R $USER:$USER firefox
+#Volte os arquivos do backup para dentro do subvolume
+mv -v mozilla-old/* mozilla/
 
-# 6) Volte os arquivos do backup para dentro do subvolume
-mv -v firefox-old/* firefox/
+#Remova a pasta antiga vazia
+rm -rf mozilla-old
 
-# 7) Remova a pasta antiga vazia
-rmdir firefox-old
+#Confirme que agora é um subvolume
+sudo btrfs subvolume show ~/.config/mozilla
 
-# 8) Confirme que agora é um subvolume
-sudo btrfs subvolume show ~/.config/mozilla/firefox
-
-# 9) (opcional) Liste subvolumes e filtre firefox
-sudo btrfs subvolume list ~ | grep -i firefox
-
----------------------------------------------------------------------------------------------------------------
-::Dolphin
-Configurar > Configurar Dolphin:
-interface >  Setar "/home/james"
-previas > setar  "arquivos de video (ffmpegthumbs)", em Confirmações >  Setar "Excluir arquivos e pastas"
-menu contexto > setar "comandos copiar, mover para", "excluir" e o que mais precisar
----------------------------------------------------------------------------------------------------------------
-echo 'kernel.split_lock_mitigate=0' | sudo tee /etc/sysctl.d/99-splitlock.conf >/dev/null
-
-#Validar
-sudo sysctl --system
-kernel.split_lock_mitigate = 0
----------------------------------------------------------------------------------------------------------------
-::DESATIVAR ipv6
+#(opcional) Liste subvolumes e filtre mozilla
+sudo btrfs subvolume list ~ | grep -i mozilla
+------------------------------------------------------------------------------
+15)DESATIVAR ipv6
 # Criar arquivo sysctl para desativar IPv6 globalmente
 sudo tee /etc/sysctl.d/99-disable-ipv6.conf >/dev/null <<'EOF'
 net.ipv6.conf.all.disable_ipv6 = 1
@@ -347,6 +272,207 @@ sudo grub-mkconfig -o /boot/grub/grub.cfg #requer reboot
 
 Validar com:
 ip a | grep -i inet6
+------------------------------------------------------------------------------
+15) KDE Apps
+sudo pacman -S --needed kde-system spectacle gwenview ark filelight isoimagewriter kate kcalc kdialog kfind kwalletmanager sweeper yakuake dolphin-plugins inotify-tools okular kgpg
+------------------------------------------------------------------------------
+16) KDE Connect
+sudo pacman -S --needed kdeconnect
+------------------------------------------------------------------------------
+17) Develop tools
+sudo pacman -S --needed linux-headers base-devel bash-completion
+------------------------------------------------------------------------------
+18) Apps pacman
+sudo pacman -S --needed rsync unzip bash-completion alsa-utils sof-firmware dmidecode nvme-cli smartmontools fwupd cloud-guest-utils wireless-regdb ksystemlog mesa vulkan-radeon lib32-mesa lib32-vulkan-radeon inetutils curl firefox firefox-i18n-pt-br
+------------------------------------------------------------------------------
+19) Apps UAR
+paru -S --needed brave-bin vscodium-bin ttf-ms-fonts 
+------------------------------------------------------------------------------
+20) Firewall
+sudo pacman -S --needed firewalld python-pyqt6 firewall-applet
+sudo systemctl enable --now firewalld
+
+#Se tiver um desses serviços adicione a exceção do firewall
+sudo firewall-cmd --set-default-zone=home
+sudo firewall-cmd --permanent --add-service=mdns
+sudo firewall-cmd --permanent --add-service=kdeconnect
+------------------------------------------------------------------------------
+20) Flatpak
+sudo pacman -S flatpak flatpak-kcm xdg-desktop-portal-gtk xdg-desktop-portal-kde
+flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+------------------------------------------------------------------------------
+21) AppArmor
+#check suporte
+zgrep CONFIG_LSM= /proc/config.gz
+
+#Grub
+sudo nano /etc/default/grub
+GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet lsm=landlock,lockdown,yama,integrity,apparmor,bpf audit=1"
+
+#atualizar grub
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+
+#reboot
+
+#Dependencias
+sudo pacman -S --needed tk apparmor python-audit python-notify2
+
+#habilitar serviços
+sudo systemctl enable --now apparmor.service
+sudo systemctl enable --now auditd.service
+
+#Criar grupos e notificação
+sudo groupadd -r audit
+sudo gpasswd -a "$(whoami)" audit
+
+#edite arquivo de conifguração auditd.conf
+sudo nano /etc/audit/auditd.conf
+
+#Adicione
+log_group = audit
+
+- CTRL + O (salvar)  
+- Enter (confirmar)  
+- CTRL + X (sair) 
+
+#Criar notificação automatica
+
+mkdir -p ~/.config/autostart
+nano ~/.config/autostart/apparmor-notify.desktop
+
+#adicionar
+[Desktop Entry]
+Type=Application
+Name=AppArmor Notify
+Exec=aa-notify -p -s 1 -w 60 -f /var/log/audit/audit.log
+NoDisplay=true
+
+- CTRL + O (salvar)  
+- Enter (confirmar)  
+- CTRL + X (sair) 
+------------------------------------------------------------------------------
+23)Fastfetch (Enhanced)
+sudo pacman -S fastfetch
+mkdir -p ~/.config/fastfetch
+cd ~/.config/fastfetch
+fastfetch --gen-config
+rm config.jsonc
+wget https://raw.githubusercontent.com/KernelsAndDragons/ArchPostInstall/refs/heads/main/config.jsonc
+------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Apos instalação usando "archinstall-custom.json":
+
+0) alterar icone iniciar para logo do archlinux > desativar aceleração de mouse > mudar de thema para breeze > add teclado profile abnt brasil > trocar tela de apresentação para logo do Archlinux > configurar sessão vazia na sessão de area de trabalho > opções de energia confome print salvo na pasta archlinux > instalar plugin para wallpaper animado por video;
+1) rodar "pos-install-check.sh" e verficar se todos os itens estão OK;
+1.1) criar subvolume brave e firefox;
+2) configurar btrfs usando script 01_btrfs-config.sh;
+3) instalar apps usando install_apps_v2.sh;
+3.1) configurar opções dolphin;
+4) rodar script 03_configurations_v2.sh;
+4.0.1) configurar zsh;
+4.0.2) configurar rclone;
+4.1) configurar lact/steam/hroic/protonplus/mangojuice;
+4.2) desativar ipv6;
+5) configurar KVM - bridge com nmtui;
+6) configurar lact / shader booster / desativar kernel.split_lock_mitigate / osprobe (detectar windows);
+----------------------------------------------------------------------------------------------------------------
+
+----------------------------------------------------------------------------------------------------------------
+::Validar serviços habilitados durante instalado do "archinstall-custom.json"
+sudo systemctl status fstrim.timer power-profiles-daemon systemd-timesyncd --no-pager
+
+::Validar serviços habilitados durante instalado do "archinstall-custom-kvm.json"
+sudo systemctl status fstrim.timer power-profiles-daemon systemd-timesyncd spice-vdagentd.service qemu-guest-agent.service --no-pager
+----------------------------------------------------------------------------------------------------------------
+::Install Spice Agent (Proxmox)
+sudo pacman -S qemu-guest-agent spice-vdagent
+sudo systemctl enable --now qemu-guest-agent.service spice-vdagentd.service
+----------------------------------------------------------------------------------------------------------------
+::LIbreoffice + language pack pt-br
+sudo pacman -S libreoffice-fresh libreoffice-fresh-pt-br
+----------------------------------------------------------------------------------------------------------------
+::Archinstall GitHub
+loadkeys br-abnt2 #comando para alterar layout do teclado
+curl -LO https://raw.githubusercontent.com/jjotasilva/archinstall-config/main/configs/archinstall-custom.json    <========= <=========
+
+archinstall --config arch-postinstall.json
+archinstall --config arch-postinstall.json --creds user_credentials.json
+archinstall --config arch-postinstall.json --silent
+
+
+::commit github no archinstall
+pacman -Sy --noconfirm git
+git clone https://github.com/SEU_USUARIO/archinstall-config.git
+cp /root/archinstall.json archinstall-config/
+cd archinstall-config
+git add archinstall.json
+git commit -m "archinstall base config"
+git push
+
+user: jjotasilva
+passwd: senha do Token
+---------------------------------------------------------------------------------------------------------------
+::INSTALL KERNEL ARCHLINUX
+sudo pacman -S linux-lts linux-lts-headers #para kernel lts
+sudo pacman -S linux linux-headers #para kernel default
+sudo mkinitcpio -P
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+
+#na tela de grub selecionar:
+Arch Linux, with Linux linux
+Arch Linux, with Linux linux-lts
+-----------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------------------------------------------
+::Dolphin
+Configurar > Configurar Dolphin:
+interface >  Setar "/home/james"
+previas > setar  "arquivos de video (ffmpegthumbs)", em Confirmações >  Setar "Excluir arquivos e pastas"
+menu contexto > setar "comandos copiar, mover para", "excluir" e o que mais precisar
+---------------------------------------------------------------------------------------------------------------
+
+---------------------------------------------------------------------------------------------------------------
+
 ---------------------------------------------------------------------------------------------------------------
 :: FORMATAR DISCO E MONTAR
 # 1) Criar/editar partição com cfdisk
