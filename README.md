@@ -95,8 +95,6 @@ fwupdmgr get-updates
 sudo fwupdmgr update
 ```
 ---
-
----
 ### Nano config:  
 Install dependencies:  
 ```bash
