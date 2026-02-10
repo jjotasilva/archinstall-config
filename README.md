@@ -96,6 +96,22 @@ sudo fwupdmgr update
 ```
 ---
 
+---
+### Nano config:  
+Install dependencies:  
+```bash
+sudo pacman -S --needed nano-syntax-highlighting
+---
+sudo nano /etc/nanorc
+fwupdmgr get-updates
+include "/usr/share/nano/*.nanorc"
+---
+CTRL + O (salvar)
+Enter (confirmar)
+CTRL + X (sair)
+```
+---
+
 ## 2. Services & Applications  
 
 ### Sensors (temperature & fans)  
