@@ -48,13 +48,20 @@ navegar > navegar até: /usr/share/pixmaps/ > selecione: "archlinux-logo.svg" > 
 Configurações > cores e temas > tela de apresentação > baixar novos > baixe e aplique: Arch Simple Blue KDE 6
 --------------------------------------------------------------------------
 2)Configurar arquivo host
+
+#Caso precise trocar de hostname
+sudo pacman -S --needed inetutils
+sudo hostnamectl set-hostname NOVO-HOSTNAME
+
+#Editando arquivo hosts
 sudo nano /etc/hosts
 
 Substitua {hostname} pelo nome de sua máquina
 
-127.0.0.1  localhost {hostname}
-::1        localhost {hostname}
-127.0.1.1  {hostname}.localdomain {hostname}
+127.0.0.1   localhost
+::1         localhost
+127.0.1.1   {hostname}.localdomain {hostname}
+
 --------------------------------------------------------------------------
 1.0.1) Add repositorio UAR
 ::PARU (RECOMENDADO)
