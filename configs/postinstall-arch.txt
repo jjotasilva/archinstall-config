@@ -353,7 +353,7 @@ NoDisplay=true
 - CTRL + X (sair) 
 ------------------------------------------------------------------------------
 23)Fastfetch (Enhanced)
-sudo pacman -S fastfetch
+sudo pacman -S --needed fastfetch
 mkdir -p ~/.config/fastfetch
 cd ~/.config/fastfetch
 fastfetch --gen-config
