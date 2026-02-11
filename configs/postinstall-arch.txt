@@ -1,21 +1,26 @@
 Apos instalação usando "archinstall-custom.json":
 
-1) alterar icone iniciar para logo do archlinux > desativar aceleração de mouse > mudar de thema para breeze > add teclado profile abnt brasil > trocar tela de apresentação para logo do Archlinux > 
-configurar sessão vazia na sessão de area de trabalho > instalar plugin para wallpaper animado por video;
-2) configurar btrfs usando script 01_btrfs-config.sh;
-2) configurar localhost
-3) configurar ntp
-3) instalar apps pacman 
-4) instalar apps UAR
-4) configurar opções dolphin;
-5) criar subvolume brave e firefox;
-6) configurar zsh;
-7) configurar rclone;
-8) desativar ipv6;
-9) configurar games
-10) configurar lact / shader booster / desativar kernel.split_lock_mitigate / osprobe (detectar windows);
-11) configurar KVM - bridge com nmtui;
-12) apparmour
+1) alterar icone iniciar para logo do archlinux > desativar aceleração de mouse > mudar o tema tela de inicialização para breeze > add teclado profile abnt brasil > 
+trocar tela de apresentação para logo do Archlinux > configurar sessão vazia na sessão de area de trabalho
+2) instalar plugin para wallpaper animado por video;
+3) configurar btrfs usando script 01_btrfs-config.sh;
+4) configurar localhost;
+5) desativar ipv6;
+6) configurar ntp;
+7) habilitar fstrim;
+8) habilitar profile power-profiles-daemon;
+9) configurar bluetooth;
+10) configurar fimware;
+11) instalar apps pacman 
+12) instalar apps UAR
+13) configurar opções dolphin;
+14) criar subvolume brave e firefox;
+15) configurar zsh;
+16) configurar rclone;
+17) configurar games
+18) configurar lact / shader booster / desativar kernel.split_lock_mitigate / osprobe (detectar windows);
+19) configurar KVM - bridge com nmtui;
+20) apparmour
 ----------------------------------------------------------------------------------------------------------------
 
 3)#Snapper (BTRFS) _ Assistante - Usar script
