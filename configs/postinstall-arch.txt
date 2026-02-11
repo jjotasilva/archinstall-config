@@ -1,10 +1,17 @@
 #Snapper (BTRFS) _ Assistante - Usar script
 https://github.com/jjotasilva/archinstall-config/blob/main/configs/01_btrfs-config.sh
 
+#KVM - usar script
+https://github.com/jjotasilva/archinstall-config/blob/main/configs/KVM-ArchLinux.txt
 
+#Shaderbooster - Usar script
+https://github.com/jjotasilva/archinstall-config/blob/main/configs/shader-booters-full-amd.sh
 
+#ZSH + Oh-My-Zsh + Powerlevel10k + Plugins - Usar script
+https://github.com/jjotasilva/archinstall-config/blob/main/configs/ZSH%20%2B%20Oh-My-Zsh%20%2B%20Powerlevel10k%20%2B%20Plugins%20(Arch%20Linux).txt
 
-
+#Rclone - usar scripts
+https://github.com/jjotasilva/archinstall-config/tree/main/configs
 
 --------------------------------------------------------------------------
 1)Configurar arquivo host
@@ -383,7 +390,8 @@ wget https://raw.githubusercontent.com/KernelsAndDragons/ArchPostInstall/refs/he
 
 Apos instalação usando "archinstall-custom.json":
 
-0) alterar icone iniciar para logo do archlinux > desativar aceleração de mouse > mudar de thema para breeze > add teclado profile abnt brasil > trocar tela de apresentação para logo do Archlinux > configurar sessão vazia na sessão de area de trabalho > opções de energia confome print salvo na pasta archlinux > instalar plugin para wallpaper animado por video;
+0) alterar icone iniciar para logo do archlinux > desativar aceleração de mouse > mudar de thema para breeze > add teclado profile abnt brasil > trocar tela de apresentação para logo do Archlinux > 
+configurar sessão vazia na sessão de area de trabalho > opções de energia confome print salvo na pasta archlinux > instalar plugin para wallpaper animado por video;
 1) rodar "pos-install-check.sh" e verficar se todos os itens estão OK;
 1.1) criar subvolume brave e firefox;
 2) configurar btrfs usando script 01_btrfs-config.sh;
