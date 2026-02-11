@@ -4,6 +4,7 @@
 1) alterar icone iniciar para logo do archlinux > desativar aceleração de mouse > mudar o tema tela de autenticação sddm para breeze > add teclado profile abnt brasil > 
 trocar tela de apresentação para logo do Archlinux > configurar sessão > sessão area de trabalho > iniciar com sessão vazia
 2) instalar plugin para wallpaper animado por video > papel de parede > baixar novos plugins > smart video wallpaper reborn;
+3) resise volume /;
 4) configurar localhost;
 5) desativar ipv6;
 6) configurar pacman;
