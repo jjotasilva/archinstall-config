@@ -40,3 +40,21 @@ source ~/.zshrc
 
 # 11) Configurar o Powerlevel10k
 p10k configure
+
+### TEMAS
+
+mkdir -p ~/.local/share/konsole
+
+wget -O ~/.local/share/konsole/TokyoNight-Night.colorscheme \
+https://raw.githubusercontent.com/folke/tokyonight.nvim/main/extras/konsole/tokyonight_night.colorscheme && \
+
+wget -O ~/.local/share/konsole/TokyoNight-Storm.colorscheme \
+https://raw.githubusercontent.com/folke/tokyonight.nvim/main/extras/konsole/tokyonight_storm.colorscheme && \
+
+wget -O ~/.local/share/konsole/TokyoNight-Moon.colorscheme \
+https://raw.githubusercontent.com/folke/tokyonight.nvim/main/extras/konsole/tokyonight_moon.colorscheme && \
+
+wget -O ~/.local/share/konsole/TokyoNight-Day.colorscheme \
+https://raw.githubusercontent.com/folke/tokyonight.nvim/main/extras/konsole/tokyonight_day.colorscheme
+
+source ~/.zshrc ou source ~/.bashrc
