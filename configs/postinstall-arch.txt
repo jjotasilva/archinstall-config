@@ -112,7 +112,7 @@ sudo nano /etc/pacman.conf
 Color
 ParallelDownloads = 10
 # Adcione
-ILoveCandy
+ILoveCandy  #criar uma linha e adicionar abaixo co Color
 --------------------------------------------------------------------------
 3) Reflector | Configurar espelho
 #dependencia
