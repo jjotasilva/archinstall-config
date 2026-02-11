@@ -163,7 +163,7 @@ Heroic launcher games:
 Habilitar nas configurações
 
 #Xbox Controller Drivers:
-paru -S --needed xpadneo-dkms-git xone-dkms-git xone-dongle-firmware
+paru -S --needed dkms linux-headers xpadneo-dkms-git
 ------------------------------------------------------------------------------
 13) Resize disco btrfs
 sudo cfdisk /dev/sda
