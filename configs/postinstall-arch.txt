@@ -46,8 +46,7 @@ chattr -VR +C /var/lib/libvirt/images
 sudo systemctl enable --now fstrim.timer
 sudo systemctl status fstrim.timer --no-pager
 --------------------------------------------------------------------------
-1.3
-sudo pacman -S powerdevil power-profiles-daemon
+1.3) sudo pacman -S --needed powerdevil power-profiles-daemon
 sudo systemctl enable --now power-profiles-daemon.service
 --------------------------------------------------------------------------
 1.4)
@@ -117,6 +116,7 @@ sudo sensors-detect
 sudo systemctl restart sensord.service #opcional
 --------------------------------------------------------------------------
 7) Configurar NTP.br
+#Validar status do timesync
 timedatectl timesync-status
 
 #Se não estiver com os servidores br, configurar conform abaixo:
@@ -130,10 +130,6 @@ FallbackNTP=a.ntp.br b.ntp.br c.ntp.br
 sudo systemctl restart systemd-timesyncd
 #Validar
 timedatectl timesync-status
---------------------------------------------------------------------------
-8) Habilitar perfil de bateria
-sudo pacman -S --needed powerdevil power-profiles-daemon
-sudo systemctl enable --now power-profiles-daemon
 --------------------------------------------------------------------------
 9) habilitar Bluetooth
 sudo pacman -S --needed bluez bluez-utils
@@ -158,11 +154,13 @@ sudo grub-mkconfig -o /boot/grub/grub.cfg
 --------------------------------------------------------------------------
 12) GAMES
 #dependencia
-sudo pacman -S --needed gamemode steam
-paru -S --needed heroic-games-launcher-bin protonplus termius mangojuice
+sudo pacman -S --needed gamemode steam mangohud
+paru -S --needed heroic-games-launcher-bin protonplus mangojuice
 
 #habilite o serviço
-systemctl --user restart gamemoded
+systemctl --user enable gamemoded
+#Validar serviço
+systemctl status gamemoded
 
 steam command:
 gamemoderun mangohud %command%
@@ -170,7 +168,7 @@ gamemoderun mangohud %command%
 Heroic launcher games:
 Habilitar nas configurações
 
-#Xbox Controller Drivers:
+#Xbox Controller Drivers | OPCIONAL:
 paru -S --needed dkms linux-headers xpadneo-dkms-git
 ------------------------------------------------------------------------------
 13) Resize disco btrfs
@@ -283,16 +281,13 @@ Validar com:
 ip a | grep -i inet6
 ------------------------------------------------------------------------------
 15) KDE Apps
-sudo pacman -S --needed kde-system spectacle gwenview ark filelight isoimagewriter kate kcalc kdialog kfind kwalletmanager sweeper yakuake dolphin-plugins inotify-tools okular kgpg
+sudo pacman -S --needed kde-system spectacle gwenview ark filelight isoimagewriter kate kcalc kdialog kfind kwalletmanager sweeper dolphin-plugins inotify-tools okular 
 ------------------------------------------------------------------------------
 16) KDE Connect
 sudo pacman -S --needed kdeconnect
 ------------------------------------------------------------------------------
-17) Develop tools
-sudo pacman -S --needed linux-headers base-devel bash-completion
-------------------------------------------------------------------------------
 18) Apps pacman
-sudo pacman -S --needed rsync unzip bash-completion alsa-utils sof-firmware dmidecode nvme-cli smartmontools fwupd cloud-guest-utils wireless-regdb ksystemlog mesa vulkan-radeon lib32-mesa lib32-vulkan-radeon inetutils curl firefox firefox-i18n-pt-br
+sudo pacman -S --needed rsync unzip alsa-utils fwupd cloud-guest-utils wireless-regdb ksystemlog mesa vulkan-radeon lib32-mesa lib32-vulkan-radeon inetutils curl firefox firefox-i18n-pt-br linux-headers base-devel bash-completion plocate bash-completion sof-firmware dmidecode nvme-cli smartmontools
 ------------------------------------------------------------------------------
 19) Apps UAR
 paru -S --needed brave-bin vscodium-bin ttf-ms-fonts 
@@ -301,13 +296,16 @@ paru -S --needed brave-bin vscodium-bin ttf-ms-fonts
 sudo pacman -S --needed firewalld python-pyqt6 firewall-applet
 sudo systemctl enable --now firewalld
 
+#Validar serviço
+sudo systemctl status firewalld
+
 #Se tiver um desses serviços adicione a exceção do firewall
 sudo firewall-cmd --set-default-zone=home
 sudo firewall-cmd --permanent --add-service=mdns
 sudo firewall-cmd --permanent --add-service=kdeconnect
 ------------------------------------------------------------------------------
 20) Flatpak
-sudo pacman -S flatpak flatpak-kcm xdg-desktop-portal-gtk xdg-desktop-portal-kde
+sudo pacman -S --needed flatpak flatpak-kcm xdg-desktop-portal-gtk xdg-desktop-portal-kde
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 ------------------------------------------------------------------------------
 21) AppArmor
