@@ -1,5 +1,6 @@
 Apos instalação usando "archinstall-custom.json":
 
+0) atualizar systema como sudo pacman -Syu > reboot
 1) alterar icone iniciar para logo do archlinux > desativar aceleração de mouse > mudar o tema tela de inicialização para breeze > add teclado profile abnt brasil > 
 trocar tela de apresentação para logo do Archlinux > configurar sessão vazia na sessão de area de trabalho
 2) instalar plugin para wallpaper animado por video;
