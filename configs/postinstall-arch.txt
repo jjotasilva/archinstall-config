@@ -1,8 +1,9 @@
-Apos instalação usando "archinstall-custom.json":
+##Apos instalação usando "archinstall-custom.json":
 
 0) atualizar systema como sudo pacman -Syu > reboot
 1) alterar icone iniciar para logo do archlinux > desativar aceleração de mouse > mudar o tema tela de inicialização para breeze > add teclado profile abnt brasil > 
 trocar tela de apresentação para logo do Archlinux > configurar sessão vazia na sessão de area de trabalho
+0) configurar zsh;
 2) instalar plugin para wallpaper animado por video;
 3) configurar btrfs usando script 01_btrfs-config.sh;
 4) configurar localhost;
@@ -16,7 +17,6 @@ trocar tela de apresentação para logo do Archlinux > configurar sessão vazia 
 12) instalar apps UAR
 13) configurar opções dolphin;
 14) criar subvolume brave e firefox;
-15) configurar zsh;
 16) configurar rclone;
 17) configurar games
 18) configurar lact / shader booster / desativar kernel.split_lock_mitigate / osprobe (detectar windows);
