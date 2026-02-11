@@ -16,7 +16,8 @@ trocar tela de apresentação para logo do Archlinux > configurar sessão > sess
 8) habilitar profile power-profiles-daemon;
 9) configurar bluetooth;
 10) configurar fimware;
-11) instalar apps pacman 
+11) instalar apps pacman;
+12) instalar apps UAR;
 13) configurar opções dolphin;
 14) criar subvolume brave e firefox;
 16) configurar rclone;
