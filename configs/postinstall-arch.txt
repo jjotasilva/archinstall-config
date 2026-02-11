@@ -23,7 +23,7 @@ git clone https://aur.archlinux.org/paru.git
 cd paru
 makepkg -si
 --------------------------------------------------------------------------
-1.1) Criar alias
+1.1) Criar alias para ll
 #Edite sudo 
 nano /etc/bash.bashrc 
 
