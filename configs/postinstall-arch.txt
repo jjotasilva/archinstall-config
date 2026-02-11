@@ -7,6 +7,7 @@ trocar tela de apresentação para logo do Archlinux > configurar sessão > sess
 0) configurar zsh;
 4) configurar localhost;
 5) desativar ipv6;
+6) reflector;
 6) configurar ntp;
 7) habilitar fstrim;
 8) habilitar profile power-profiles-daemon;
