@@ -1,17 +1,17 @@
 ##Apos instalação usando "archinstall-custom.json":
 
 0) atualizar systema como sudo pacman -Syu > reboot
-1) alterar icone iniciar para logo do archlinux > desativar aceleração de mouse > mudar o tema tela de inicialização para breeze > add teclado profile abnt brasil > 
-trocar tela de apresentação para logo do Archlinux > configurar sessão vazia na sessão de area de trabalho
+1) alterar icone iniciar para logo do archlinux > desativar aceleração de mouse > mudar o tema tela de autenticação sddm para breeze > add teclado profile abnt brasil > 
+trocar tela de apresentação para logo do Archlinux > configurar sessão > sessão area de trabalho > iniciar com sessão vazia
+2) instalar plugin para wallpaper animado por video > papel de parede > baixar novos plugins > smart video wallpaper reborn;
 0) configurar zsh;
-2) instalar plugin para wallpaper animado por video;
-3) configurar btrfs usando script 01_btrfs-config.sh;
 4) configurar localhost;
 5) desativar ipv6;
 6) configurar ntp;
 7) habilitar fstrim;
 8) habilitar profile power-profiles-daemon;
 9) configurar bluetooth;
+3) configurar btrfs usando script 01_btrfs-config.sh;
 10) configurar fimware;
 11) instalar apps pacman 
 12) instalar apps UAR
