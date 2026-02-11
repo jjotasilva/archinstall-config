@@ -379,43 +379,7 @@ wget https://raw.githubusercontent.com/KernelsAndDragons/ArchPostInstall/refs/he
 ------------------------------------------------------------------------------
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+##EXTRAS
 
 Apos instalação usando "archinstall-custom.json":
 
@@ -434,15 +398,8 @@ Apos instalação usando "archinstall-custom.json":
 6) configurar lact / shader booster / desativar kernel.split_lock_mitigate / osprobe (detectar windows);
 ----------------------------------------------------------------------------------------------------------------
 
-----------------------------------------------------------------------------------------------------------------
-::Validar serviços habilitados durante instalado do "archinstall-custom.json"
-sudo systemctl status fstrim.timer power-profiles-daemon systemd-timesyncd --no-pager
-
-::Validar serviços habilitados durante instalado do "archinstall-custom-kvm.json"
-sudo systemctl status fstrim.timer power-profiles-daemon systemd-timesyncd spice-vdagentd.service qemu-guest-agent.service --no-pager
-----------------------------------------------------------------------------------------------------------------
 ::Install Spice Agent (Proxmox)
-sudo pacman -S qemu-guest-agent spice-vdagent
+sudo pacman -S --needed qemu-guest-agent spice-vdagent
 sudo systemctl enable --now qemu-guest-agent.service spice-vdagentd.service
 ----------------------------------------------------------------------------------------------------------------
 ::LIbreoffice + language pack pt-br
@@ -478,19 +435,12 @@ sudo grub-mkconfig -o /boot/grub/grub.cfg
 #na tela de grub selecionar:
 Arch Linux, with Linux linux
 Arch Linux, with Linux linux-lts
------------------------------------------------------------------------
-
-
 ---------------------------------------------------------------------------------------------------------------
 ::Dolphin
 Configurar > Configurar Dolphin:
 interface >  Setar "/home/james"
 previas > setar  "arquivos de video (ffmpegthumbs)", em Confirmações >  Setar "Excluir arquivos e pastas"
 menu contexto > setar "comandos copiar, mover para", "excluir" e o que mais precisar
----------------------------------------------------------------------------------------------------------------
-
----------------------------------------------------------------------------------------------------------------
-
 ---------------------------------------------------------------------------------------------------------------
 :: FORMATAR DISCO E MONTAR
 # 1) Criar/editar partição com cfdisk
