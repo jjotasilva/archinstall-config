@@ -523,5 +523,56 @@ Smart VideoWallpaper Reborn - KDE Slide Wallpaper animado
 :: Corrigir escala de resolução do Onlyoffice
 onlyoffice-desktopeditors --force-scale=1
 ---------------------------------------------------------------------------------------------------------------
+# ============================================================
+# PASSO A PASSO MANUAL (equivalente ao script 01_btrfs-config.sh)
+# Snapper + Btrfs + Grub-btrfs + Btrfs Assistant
+# ============================================================
+
+#Atualizar o sistema
+sudo pacman -Syu
+
+#Instalar dependências base + pacotes principais (tudo via pacman)
+sudo pacman -S --needed base-devel git snapper snap-pac grub-btrfs inotify-tools plocate
+
+#Instalar PARU (AUR helper)
+cd ~
+git clone https://aur.archlinux.org/paru.git
+cd paru
+makepkg -si
+cd ~
+rm -rf paru
+
+#Instalar Btrfs Assistant (AUR)
+paru -S --needed btrfs-assistant
+
+#Criar configuração Snapper para ROOT (/) e HOME (/home)
+sudo snapper -c root create-config /
+sudo snapper -c home create-config /home
+
+#Ajustar permissões e ACL do Snapper
+sudo snapper -c root set-config "ALLOW_USERS=$USER" "SYNC_ACL=yes"
+sudo snapper -c home set-config "ALLOW_USERS=$USER" "SYNC_ACL=yes"
+
+#Desativar snapshots automáticos no /home (timeline)
+sudo snapper -c home set-config "TIMELINE_CREATE=no"
+
+#Ajustar PRUNENAMES do updatedb para ignorar .snapshots (plocate/mlocate)
+sudo sed -i 's|^PRUNENAMES[[:space:]]*=[[:space:]]*".*"|PRUNENAMES = ".git .hg .svn .snapshots"|' /etc/updatedb.conf
+
+#Habilitar timers do Snapper
+sudo systemctl enable --now snapper-timeline.timer snapper-cleanup.timer
+
+#Habilitar serviço grub-btrfsd (gera entradas no GRUB para snapshots)
+sudo systemctl enable --now grub-btrfsd.service
+
+#(Opcional) Adicionar hook grub-btrfs-overlayfs no mkinitcpio se existir
+ls /usr/lib/initcpio/hooks/grub-btrfs-overlayfs /usr/lib/initcpio/install/grub-btrfs-overlayfs 2>/dev/null
+
+#Se existir e você quiser habilitar, rode:
+sudo sed -i -E 's/^(HOOKS=\([^)]*)\)/\1 grub-btrfs-overlayfs)/' /etc/mkinitcpio.conf
+
+# Regerar initramfs
+sudo mkinitcpio -P
+
 
 
