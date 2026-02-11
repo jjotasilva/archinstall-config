@@ -351,6 +351,10 @@ NoDisplay=true
 - CTRL + O (salvar)  
 - Enter (confirmar)  
 - CTRL + X (sair) 
+
+#Criar alias
+echo 'alias aa-denied="sudo ausearch -m AVC,USER_AVC,APPARMOR -ts today | less"' >> ~/.zshrc
+source ~/.zshrc
 ------------------------------------------------------------------------------
 23)Fastfetch (Enhanced)
 sudo pacman -S --needed fastfetch
