@@ -159,7 +159,9 @@
         "man-pages",
         "plocate",
         "amd-ucode",
-        "linux-firmware"
+        "linux-firmware",
+        "linux-headers",
+        "dkms"
     ],
     "parallel_downloads": 20,
     "profile_config": {
