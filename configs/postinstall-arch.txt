@@ -14,6 +14,7 @@ Substitua {hostname} pelo nome de sua máquina
 
 127.0.0.1  localhost {hostname}
 ::1        localhost {hostname}
+127.0.1.1  {hostname}.localdomain {hostname}
 --------------------------------------------------------------------------
 1.0.1) Add repositorio UAR
 ::PARU (RECOMENDADO)
@@ -22,6 +23,10 @@ cd ~
 git clone https://aur.archlinux.org/paru.git
 cd paru
 makepkg -si
+
+#Apos instalar remover a pasta paru
+cd ~
+rm -rf paru
 --------------------------------------------------------------------------
 1.1) Criar alias para ll
 #Edite sudo 
@@ -40,7 +45,7 @@ source ~/.zshrc
 lsattr -d /var/lib/libvirt/images 
 
 # Se o subvolume existir e a saida fo diferente de "lsattr -d /var/lib/libvirt/images" rodar o comando abaixo:
-chattr -VR +C /var/lib/libvirt/images
+sudo chattr -R +C /var/lib/libvirt/images
 --------------------------------------------------------------------------
 1.2) Habilitar fstrim (Discard disco)
 sudo systemctl enable --now fstrim.timer
@@ -76,7 +81,7 @@ sudo reflector --verbose \
   --save /etc/pacman.d/mirrorlist
 
 #Atualizar banco de dados
-sudo pacman -Syyu
+sudo pacman -Syu
 --------------------------------------------------------------------------
 4) Atualização de firmware
 #Dependencia
@@ -126,7 +131,8 @@ sudo nano /etc/systemd/timesyncd.conf
 NTP=a.st1.ntp.br b.st1.ntp.br c.st1.ntp.br d.st1.ntp.br
 FallbackNTP=a.ntp.br b.ntp.br c.ntp.br
 --------------
-#Reiniciar o serviços
+#Validar serviço
+sudo systemctl enable --now systemd-timesyncd
 sudo systemctl restart systemd-timesyncd
 #Validar
 timedatectl timesync-status
@@ -135,7 +141,7 @@ timedatectl timesync-status
 sudo pacman -S --needed bluez bluez-utils
 sudo systemctl enable --now bluetooth
 --------------------------------------------------------------------------
-10) Desabilitar SplitLock
+10) Desabilitar SplitLock #OPCIONAL Melhora desempenho em jogos
 echo 'kernel.split_lock_mitigate=0' | sudo tee /etc/sysctl.d/99-splitlock.conf >/dev/null
 
 #Validar
@@ -158,9 +164,10 @@ sudo pacman -S --needed gamemode steam mangohud
 paru -S --needed heroic-games-launcher-bin protonplus mangojuice
 
 #habilite o serviço
-systemctl --user enable gamemoded
+systemctl --user enable --now gamemoded.service
+
 #Validar serviço
-systemctl status gamemoded
+systemctl --user status gamemoded.service
 
 steam command:
 gamemoderun mangohud %command%
@@ -172,7 +179,7 @@ Habilitar nas configurações
 paru -S --needed dkms linux-headers xpadneo-dkms-git
 ------------------------------------------------------------------------------
 13) Resize disco btrfs
-sudo cfdisk /dev/sda
+sudo cfdisk /dev/nvme0n1
 
 Selecione a partição Btrfs (30G)
 Escolha Resize
@@ -185,12 +192,12 @@ sudo btrfs filesystem resize max /
 ou #RECOMENDADO
 
 sudo pacman -S --needed cloud-guest-utils
-sudo parted -s /dev/sda unit GiB print free #mostra espaço não alocado ou "sudo cfdisk /dev/sda"
-sudo growpart /dev/sda 2 #use "df -h /" para ver o numero da partição onde está o "/", no meu caso nvme0n1p2
+sudo parted -s /dev/nvme0n1 unit GiB print free #mostra espaço não alocado ou "sudo cfdisk /dev/nvme0n1"
+sudo growpart /dev/nvme0n1 2 #use "df -h /" para ver o numero da partição onde está o "/", no meu caso nvme0n1p2
 sudo btrfs filesystem resize max /
 
 #Validar com:
-sudo parted -s /dev/sda unit GiB print free
+sudo parted -s /dev/nvme0n1 unit GiB print free
 sudo btrfs filesystem usage /
 ------------------------------------------------------------------------------
 14) Criar Subvolume Brave / Mozilla
@@ -287,7 +294,7 @@ sudo pacman -S --needed kde-system spectacle gwenview ark filelight isoimagewrit
 sudo pacman -S --needed kdeconnect
 ------------------------------------------------------------------------------
 18) Apps pacman
-sudo pacman -S --needed rsync unzip alsa-utils fwupd cloud-guest-utils wireless-regdb ksystemlog mesa vulkan-radeon lib32-mesa lib32-vulkan-radeon inetutils curl firefox firefox-i18n-pt-br linux-headers base-devel bash-completion plocate bash-completion sof-firmware dmidecode nvme-cli smartmontools
+sudo pacman -S --needed rsync unzip alsa-utils fwupd cloud-guest-utils wireless-regdb ksystemlog mesa vulkan-radeon lib32-mesa lib32-vulkan-radeon inetutils curl firefox firefox-i18n-pt-br linux-headers base-devel plocate bash-completion sof-firmware dmidecode nvme-cli smartmontools
 ------------------------------------------------------------------------------
 19) Apps UAR
 paru -S --needed brave-bin vscodium-bin ttf-ms-fonts 
@@ -295,6 +302,7 @@ paru -S --needed brave-bin vscodium-bin ttf-ms-fonts
 20) Firewall
 sudo pacman -S --needed firewalld python-pyqt6 firewall-applet
 sudo systemctl enable --now firewalld
+sudo firewall-cmd --reload
 
 #Validar serviço
 sudo systemctl status firewalld
@@ -303,6 +311,7 @@ sudo systemctl status firewalld
 sudo firewall-cmd --set-default-zone=home
 sudo firewall-cmd --permanent --add-service=mdns
 sudo firewall-cmd --permanent --add-service=kdeconnect
+sudo firewall-cmd --reload
 ------------------------------------------------------------------------------
 20) Flatpak
 sudo pacman -S --needed flatpak flatpak-kcm xdg-desktop-portal-gtk xdg-desktop-portal-kde
@@ -322,7 +331,7 @@ sudo grub-mkconfig -o /boot/grub/grub.cfg
 #reboot
 
 #Dependencias
-sudo pacman -S --needed tk apparmor python-audit python-notify2
+sudo pacman -S --needed tk apparmor python-audit python-notify2 audit
 
 #habilitar serviços
 sudo systemctl enable --now apparmor.service
