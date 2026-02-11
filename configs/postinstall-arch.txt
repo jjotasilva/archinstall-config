@@ -4,18 +4,18 @@
 1) alterar icone iniciar para logo do archlinux > desativar aceleração de mouse > mudar o tema tela de autenticação sddm para breeze > add teclado profile abnt brasil > 
 trocar tela de apresentação para logo do Archlinux > configurar sessão > sessão area de trabalho > iniciar com sessão vazia
 2) instalar plugin para wallpaper animado por video > papel de parede > baixar novos plugins > smart video wallpaper reborn;
-0) configurar zsh;
 4) configurar localhost;
 5) desativar ipv6;
-6) reflector;
+6) configurar pacman;
 6) configurar ntp;
+6) reflector;
+12) instalar apps UAR
+3) configurar btrfs usando script 01_btrfs-config.sh;
 7) habilitar fstrim;
 8) habilitar profile power-profiles-daemon;
 9) configurar bluetooth;
-3) configurar btrfs usando script 01_btrfs-config.sh;
 10) configurar fimware;
 11) instalar apps pacman 
-12) instalar apps UAR
 13) configurar opções dolphin;
 14) criar subvolume brave e firefox;
 16) configurar rclone;
@@ -23,6 +23,7 @@ trocar tela de apresentação para logo do Archlinux > configurar sessão > sess
 18) configurar lact / shader booster / desativar kernel.split_lock_mitigate / osprobe (detectar windows);
 19) configurar KVM - bridge com nmtui;
 20) apparmour
+0) configurar zsh;
 ----------------------------------------------------------------------------------------------------------------
 
 3)#Snapper (BTRFS) _ Assistante - Usar script
