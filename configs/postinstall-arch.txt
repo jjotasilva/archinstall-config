@@ -1,22 +1,24 @@
 Apos instalação usando "archinstall-custom.json":
 
-0) alterar icone iniciar para logo do archlinux > desativar aceleração de mouse > mudar de thema para breeze > add teclado profile abnt brasil > trocar tela de apresentação para logo do Archlinux > 
-configurar sessão vazia na sessão de area de trabalho > opções de energia confome print salvo na pasta archlinux > instalar plugin para wallpaper animado por video;
-1) rodar "pos-install-check.sh" e verficar se todos os itens estão OK;
-1.1) criar subvolume brave e firefox;
+1) alterar icone iniciar para logo do archlinux > desativar aceleração de mouse > mudar de thema para breeze > add teclado profile abnt brasil > trocar tela de apresentação para logo do Archlinux > 
+configurar sessão vazia na sessão de area de trabalho > instalar plugin para wallpaper animado por video;
 2) configurar btrfs usando script 01_btrfs-config.sh;
-3) instalar apps usando install_apps_v2.sh;
-3.1) configurar opções dolphin;
-4) rodar script 03_configurations_v2.sh;
-4.0.1) configurar zsh;
-4.0.2) configurar rclone;
-4.1) configurar lact/steam/hroic/protonplus/mangojuice;
-4.2) desativar ipv6;
-5) configurar KVM - bridge com nmtui;
-6) configurar lact / shader booster / desativar kernel.split_lock_mitigate / osprobe (detectar windows);
+2) configurar localhost
+3) configurar ntp
+3) instalar apps pacman 
+4) instalar apps UAR
+4) configurar opções dolphin;
+5) criar subvolume brave e firefox;
+6) configurar zsh;
+7) configurar rclone;
+8) desativar ipv6;
+9) configurar games
+10) configurar lact / shader booster / desativar kernel.split_lock_mitigate / osprobe (detectar windows);
+11) configurar KVM - bridge com nmtui;
+12) apparmour
 ----------------------------------------------------------------------------------------------------------------
 
-#Snapper (BTRFS) _ Assistante - Usar script
+3)#Snapper (BTRFS) _ Assistante - Usar script
 https://github.com/jjotasilva/archinstall-config/blob/main/configs/01_btrfs-config.sh
 
 #KVM - usar script
@@ -31,7 +33,7 @@ https://github.com/jjotasilva/archinstall-config/blob/main/configs/ZSH%20%2B%20O
 #Rclone - usar scripts
 https://github.com/jjotasilva/archinstall-config/tree/main/configs
 
-::LOGO Menu Iniciar Arch
+1)::LOGO Menu Iniciar Arch
 Clicar com o botão direito do mouse sobre o logo KDE iniciar > selecionar "Conf de lançador de aplicativos" > clicar no "icone" > 
 navegar > navegar até: /usr/share/pixmaps/ > selecione: "archlinux-logo.svg" > OK > Aplicar OK
 ---------------------------------------------------------------------------------------------------------------
@@ -39,7 +41,7 @@ navegar > navegar até: /usr/share/pixmaps/ > selecione: "archlinux-logo.svg" > 
 
 Configurações > cores e temas > tela de apresentação > baixar novos > baixe e aplique: Arch Simple Blue KDE 6
 --------------------------------------------------------------------------
-1)Configurar arquivo host
+2)Configurar arquivo host
 sudo nano /etc/hosts
 
 Substitua {hostname} pelo nome de sua máquina
