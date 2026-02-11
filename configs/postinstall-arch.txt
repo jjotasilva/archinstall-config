@@ -25,13 +25,15 @@ makepkg -si
 --------------------------------------------------------------------------
 1.1) Criar alias para ll
 #Edite sudo 
-nano /etc/bash.bashrc 
+nano ~/.bashrc 
+nano ~/.zshrc
 
 #Adicione no final
 alias ll="ls -lh --color=auto"
 
 #Atualize 
 source ~/.bashrc
+source ~/.zshrc
 --------------------------------------------------------------------------
 1.1.1) Libirt KVM - Validar permissão no subvolume btrfs @images
 # listar permissão
