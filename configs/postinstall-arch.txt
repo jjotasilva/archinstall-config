@@ -345,7 +345,7 @@ sudo pacman -S --needed kde-system spectacle gwenview ark filelight isoimagewrit
 sudo pacman -S --needed kdeconnect
 ------------------------------------------------------------------------------
 18) Apps pacman
-sudo pacman -S --needed fastfetch zip unzip ffmpeg ffmpegthumbs ntfs-3g discord rclone obs-studio dolphin-plugins okular gwenview elisa kcalc unrar p7zip noto-fonts-cjk rsync cpu-x net-tools dnsutils dnsmasq mission-center pavucontrol vlc vlc-plugins-all alsa-utils fwupd cloud-guest-utils wireless-regdb mesa vulkan-radeon lib32-mesa lib32-vulkan-radeon inetutils curl firefox firefox-i18n-pt-br linux-headers base-devel plocate bash-completion sof-firmware dmidecode nvme-cli smartmontools
+sudo pacman -S --needed fastfetch packagekit-qt6 zip unzip ffmpeg ffmpegthumbs ntfs-3g discord rclone obs-studio dolphin-plugins okular gwenview elisa kcalc unrar p7zip noto-fonts-cjk rsync cpu-x net-tools dnsutils dnsmasq mission-center pavucontrol vlc vlc-plugins-all alsa-utils fwupd cloud-guest-utils wireless-regdb mesa vulkan-radeon lib32-mesa lib32-vulkan-radeon inetutils curl firefox firefox-i18n-pt-br linux-headers base-devel plocate bash-completion sof-firmware dmidecode nvme-cli smartmontools
 
 ------------------------------------------------------------------------------
 19) Apps UAR
