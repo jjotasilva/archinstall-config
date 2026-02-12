@@ -647,5 +647,55 @@ sudo sed -i -E 's/^(HOOKS=\([^)]*)\)/\1 grub-btrfs-overlayfs)/' /etc/mkinitcpio.
 # Regerar initramfs
 sudo mkinitcpio -P
 
+:: yt-dlp
+
+# 1) Instalar dependências
+sudo pacman -S --needed yt-dlp ffmpeg
+
+# 2) Criar diretório de binários locais
+mkdir -p ~/.local/bin
+
+# 3) Criar o script yt-download
+cat > ~/.local/bin/yt-download <<'EOF'
+#!/usr/bin/env bash
+set -euo pipefail
+
+need() { command -v "$1" >/dev/null 2>&1 || { echo "Erro: '$1' não encontrado."; exit 1; }; }
+need yt-dlp
+need ffmpeg
+
+DOWNLOAD_DIR="$HOME/Downloads"
+mkdir -p "$DOWNLOAD_DIR"
+
+read -r -p "Cole a URL do YouTube: " url
+if [[ -z "${url}" ]]; then
+  echo "Nenhuma URL informada."
+  exit 1
+fi
+
+yt-dlp -f "bv*+ba/b" \
+  --cookies-from-browser brave \
+  --write-auto-subs --sub-lang "pt-BR,pt,pt-PT" \
+  --convert-subs srt \
+  --merge-output-format mkv \
+  -o "$DOWNLOAD_DIR/%(title).200B [%(id)s].%(ext)s" \
+  "$url"
+
+echo "Download concluído em: $DOWNLOAD_DIR"
+EOF
+
+# 4) Dar permissão de execução
+chmod +x ~/.local/bin/yt-download
+
+# 5) Criar alias no ZSH
+grep -qxF 'alias yt-download="~/.local/bin/yt-download"' ~/.zshrc || \
+  echo 'alias yt-download="~/.local/bin/yt-download"' >> ~/.zshrc
+
+# 6) Criar alias no Bash
+grep -qxF 'alias yt-download="~/.local/bin/yt-download"' ~/.bashrc || \
+  echo 'alias yt-download="~/.local/bin/yt-download"' >> ~/.bashrc
+
+# 7) Rodar no terminal
+yt-download
 
 
