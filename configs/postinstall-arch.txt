@@ -10,6 +10,7 @@
 7) ajustar resolução da tela de inicialização do sddm e grub;
 8) configurar localhost;
 9) desativar ipv6;
+10) habilitar systemd resolved;
 10) configurar pacman;
 11) configurar ntp;
 12) reflector;
@@ -89,7 +90,28 @@ GRUB_GFXMODE=1920x1080x32
 GRUB_GFXPAYLOAD_LINUX=keep
 
 sudo grub-mkconfig -o /boot/grub/grub.cfg
+
+:: systemdResolved
+
+#Configurar systemd-resolved (DNS resolver padrão do systemd)
+
+#Habilitar e iniciar o serviço systemd-resolved
+sudo systemctl enable --now systemd-resolved.service
+
+#Remover resolv.conf fixo (se existir)
+sudo rm -f /etc/resolv.conf
+
+#Criar o symlink do resolv.conf apontando para o stub do systemd-resolved
+sudo ln -s /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
+
+#Validar se o DNS está correto e ativo
+resolvectl status
+
+#Validar se o erro resolve1 parou de ocorrer no boot atual
+journalctl -b --since "16:00" | grep -i resolve1 || echo "OK: sem resolve1"
+
 --------------------------------------------------------------------------
+
 2)Configurar arquivo host
 
 #Caso precise trocar de hostname
