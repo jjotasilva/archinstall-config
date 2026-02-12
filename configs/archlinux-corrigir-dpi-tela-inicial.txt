@@ -1,0 +1,33 @@
+##Corrigir escala de resolução tela inicial
+
+# 1) Criar o diretório de configuração do SDDM (se não existir)
+sudo mkdir -p /etc/sddm.conf.d
+
+# 2) Criar/editar a configuração de escala do greeter (Qt)
+sudo tee /etc/sddm.conf.d/30-qt-scaling.conf > /dev/null << 'EOF'
+[General]
+GreeterEnvironment=QT_SCREEN_SCALE_FACTORS=1.5;QT_FONT_DPI=192
+EOF
+
+##4k 175% de escala
+[General]
+GreeterEnvironment=QT_SCREEN_SCALE_FACTORS=1.75;QT_FONT_DPI=224
+
+##4k 200% de escala
+[General]
+GreeterEnvironment=QT_SCREEN_SCALE_FACTORS=2;QT_FONT_DPI=256
+
+
+# 3) Garantir permissões corretas
+sudo chmod 644 /etc/sddm.conf.d/30-qt-scaling.conf
+
+# 4) Reiniciar o sistema (recomendado)
+sudo reboot
+
+#GRUB
+GRUB_TERMINAL_OUTPUT=gfxterm
+GRUB_GFXMODE=1920x1080x32
+GRUB_GFXPAYLOAD_LINUX=keep
+
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+
