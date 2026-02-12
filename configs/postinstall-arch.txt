@@ -1,55 +1,89 @@
 ##Apos instalação usando "archinstall-custom.json":
 
-0) atualizar systema como sudo pacman -Syu > reboot
-1) alterar icone iniciar para logo do archlinux > desativar aceleração de mouse > mudar o tema tela de autenticação sddm para breeze > add teclado profile abnt brasil > 
-trocar tela de apresentação para logo do Archlinux > configurar sessão > sessão area de trabalho > iniciar com sessão vazia
-2) instalar plugin para wallpaper animado por video > papel de parede > baixar novos plugins > smart video wallpaper reborn;
-3) resise volume /;
-4) configurar localhost;
-5) desativar ipv6;
-6) configurar pacman;
-6) configurar ntp;
-6) reflector;
-12) instalar apps UAR
-3) configurar btrfs usando script 01_btrfs-config.sh;
-7) habilitar fstrim;
-8) habilitar profile power-profiles-daemon;
-9) configurar bluetooth;
-10) configurar fimware;
-11) instalar apps pacman;
-12) instalar apps UAR;
-13) configurar opções dolphin;
-14) criar subvolume brave e firefox;
-16) configurar rclone;
-17) configurar games
-18) configurar lact / shader booster / desativar kernel.split_lock_mitigate / osprobe (detectar windows);
-19) configurar KVM - bridge com nmtui;
-20) apparmour
-0) configurar zsh;
+1) atualizar systema como sudo pacman -Syu > reboot
+2) alterar icone iniciar para logo do archlinux > desativar aceleração de mouse > mudar o tema tela de autenticação sddm para breeze > add teclado profile abnt brasil > 
+3) trocar tela de apresentação para logo do Archlinux > configurar sessão > sessão area de trabalho > iniciar com sessão vazia
+4) instalar plugin para wallpaper animado por video > papel de parede > baixar novos plugins > smart video wallpaper reborn;
+5) resise volume /;
+6) configurar btrfs usando script 01_btrfs-config.sh;
+7) ajustar resolução da tela de inicialização do sddm e grub;
+8) configurar localhost;
+9) desativar ipv6;
+10) configurar pacman;
+11) configurar ntp;
+12) reflector;
+13) instalar apps UAR
+14) habilitar fstrim;
+15) habilitar profile power-profiles-daemon;
+16) configurar bluetooth;
+17) configurar fimware;
+18) instalar apps pacman;
+19) instalar apps UAR;
+20) configurar opções dolphin;
+21) criar subvolume brave e firefox;
+22) configurar rclone;
+23) configurar games
+24) configurar lact / shader booster / desativar kernel.split_lock_mitigate / osprobe (detectar windows);
+25) configurar KVM - bridge com nmtui;
+26) apparmour
+27) configurar zsh;
 ----------------------------------------------------------------------------------------------------------------
 
-3)#Snapper (BTRFS) _ Assistante - Usar script
+:: Snapper (BTRFS) _ Assistante - Usar script
 https://github.com/jjotasilva/archinstall-config/blob/main/configs/01_btrfs-config.sh
 
-#KVM - usar script
+:: KVM - usar script
 https://github.com/jjotasilva/archinstall-config/blob/main/configs/KVM-ArchLinux.txt
 
-#Shaderbooster - Usar script
+:: Shaderbooster - Usar script
 https://github.com/jjotasilva/archinstall-config/blob/main/configs/shader-booters-full-amd.sh
 
-#ZSH + Oh-My-Zsh + Powerlevel10k + Plugins - Usar script
+:: ZSH + Oh-My-Zsh + Powerlevel10k + Plugins - Usar script
 https://github.com/jjotasilva/archinstall-config/blob/main/configs/ZSH%20%2B%20Oh-My-Zsh%20%2B%20Powerlevel10k%20%2B%20Plugins%20(Arch%20Linux).txt
 
-#Rclone - usar scripts
+:: Rclone - usar scripts
 https://github.com/jjotasilva/archinstall-config/tree/main/configs
 
-1)::LOGO Menu Iniciar Arch
+:: LOGO Menu Iniciar Arch
 Clicar com o botão direito do mouse sobre o logo KDE iniciar > selecionar "Conf de lançador de aplicativos" > clicar no "icone" > 
 navegar > navegar até: /usr/share/pixmaps/ > selecione: "archlinux-logo.svg" > OK > Aplicar OK
----------------------------------------------------------------------------------------------------------------
+
 :: Trocar logo SDDM
 
 Configurações > cores e temas > tela de apresentação > baixar novos > baixe e aplique: Arch Simple Blue KDE 6
+
+:: Corrigir escala de resolução tela inicial
+
+#Criar o diretório de configuração do SDDM (se não existir)
+sudo mkdir -p /etc/sddm.conf.d
+
+#Criar/editar a configuração de escala do greeter (Qt)
+sudo tee /etc/sddm.conf.d/30-qt-scaling.conf > /dev/null << 'EOF'
+[General]
+GreeterEnvironment=QT_SCREEN_SCALE_FACTORS=1.5;QT_FONT_DPI=192
+EOF
+
+##4k 175% de escala
+[General]
+GreeterEnvironment=QT_SCREEN_SCALE_FACTORS=1.75;QT_FONT_DPI=224
+
+##4k 200% de escala
+[General]
+GreeterEnvironment=QT_SCREEN_SCALE_FACTORS=2;QT_FONT_DPI=256
+
+
+# 3) Garantir permissões corretas
+sudo chmod 644 /etc/sddm.conf.d/30-qt-scaling.conf
+
+# 4) Reiniciar o sistema (recomendado)
+sudo reboot
+
+:: Corrigir resolução da tela de GRUB
+GRUB_TERMINAL_OUTPUT=gfxterm
+GRUB_GFXMODE=1920x1080x32
+GRUB_GFXPAYLOAD_LINUX=keep
+
+sudo grub-mkconfig -o /boot/grub/grub.cfg
 --------------------------------------------------------------------------
 2)Configurar arquivo host
 
