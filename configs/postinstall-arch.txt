@@ -79,6 +79,10 @@ sudo chmod 644 /etc/sddm.conf.d/30-qt-scaling.conf
 sudo reboot
 
 :: Corrigir resolução da tela de GRUB
+
+#Editar GRUB
+sudo nano /etc/default/grub
+
 GRUB_TERMINAL_OUTPUT=gfxterm
 GRUB_GFXMODE=1920x1080x32
 GRUB_GFXPAYLOAD_LINUX=keep
