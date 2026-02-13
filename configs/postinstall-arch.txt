@@ -54,7 +54,7 @@ navegar > navegar até: /usr/share/pixmaps/ > selecione: "archlinux-logo.svg" > 
 
 Configurações > cores e temas > tela de apresentação > baixar novos > baixe e aplique: Arch Simple Blue KDE 6
 
-:: Corrigir escala de resolução tela inicial
+:: Corrigir escala de resolução tela inicial SDDM e NUNLOCK ativo
 
 #Criar o diretório de configuração do SDDM (se não existir)
 sudo mkdir -p /etc/sddm.conf.d
@@ -70,14 +70,25 @@ EOF
 GreeterEnvironment=QT_SCREEN_SCALE_FACTORS=1.75;QT_FONT_DPI=224
 
 ##4k 200% de escala
+
+
 [General]
-GreeterEnvironment=QT_SCREEN_SCALE_FACTORS=2;QT_FONT_DPI=256
+Numlock=on
+GreeterEnvironment=QT_SCREEN_SCALE_FACTORS=1.5;QT_FONT_DPI=144
+
+[Wayland]
+EnableHiDPI=true
+Scale=1.5
+
+[X11]
+EnableHiDPI=true
+Scale=1.5
 
 
-# 3) Garantir permissões corretas
+#Garantir permissões corretas
 sudo chmod 644 /etc/sddm.conf.d/30-qt-scaling.conf
 
-# 4) Reiniciar o sistema (recomendado)
+#Reiniciar o sistema (recomendado)
 sudo reboot
 
 :: Corrigir resolução da tela de GRUB
