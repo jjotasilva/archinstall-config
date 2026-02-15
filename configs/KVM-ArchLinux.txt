@@ -14,7 +14,8 @@ sudo pacman -S --needed \
   edk2-ovmf \
   swtpm \
   libosinfo \
-  libguestfs 
+  libguestfs \
+  virtiofsd
 
 # Observações:
 # - qemu-img já vem no qemu-full
