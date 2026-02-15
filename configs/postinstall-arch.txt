@@ -133,6 +133,12 @@ Include = /etc/pacman.d/chaotic-mirrorlist
 
 sudo pacman -S --needed pamac
 
+:: Install OpenCL | ROCm
+
+sudo pacman -S --needed rocm-opencl-runtime rocm-hip-runtime clinfo
+clinfo | head
+
+
 --------------------------------------------------------------------------
 
 2)Configurar arquivo host
