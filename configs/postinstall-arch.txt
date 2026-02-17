@@ -1,34 +1,34 @@
 ##Apos instalação usando "archinstall-custom.json":
 
-0) ajustar GRUB/inicializaçao SDDM (TELA)
-5) resise volume /;
-1) atualizar systema como sudo pacman -Syu > reboot
-2) alterar icone iniciar para logo do archlinux > desativar aceleração de mouse > mudar o tema tela de autenticação sddm para breeze > add teclado profile abnt brasil > 
-3) trocar tela de apresentação para logo do Archlinux > configurar sessão > sessão area de trabalho > iniciar com sessão vazia
-4) instalar plugin para wallpaper animado por video > papel de parede > baixar novos plugins > smart video wallpaper reborn;
-6) configurar btrfs usando script 01_btrfs-config.sh;
-7) ajustar resolução da tela de inicialização do sddm e grub;
-8) configurar localhost;
-9) desativar ipv6;
-10) habilitar systemd resolved;
-10) configurar pacman;
-11) configurar ntp;
-12) reflector;
-13) instalar apps UAR e CHAOTIC
-14) habilitar fstrim;
-15) habilitar profile power-profiles-daemon;
-16) configurar bluetooth;
-17) configurar fimware;
-18) instalar apps pacman;
-19) instalar apps UAR;
-20) configurar opções dolphin;
-21) criar subvolume brave e firefox;
-22) configurar rclone;
-23) configurar games
-24) configurar lact / shader booster / desativar kernel.split_lock_mitigate / osprobe (detectar windows);
-25) configurar KVM - bridge com nmtui;
-26) apparmour
-27) configurar zsh;
+1) ajustar dpi GRUB/dpi inicializaçao SDDM (TELA)/num lock ativo sddm
+2) resise volume /;
+3) atualizar systema como sudo pacman -Syu > reboot
+4) alterar icone iniciar para logo do archlinux > desativar aceleração de mouse > mudar o tema tela de autenticação sddm para breeze > add teclado profile abnt brasil > 
+5) trocar tela de apresentação para logo do Archlinux > configurar sessão > sessão area de trabalho > iniciar com sessão vazia
+6) instalar plugin para wallpaper animado por video > papel de parede > baixar novos plugins > smart video wallpaper reborn;
+7) configurar btrfs usando script 01_btrfs-config.sh;
+8) ajustar resolução da tela de inicialização do sddm e grub;
+9) configurar localhost;
+10) desativar ipv6;
+11) habilitar systemd resolved;
+12) configurar pacman;
+13) configurar ntp;
+14) reflector;
+15) instalar apps UAR e CHAOTIC
+16) habilitar fstrim;
+17) habilitar profile power-profiles-daemon;
+18) configurar bluetooth;
+19) configurar fimware;
+20) instalar apps pacman;
+21) instalar apps UAR;
+22) configurar opções dolphin;
+23) criar subvolume brave e firefox;
+24) configurar rclone;
+25) configurar games
+26) configurar lact / shader booster / desativar kernel.split_lock_mitigate / osprobe (detectar windows);
+27) configurar KVM - bridge com nmtui;
+28) apparmour
+29) configurar zsh;
 ----------------------------------------------------------------------------------------------------------------
 
 :: Snapper (BTRFS) _ Assistante - Usar script
