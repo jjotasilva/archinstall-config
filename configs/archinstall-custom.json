@@ -161,7 +161,9 @@
         "amd-ucode",
         "linux-firmware",
         "linux-headers",
-        "dkms"
+        "dkms",
+        "firefox",
+        "firefox-i18n-pt-br"
     ],
     "parallel_downloads": 20,
     "profile_config": {
