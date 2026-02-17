@@ -138,6 +138,16 @@ sudo pacman -S --needed pamac
 sudo pacman -S --needed rocm-opencl-runtime rocm-hip-runtime clinfo
 clinfo | head
 
+:: remover entradas efi
+
+#verificar entradas no efi
+efibootmgr
+
+#remover entradas no efi
+sudo efibootmgr -b 0004 -B
+
+#setar ordem de inicialização
+sudo efibootmgr -o 0006
 
 --------------------------------------------------------------------------
 
