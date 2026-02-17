@@ -165,7 +165,7 @@
         "firefox",
         "firefox-i18n-pt-br"
     ],
-    "parallel_downloads": 20,
+    "parallel_downloads": 10,
     "profile_config": {
         "gfx_driver": "AMD / ATI (open-source)",
         "greeter": "sddm",
