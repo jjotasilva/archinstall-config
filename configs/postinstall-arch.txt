@@ -737,4 +737,10 @@ grep -qxF 'alias yt-download="~/.local/bin/yt-download"' ~/.bashrc || \
 # 7) Rodar no terminal
 yt-download
 
+:: HDR KDE
+
+sudo pacman -S --needed kscreen
+kscreen-doctor -o
+kscreen-doctor output.HDMI-A-1.hdr.disable
+reboot
 
