@@ -459,7 +459,12 @@ linux-headers base-devel plocate bash-completion \
 sof-firmware dmidecode nvme-cli smartmontools
 ------------------------------------------------------------------------------
 19) Apps UAR
-paru -S --needed brave-bin vscodium-bin ttf-ms-fonts onlyoffice-desktopeditors termius-bin
+paru -S --needed \
+brave-bin \
+vscodium-bin \
+ttf-ms-fonts \
+onlyoffice-bin \
+termius
 ------------------------------------------------------------------------------
 20) Firewall
 sudo pacman -S --needed firewalld python-pyqt6 firewall-applet
