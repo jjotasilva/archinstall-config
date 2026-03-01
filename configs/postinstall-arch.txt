@@ -306,6 +306,11 @@ sudo grub-mkconfig -o /boot/grub/grub.cfg
 sudo pacman -S --needed gamemode steam mangohud lact
 paru -S --needed heroic-games-launcher-bin protonplus mangojuice
 
+#lact - Se não habilitar as opções de OC e termico, habilitar no grub:
+GRUB_CMDLINE_LINUX_DEFAULT="quiet amdgpu.ppfeaturemask=0xffffffff"
+
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+
 #habilite o serviço
 systemctl --user enable --now gamemoded.service
 
