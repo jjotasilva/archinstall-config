@@ -103,22 +103,19 @@ sudo grub-mkconfig -o /boot/grub/grub.cfg
 
 :: systemdResolved
 
-#Configurar systemd-resolved (DNS resolver padrão do systemd)
+# systemd-resolved (config padrão no Arch)
 
-#Habilitar e iniciar o serviço systemd-resolved
+# Habilitar e iniciar o serviço
 sudo systemctl enable --now systemd-resolved.service
 
-#Remover resolv.conf fixo (se existir)
-sudo rm -f /etc/resolv.conf
+# Garantir que o resolv.conf aponta para o stub do resolved
+sudo ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
 
-#Criar o symlink do resolv.conf apontando para o stub do systemd-resolved
-sudo ln -s /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
+# Reiniciar o serviço (garante estado limpo)
+sudo systemctl restart systemd-resolved
 
-#Validar se o DNS está correto e ativo
+# Validar
 resolvectl status
-
-#Validar se o erro resolve1 parou de ocorrer no boot atual
-journalctl -b --since "16:00" | grep -i resolve1 || echo "OK: sem resolve1"
 
 :: CHAOTIC AUR 
 
