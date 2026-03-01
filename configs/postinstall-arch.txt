@@ -253,19 +253,15 @@ include "/usr/share/nano/*.nanorc"
 - CTRL + X (sair) 
 --------------------------------------------------------------------------
 6) Configurar sensores temperatura
-#Dependencia
-sudo pacman -S --needed lm_sensors i2c-tools rrdtool
 
-sudo modprobe i2c_dev
-sudo systemctl enable --now sensord.service #opcional
+# Instalar dependência
+sudo pacman -S --needed lm_sensors
 
-- Intel: sudo modprobe i2c-i801
-- AMD: sudo modprobe i2c-piix4
-
-echo "i2c_dev" | sudo tee /etc/modules-load.d/i2c.conf
-
+# Detectar sensores (uma vez)
 sudo sensors-detect
-sudo systemctl restart sensord.service #opcional
+
+# Verificar sensores
+sensors
 --------------------------------------------------------------------------
 7) Configurar NTP.br
 #Validar status do timesync
@@ -434,15 +430,33 @@ sudo grub-mkconfig -o /boot/grub/grub.cfg #requer reboot
 Validar com:
 ip a | grep -i inet6
 ------------------------------------------------------------------------------
-15) KDE Apps
-sudo pacman -S --needed kde-system spectacle gwenview ark filelight isoimagewriter kate kcalc kdialog kfind kwalletmanager sweeper dolphin-plugins inotify-tools okular 
+# KDE Apps (ajustado e otimizado)
+
+sudo pacman -S --needed \
+kde-system \
+spectacle gwenview ark kate kcalc kdialog kwalletmanager \
+dolphin-plugins inotify-tools okular \
+ffmpegthumbs kdegraphics-thumbnailers
+
+# OCR no Spectacle (KDE 6.6+)
+sudo pacman -S --needed tesseract tesseract-data-eng tesseract-data-por
 ------------------------------------------------------------------------------
 16) KDE Connect
 sudo pacman -S --needed kdeconnect
 ------------------------------------------------------------------------------
-18) Apps pacman (pacotes de dependicias KDE + Apps + drivers AMD)
-sudo pacman -S --needed fastfetch zip unzip ffmpeg ffmpegthumbs ntfs-3g discord rclone obs-studio dolphin-plugins okular kscreen gwenview kdegraphics-thumbnailers elisa kcalc unrar p7zip noto-fonts-cjk rsync cpu-x net-tools dnsutils dnsmasq mission-center pavucontrol vlc vlc-plugins-all alsa-utils fwupd cloud-guest-utils wireless-regdb mesa vulkan-radeon lib32-mesa lib32-vulkan-radeon inetutils curl firefox firefox-i18n-pt-br linux-headers base-devel plocate bash-completion sof-firmware dmidecode nvme-cli smartmontools
+Meus Apps
 
+sudo pacman -S --needed \
+fastfetch zip unzip ffmpeg ffmpegthumbs \
+discord rclone obs-studio \
+dolphin-plugins okular kscreen gwenview kcalc kdegraphics-thumbnailers \
+unrar p7zip noto-fonts-cjk rsync \
+cpu-x dnsutils dnsmasq mission-center pavucontrol vlc alsa-utils \
+fwupd wireless-regdb \
+mesa vulkan-radeon lib32-mesa lib32-vulkan-radeon \
+curl firefox firefox-i18n-pt-br \
+linux-headers base-devel plocate bash-completion \
+sof-firmware dmidecode nvme-cli smartmontools
 ------------------------------------------------------------------------------
 19) Apps UAR
 paru -S --needed brave-bin vscodium-bin ttf-ms-fonts onlyoffice-desktopeditors termius-bin
