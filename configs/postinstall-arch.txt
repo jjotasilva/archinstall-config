@@ -1,8 +1,8 @@
 ##Apos instalação usando "archinstall-custom.json":
 
-1) ajustar dpi GRUB/dpi inicializaçao SDDM (TELA)/num lock ativo sddm
-2) resise volume /;
-3) atualizar systema como sudo pacman -Syu > reboot
+0) resise volume /;
+1) install btrfs/snapper;
+2) ajustar dpi GRUB/dpi inicializaçao SDDM (TELA)/num lock ativo sddm
 4) alterar icone iniciar para logo do archlinux > desativar aceleração de mouse > mudar o tema tela de autenticação sddm para breeze > add teclado profile abnt brasil > 
 5) trocar tela de apresentação para logo do Archlinux > configurar sessão > sessão area de trabalho > iniciar com sessão vazia
 6) instalar plugin para wallpaper animado por video > papel de parede > baixar novos plugins > smart video wallpaper reborn;
