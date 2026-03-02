@@ -764,3 +764,5 @@ kscreen-doctor -o
 kscreen-doctor output.HDMI-A-1.hdr.disable
 reboot
 
+:: ajustar tamanho dpi vlc e onlyoffice
+editar aplicacativo > variavél de ambiente > QT_SCALE_FACTOR=1.5 > salvar
