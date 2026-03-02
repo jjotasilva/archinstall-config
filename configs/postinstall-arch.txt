@@ -489,55 +489,81 @@ sudo firewall-cmd --reload
 sudo pacman -S --needed flatpak flatpak-kcm xdg-desktop-portal-gtk xdg-desktop-portal-kde
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 ------------------------------------------------------------------------------
-21) AppArmor
-#check suporte
-zgrep CONFIG_LSM= /proc/config.gz
+21) AppArmor (Arch + GRUB + KDE)
 
-#Grub
+#GRUB: habilitar LSM stacking + audit (inclui capability)
 sudo nano /etc/default/grub
-GRUB_CMDLINE_LINUX_DEFAULT="lsm=landlock,lockdown,yama,integrity,apparmor,bpf audit=1"
+GRUB_CMDLINE_LINUX_DEFAULT="lsm=landlock,lockdown,yama,integrity,apparmor,bpf,capability audit=1"
 
-#atualizar grub
+#Atualizar GRUB
 sudo grub-mkconfig -o /boot/grub/grub.cfg
 
-#reboot
+#reboot (necessário para carregar os parâmetros do kernel)
+# reboot
 
-#Dependencias
-sudo pacman -S --needed tk apparmor python-audit python-notify2 audit
 
-#habilitar serviços
+#Pacotes (Arch)
+# - apparmor: inclui aa-status/aa-enforce/aa-notify/aa-logprof
+# - audit: gera /var/log/audit/audit.log
+# - python-notify2: notificações desktop
+# - tk: requerido pelo aa-notify (tkinter/libtk)
+sudo pacman -S --needed apparmor audit python-notify2 tk
+
+#Serviços
 sudo systemctl enable --now apparmor.service
 sudo systemctl enable --now auditd.service
 
-#Criar grupos e notificação
-sudo groupadd -r audit
+#Validar AppArmor no kernel (deve aparecer "apparmor")
+cat /sys/kernel/security/lsm
+
+#Grupo audit (pra permitir leitura do audit.log pelo usuário)
+sudo groupadd -r audit 2>/dev/null || true
 sudo gpasswd -a "$(whoami)" audit
 
-#edite arquivo de conifguração auditd.conf
+#Configurar auditd para usar o grupo audit no log
 sudo nano /etc/audit/auditd.conf
-
-#Adicione
+# Ajustar para:
 log_group = audit
 
-- CTRL + O (salvar)  
-- Enter (confirmar)  
-- CTRL + X (sair) 
+#Reboot (necessário para:
+# - aplicar log_group com auditd protegido contra restart manual
+# - aplicar membership do grupo 'audit' na sessão do usuário)
+# reboot
 
-#Criar notificação automatica
 
+#Verificar status do AppArmor
+sudo aa-status
+
+#Aplicar profiles (mais seguro; pode não mudar muito se já estiverem em enforce)
+sudo find /etc/apparmor.d -type f -name "usr.bin.*" -exec sudo aa-enforce {} +
+
+#Notificação automática (KDE Autostart)
 mkdir -p ~/.config/autostart
-nano ~/.config/autostart/apparmor-notify.desktop
 
-#adicionar
+cat > ~/.config/autostart/apparmor-notify.desktop <<'EOF'
 [Desktop Entry]
 Type=Application
 Name=AppArmor Notify
-Exec=aa-notify -p -s 1 -w 60 -f /var/log/audit/audit.log
-NoDisplay=true
+Exec=sh -lc 'test -f /var/log/audit/audit.log && exec aa-notify -p -s 1 -w 60 -f /var/log/audit/audit.log'
+Terminal=false
+X-KDE-autostart-enabled=true
+EOF
 
-- CTRL + O (salvar)  
-- Enter (confirmar)  
-- CTRL + X (sair) 
+#(Opcional) Fix Flatpak/Proton (Bubblewrap unconfined)
+sudo sh -c 'cat > /etc/apparmor.d/bwrap <<EOF
+abi <abi/4.0>,
+include <tunables/global>
+
+profile bwrap /usr/bin/bwrap flags=(unconfined) {
+  userns,
+}
+EOF'
+
+sudo systemctl restart apparmor.service
+
+#Observação: para a notificação funcionar, faça logout/login (ou reboot).
+# Validar:
+# pgrep -af aa-notify
 
 ------------------------------------------------------------------------------
 23)Fastfetch (Enhanced)
