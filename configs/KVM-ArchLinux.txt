@@ -39,7 +39,7 @@ sudo systemctl enable --now \
   virtproxyd.socket
 
 # Validar:
-systemctl status virtqemud.socket virtnetworkd.socket virtlogd.socket virtstoraged.socket virtnodedevd.socket --no-pager
+systemctl status virtqemud.socket virtnetworkd.socket virtlogd.socket virtstoraged.socket virtnodedevd.socket virtproxyd.socket --no-pager
 
 # Observações:
 # - NÃO habilite libvirtd.service
