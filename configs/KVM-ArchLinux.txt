@@ -15,7 +15,9 @@ sudo pacman -S --needed \
   swtpm \
   libosinfo \
   libguestfs \
-  virtiofsd
+  virtiofsd \
+  dnsmasq \
+  iptables-nft
 
 # Observações:
 # - qemu-img já vem no qemu-full
@@ -33,7 +35,8 @@ sudo systemctl enable --now \
   virtnetworkd.socket \
   virtlogd.socket \
   virtstoraged.socket \
-  virtnodedevd.socket
+  virtnodedevd.socket \
+  virtproxyd.socket
 
 # Validar:
 systemctl status virtqemud.socket virtnetworkd.socket virtlogd.socket virtstoraged.socket virtnodedevd.socket --no-pager
@@ -94,47 +97,6 @@ sudo usermod -aG libvirt $USER
 
 # IMPORTANTE:
 # Logout/login ou reboot obrigatório para aplicar o grupo
-
-
-############################################################
-# 7) Definir URI padrão do libvirt (recomendado)
-############################################################
-# Evita uso acidental de qemu:///session
-
-mkdir -p ~/.config/environment.d
-printf "LIBVIRT_DEFAULT_URI=qemu:///system\n" \
-  > ~/.config/environment.d/99-libvirt.conf
-
-# Depois:
-# logout/login ou reboot
-
-
-############################################################
-# 8) Firewalld (APENAS se estiver ativo)
-############################################################
-# Este passo é necessário SOMENTE se o firewalld estiver rodando.
-
-systemctl status firewalld --no-pager
-
-# Se estiver ativo, garantir que a zona libvirt exista:
-sudo install -Dm644 \
-  /usr/lib/firewalld/zones/libvirt.xml \
-  /etc/firewalld/zones/libvirt.xml
-
-sudo firewall-cmd --reload
-
-# Amarrar a bridge virbr0 à zona libvirt:
-sudo firewall-cmd --zone=libvirt --add-interface=virbr0
-sudo firewall-cmd --zone=libvirt --add-interface=virbr0 --permanent
-sudo firewall-cmd --reload
-
-# Validar:
-firewall-cmd --get-active-zones
-
-# Observações:
-# - NÃO desative o firewalld
-# - NÃO mova virbr0 para zonas public ou trusted
-# - Essa é a integração correta libvirt + firewalld
 
 
 ############################################################
