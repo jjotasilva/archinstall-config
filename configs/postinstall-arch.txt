@@ -840,3 +840,6 @@ systemctl status tuned tuned-ppd --no-pager
 
 # Verificar o perfil real aplicado
 tuned-adm active
+
+# verificar erros
+sudo tuned-adm verify
