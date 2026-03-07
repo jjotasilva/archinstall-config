@@ -835,5 +835,8 @@ performance=throughput-performance
 # Reiniciar 
 sudo reboot
 
+#validar serviços
+systemctl status tuned tuned-ppd --no-pager
+
 # Verificar o perfil real aplicado
 tuned-adm active
