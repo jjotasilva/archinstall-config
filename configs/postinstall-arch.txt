@@ -843,3 +843,51 @@ tuned-adm active
 
 # verificar erros
 sudo tuned-adm verify
+
+Correção do tuned-adm verify no Arch Linux
+==========================================
+
+Problema
+--------
+Em sistemas com amd-pstate-epp, o comando:
+
+sudo tuned-adm verify
+
+pode falhar com erro relacionado ao módulo cpufreq_conservative,
+mesmo com o TuneD funcionando corretamente.
+
+Causa
+-----
+O perfil "desktop" herda o perfil "balanced".
+O perfil "balanced" original tenta validar cpufreq_conservative.
+No Arch com amd-pstate-epp, isso pode gerar falso erro no verify.
+
+Correção
+--------
+1) Criar o diretório do perfil local override:
+
+sudo mkdir -p /etc/tuned/profiles/balanced
+
+2) Editar o arquivo:
+
+sudo nano /etc/tuned/profiles/balanced/tuned.conf
+
+3) Colar este conteúdo:
+
+[main]
+include=balanced
+
+[modules]
+enabled=0
+
+4) Reiniciar os serviços:
+
+sudo systemctl restart tuned tuned-ppd
+
+5) Validar novamente:
+
+sudo tuned-adm verify
+
+Resultado esperado
+------------------
+Verification succeeded, current system settings match the preset profile.
