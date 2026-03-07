@@ -832,8 +832,8 @@ power-saver=powersave
 balanced=desktop   #altere pelo profiles que você deseja aqui
 performance=throughput-performance
 
-# Reiniciar 
-sudo reboot
+# Reiniciar serviços (ou reinicie o sistema)
+sudo systemctl restart tuned tuned-ppd
 
 #validar serviços
 systemctl status tuned tuned-ppd --no-pager
