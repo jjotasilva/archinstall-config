@@ -891,3 +891,10 @@ sudo tuned-adm verify
 Resultado esperado
 ------------------
 Verification succeeded, current system settings match the preset profile.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+:: Instalando impressora HP 2774
+sudo pacman -S --needed cups cups-pdf ghostscript gsfonts libcups hplip system-config-printer
+sudo systemctl enable --now cups.service
+system-config-printer #inicia o wizard de configuração, clique em adicionar e caso use firewall clica no ajustar firewall para adicionar na exceção
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
