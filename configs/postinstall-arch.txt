@@ -898,3 +898,8 @@ sudo pacman -S --needed cups cups-pdf ghostscript gsfonts libcups hplip system-c
 sudo systemctl enable --now cups.service
 system-config-printer #inicia o wizard de configuração, clique em adicionar e caso use firewall clica no ajustar firewall para adicionar na exceção
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+:: Synergy
+
+sudo firewall-cmd --add-port=24800/tcp --permanent
+sudo firewall-cmd --reload
