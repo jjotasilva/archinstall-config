@@ -903,3 +903,90 @@ system-config-printer #inicia o wizard de configuração, clique em adicionar e 
 
 sudo firewall-cmd --add-port=24800/tcp --permanent
 sudo firewall-cmd --reload
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+:: Criar Converter MKV to MP4 no contexto do dolphin
+
+# 1) Criar pasta local de scripts
+mkdir -p ~/.local/bin
+
+# 2) Criar o script que converte MKV para MP4
+cat > ~/.local/bin/mkv-to-mp4 <<'EOF'
+#!/usr/bin/env bash
+set -euo pipefail
+
+need() {
+  command -v "$1" >/dev/null 2>&1 || {
+    echo "Erro: '$1' não encontrado."
+    exit 1
+  }
+}
+
+need ffmpeg
+need notify-send
+
+if [[ $# -lt 1 ]]; then
+  notify-send "MKV para MP4" "Nenhum arquivo foi informado."
+  exit 1
+fi
+
+for input in "$@"; do
+  [[ -f "$input" ]] || continue
+
+  ext="${input##*.}"
+  shopt -s nocasematch
+  if [[ "$ext" != "mkv" ]]; then
+    shopt -u nocasematch
+    continue
+  fi
+  shopt -u nocasematch
+
+  dir="$(dirname "$input")"
+  base="$(basename "$input")"
+  name="${base%.*}"
+  output="$dir/$name.mp4"
+
+  if [[ -e "$output" ]]; then
+    output="$dir/${name}_convertido.mp4"
+  fi
+
+  # Mantém o vídeo original e converte só o áudio para AAC
+  if ffmpeg -y -i "$input" -c:v copy -c:a aac -b:a 128k "$output"; then
+    notify-send "MKV para MP4" "Conversão concluída: $(basename "$output")"
+  else
+    notify-send "MKV para MP4" "Falha ao converter: $(basename "$input")"
+  fi
+done
+EOF
+
+# 3) Garantir que o script pertence ao seu usuário
+sudo chown $USER:$USER ~/.local/bin/mkv-to-mp4
+
+# 4) Dar permissão de execução ao script
+chmod +x ~/.local/bin/mkv-to-mp4
+
+# 5) Criar a ação do menu de contexto do Dolphin
+mkdir -p ~/.local/share/kio/servicemenus
+cat > ~/.local/share/kio/servicemenus/mkv-to-mp4.desktop <<EOF
+[Desktop Entry]
+Type=Service
+MimeType=video/x-matroska;
+Actions=ConvertMKVtoMP4
+X-KDE-ServiceTypes=KonqPopupMenu/Plugin
+
+[Desktop Action ConvertMKVtoMP4]
+Name=Converter MKV para MP4
+Name[pt_BR]=Converter MKV para MP4
+Icon=video-x-generic
+Exec=$HOME/.local/bin/mkv-to-mp4 %F
+EOF
+
+# 6) Dar permissão de execução ao arquivo .desktop
+chmod +x ~/.local/share/kio/servicemenus/mkv-to-mp4.desktop
+
+# 7) Fechar e abrir o Dolphin novamente
+# Depois disso, ao clicar com o botão direito em um arquivo .mkv,
+# deve aparecer a opção:
+# Converter MKV para MP4
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
