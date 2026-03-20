@@ -990,3 +990,6 @@ chmod +x ~/.local/share/kio/servicemenus/mkv-to-mp4.desktop
 # deve aparecer a opção:
 # Converter MKV para MP4
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+:: Escala resolução irpf2026
+Clicar com botão direito do mouse no app > editar aplicação > ambiente de variavel > digitar: GDK_SCALE=2 > salvar
