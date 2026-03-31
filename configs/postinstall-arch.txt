@@ -1001,3 +1001,12 @@ Clicar com botão direito do mouse no app > editar aplicação > ambiente de var
 paru -S stacher7                                                                                     ─╯
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+:: Melhorar desempenho nvme
+verificar se está setado [none] com:
+cat /sys/block/nvme0n1/queue/scheduler
+
+Se não estiver usar o comando:
+echo none | sudo tee /sys/block/nvme0n1/queue/scheduler
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
