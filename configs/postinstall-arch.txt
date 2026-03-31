@@ -1009,4 +1009,10 @@ cat /sys/block/nvme0n1/queue/scheduler
 Se não estiver usar o comando:
 echo none | sudo tee /sys/block/nvme0n1/queue/scheduler
 
+Tornar permanente após boot:
+
+❯ sudo nano /etc/udev/rules.d/60-ioschedulers.rules
+ACTION=="add|change", KERNEL=="nvme0n1", ATTR{queue/scheduler}="none"
+
+salvar, fechar
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
