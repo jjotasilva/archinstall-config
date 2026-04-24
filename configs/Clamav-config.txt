@@ -1,0 +1,230 @@
+# =========================================================
+# MODELO - INSTALAÇÃO E CONFIGURAÇÃO DO CLAMAV NO ARCH KDE
+# Cenário:
+# - freshclam ativo
+# - clamd ativo
+# - on-access monitorando ~/Downloads
+# - quarentena em /var/lib/clamav/quarantine
+# - scan diário da /home via systemd
+# - exclusões para reduzir tempo de scan
+# - log com data/hora em /var/log/clamav/
+# =========================================================
+
+
+# =========================================================
+# 1) INSTALAR CLAMAV
+# =========================================================
+sudo pacman -S clamav
+
+
+# =========================================================
+# 2) ATUALIZAR BASE INICIAL
+# =========================================================
+sudo systemctl start clamav-freshclam-once.service
+sudo systemctl enable --now clamav-freshclam.service
+
+
+# =========================================================
+# 3) AJUSTAR ACLs PARA O clamd/clamonacc ACESSAREM ~/Downloads
+# =========================================================
+setfacl -m u:clamav:--x /home/james
+setfacl -m u:clamav:r-x /home/james/Downloads
+
+
+# =========================================================
+# 4) CONFIGURAR clamd.conf
+#    - on-access em Downloads
+#    - tamanhos máximos
+#    - excludes do daemon
+# =========================================================
+sudo cp /etc/clamav/clamd.conf /etc/clamav/clamd.conf.bak
+
+sudo sed -i '/^OnAccessIncludePath /d;/^OnAccessExcludeUname /d;/^OnAccessPrevention /d;/^MaxFileSize /d;/^MaxScanSize /d;/^ExcludePath /d' /etc/clamav/clamd.conf
+
+sudo tee -a /etc/clamav/clamd.conf >/dev/null <<'EOF'
+
+# On-access protection for Downloads
+OnAccessIncludePath /home/james/Downloads
+OnAccessExcludeUname clamav
+OnAccessPrevention yes
+
+MaxFileSize 512M
+MaxScanSize 1G
+
+ExcludePath ^/home/james/nextcloud(/|$)
+ExcludePath ^/home/james/kvm(/|$)
+ExcludePath ^/home/james/\.local/share/Steam(/|$)
+ExcludePath ^/home/james/\.steam(/|$)
+ExcludePath ^/home/james/\.cache(/|$)
+ExcludePath ^/home/james/\.npm(/|$)
+ExcludePath ^/home/james/\.cargo(/|$)
+ExcludePath ^/home/james/\.vscode-oss(/|$)
+ExcludePath ^/home/james/\.stacher(/|$)
+ExcludePath ^/home/james/\.var(/|$)
+EOF
+
+
+# =========================================================
+# 5) CRIAR QUARENTENA
+#    Opção validada: subvolume btrfs em /var/lib/clamav/quarantine
+# =========================================================
+sudo btrfs subvolume create /var/lib/clamav/quarantine
+sudo chmod 700 /var/lib/clamav/quarantine
+
+
+# =========================================================
+# 6) SUBIR clamd
+# =========================================================
+sudo systemctl restart clamav-daemon.service
+sudo systemctl enable clamav-daemon.service
+
+
+# =========================================================
+# 7) AJUSTAR clamonacc PARA USAR A QUARENTENA CORRETA
+# =========================================================
+sudo mkdir -p /etc/systemd/system/clamav-clamonacc.service.d
+
+sudo tee /etc/systemd/system/clamav-clamonacc.service.d/override.conf >/dev/null <<'EOF'
+[Service]
+ExecStart=
+ExecStart=/usr/sbin/clamonacc -F --log=/var/log/clamav/clamonacc.log --move=/var/lib/clamav/quarantine
+EOF
+
+sudo systemctl daemon-reload
+sudo systemctl restart clamav-clamonacc.service
+sudo systemctl enable clamav-clamonacc.service
+
+
+# =========================================================
+# 8) TESTE ON-ACCESS COM EICAR
+# =========================================================
+cd ~/Downloads && curl -LO https://secure.eicar.org/eicar.com.txt
+cat ~/Downloads/eicar.com.txt
+sudo ls -la /var/lib/clamav/quarantine
+
+
+# =========================================================
+# 9) CRIAR SERVICE DO SCAN DIÁRIO DA /home
+#    - PUA habilitado
+#    - heurística habilitada
+#    - log com data/hora
+#    - exclusões ajustadas
+#    - quarentena automática
+# =========================================================
+sudo tee /etc/systemd/system/clamscan.service >/dev/null <<'EOF'
+[Unit]
+Description=Daily ClamAV Scan
+
+[Service]
+Type=oneshot
+Nice=10
+ExecStart=/bin/bash -c 'LOG="/var/log/clamav/scan-$(date +%%F_%%H-%%M-%%S).log"; exec /usr/bin/clamscan -r --log="$LOG" --detect-pua=yes --heuristic-alerts=yes --exclude-dir="^/sys" --exclude-dir="^/proc" --exclude-dir="^/dev" --exclude-dir="^/home/james/nextcloud(/|$)" --exclude-dir="^/home/james/kvm(/|$)" --exclude-dir="^/home/james/\.local/share/Steam(/|$)" --exclude-dir="^/home/james/\.steam(/|$)" --exclude-dir="^/home/james/\.cache(/|$)" --exclude-dir="^/home/james/\.npm(/|$)" --exclude-dir="^/home/james/\.cargo(/|$)" --exclude-dir="^/home/james/\.vscode-oss(/|$)" --exclude-dir="^/home/james/\.stacher(/|$)" --exclude-dir="^/home/james/\.var(/|$)" --exclude-dir="^/home/james/\.config/BraveSoftware/Brave-Browser/Default/Extensions/eiaeiblijfjekdanodkjadfinkhbfgcd(/|$)" --move=/var/lib/clamav/quarantine /home'
+EOF
+
+
+# =========================================================
+# 10) CRIAR TIMER DIÁRIO ÀS 13:00
+# =========================================================
+sudo tee /etc/systemd/system/clamscan.timer >/dev/null <<'EOF'
+[Unit]
+Description=Schedule Daily ClamAV Scan
+
+[Timer]
+OnCalendar=*-*-* 13:00:00
+AccuracySec=1h
+Persistent=true
+
+[Install]
+WantedBy=timers.target
+EOF
+
+sudo systemctl daemon-reload
+sudo systemctl enable --now clamscan.timer
+
+
+# =========================================================
+# 11) VALIDAR SERVIÇOS
+# =========================================================
+systemctl status --no-pager clamav-daemon.service clamav-clamonacc.service clamav-freshclam.service clamscan.timer
+
+
+# =========================================================
+# 12) RODAR O SCAN DIÁRIO MANUALMENTE
+# =========================================================
+sudo systemctl start clamscan.service
+
+
+# =========================================================
+# 13) ACOMPANHAR O ANDAMENTO
+# =========================================================
+sudo journalctl -u clamscan.service -f -l
+
+
+# =========================================================
+# 14) VER STATUS DO SCAN
+# =========================================================
+systemctl status --no-pager clamscan.service
+
+
+# =========================================================
+# 15) VER O ÚLTIMO LOG GERADO
+# =========================================================
+sudo ls -lt /var/log/clamav/scan-*.log | head
+
+
+# =========================================================
+# 16) VER O RESUMO DO ÚLTIMO SCAN
+# =========================================================
+sudo grep -A12 'SCAN SUMMARY' "$(ls -1t /var/log/clamav/scan-*.log | head -n 1)"
+
+
+# =========================================================
+# 17) VER DETECÇÕES / EXCLUSÕES / ARQUIVOS MOVIDOS
+# =========================================================
+sudo grep -E 'Excluded|FOUND|moved to' "$(ls -1t /var/log/clamav/scan-*.log | head -n 1)"
+
+
+# =========================================================
+# 18) VER CONTEÚDO DA QUARENTENA
+# =========================================================
+sudo ls -l /var/lib/clamav/quarantine
+
+
+# =========================================================
+# 19) ABRIR O ÚLTIMO LOG COMPLETO
+# =========================================================
+sudo less "$(ls -1t /var/log/clamav/scan-*.log | head -n 1)"
+
+
+# =========================================================
+# 20) TESTE MANUAL DE UM CAMINHO ESPECÍFICO
+# =========================================================
+clamscan -r /home/james/nextcloud
+
+
+# =========================================================
+# 21) COMANDOS ÚTEIS
+# =========================================================
+
+# Ver mount do nextcloud (rclone/webdav)
+findmnt /home/james/nextcloud
+
+# Ver últimos logs do on-access
+sudo tail -n 50 /var/log/clamav/clamonacc.log
+
+# Ver últimos logs do clamd
+sudo tail -n 50 /var/log/clamav/clamd.log
+
+# Ver último scan salvo em arquivo
+sudo ls -1 /var/log/clamav/scan-*.log | tail -n 3
+
+
+# =========================================================
+# OBSERVAÇÕES
+# =========================================================
+# 1. O scan diário usa clamscan standalone.
+# 2. O on-access usa clamd + clamonacc.
+# 3. O ClamTk não controla automaticamente esse service do systemd.
+# 4. A extensão do NordPass foi excluída do scan diário para evitar falso positivo.
+# 5. O nextcloud via rclone/webdav foi excluído do scan diário porque o scan nele ficou muito demorado.
+# =========================================================
