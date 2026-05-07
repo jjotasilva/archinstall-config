@@ -163,7 +163,8 @@
         "linux-headers",
         "dkms",
         "firefox",
-        "firefox-i18n-pt-br"
+        "firefox-i18n-pt-br",
+        "konsole"
     ],
     "parallel_downloads": 10,
     "profile_config": {
