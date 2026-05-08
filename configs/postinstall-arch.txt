@@ -454,13 +454,13 @@ Meus Apps
 sudo pacman -S --needed \
 fastfetch zip unzip ffmpeg ffmpegthumbs \
 discord rclone obs-studio \
-dolphin-plugins okular kscreen gwenview kcalc kdegraphics-thumbnailers \
+dolphin dolphin-plugins okular gwenview kcalc filelight spectacle tesseract tesseract-data-por gnome-disk-utility kdegraphics-thumbnailers \
 unrar p7zip noto-fonts-cjk rsync \
 cpu-x dnsutils dnsmasq mission-center pavucontrol vlc vlc-plugins-all alsa-utils \
 fwupd wireless-regdb \
 mesa vulkan-radeon lib32-mesa lib32-vulkan-radeon \
 curl firefox firefox-i18n-pt-br \
-linux-headers base-devel plocate bash-completion \
+linux-zen-headers base-devel plocate bash-completion \
 sof-firmware dmidecode nvme-cli smartmontools
 ------------------------------------------------------------------------------
 19) Apps UAR
@@ -469,7 +469,7 @@ brave-bin \
 vscodium-bin \
 ttf-ms-fonts \
 onlyoffice-bin \
-termius
+brave-origin-beta-bin
 ------------------------------------------------------------------------------
 20) Firewall
 sudo pacman -S --needed firewalld python-pyqt6 firewall-applet
