@@ -63,6 +63,12 @@ FallbackNTP=0.arch.pool.ntp.org 1.arch.pool.ntp.org
 EOF
 
 systemctl restart systemd-timesyncd
+
+Validar com:
+
+timedatectl status
+
+NTP Service = active
 ----------------------------------------------------------------------------------------------------------------
 :: Corrigir escala de resolução tela inicial SDDM e NUNLOCK ativo
 
