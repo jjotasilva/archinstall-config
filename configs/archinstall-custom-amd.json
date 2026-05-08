@@ -180,7 +180,8 @@
         "dolphin",
         "dolphin-plugins",
         "python-pyqt6",
-        "firewall-applet"
+        "firewall-applet",
+        "filelight"
     ],
     "parallel_downloads": 10,
     "profile_config": {
