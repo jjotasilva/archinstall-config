@@ -1018,5 +1018,9 @@ salvar, fechar
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ::: Auto Logon KDE Plasma - Plasma Login Manager (PLM)
-sudo nano /etc/plasmalogin.conf [Autologin] User=james Session=plasma
+sudo nano /etc/plasmalogin.conf 
+
+[Autologin]
+User=james
+Session=plasma
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
