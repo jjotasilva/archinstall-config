@@ -170,7 +170,7 @@
         "man-db",
         "man-pages",
         "plocate",
-        "amd-ucode",
+        "intel-ucode",
         "linux-firmware",
         "linux-zen-headers",
         "dkms",
@@ -184,7 +184,7 @@
     ],
     "parallel_downloads": 10,
     "profile_config": {
-        "gfx_driver": "AMD / ATI (open-source)",
+        "gfx_driver": "Intel (open-source)",
         "greeter": "plasma-login-manager",
         "profile": {
             "custom_settings": {
