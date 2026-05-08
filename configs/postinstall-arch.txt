@@ -1015,4 +1015,8 @@ Tornar permanente após boot:
 ACTION=="add|change", KERNEL=="nvme0n1", ATTR{queue/scheduler}="none"
 
 salvar, fechar
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+::: Auto Logon KDE Plasma - Plasma Login Manager (PLM)
+sudo nano /etc/plasmalogin.conf [Autologin] User=james Session=plasma
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
