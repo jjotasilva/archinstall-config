@@ -6,8 +6,20 @@
         "bluetooth_config": {
             "enabled": true
         },
+        "firewall_config": {
+            "firewall": "firewalld"  
+        },
+        "fonts_config": {
+            "fonts": [
+                "noto-fonts",
+                "noto-fonts-emoji",
+                "noto-fonts-cjk",
+                "ttf-liberation",
+                "ttf-dejavu"
+            ]
+        },
         "print_service_config": {
-            "enabled": false
+            "enabled": true
         }
     },
     "archinstall-language": "English",
@@ -133,9 +145,9 @@
             }
         ]
     },
-    "hostname": "archlinux-kvm",
+    "hostname": "archlinux",
     "kernels": [
-        "linux"
+        "linux-zen"
     ],
     "locale_config": {
         "kb_layout": "br-abnt2",
@@ -160,16 +172,20 @@
         "plocate",
         "amd-ucode",
         "linux-firmware",
-        "linux-headers",
+        "linux-zen-headers",
         "dkms",
         "firefox",
         "firefox-i18n-pt-br",
-        "konsole"
+        "konsole",
+        "dolphin",
+        "dolphin-plugins",
+        "python-pyqt6",
+        "firewall-applet"
     ],
     "parallel_downloads": 10,
     "profile_config": {
         "gfx_driver": "AMD / ATI (open-source)",
-        "greeter": "sddm",
+        "greeter": "plasma-login-manager",
         "profile": {
             "custom_settings": {
                 "KDE Plasma": {}
