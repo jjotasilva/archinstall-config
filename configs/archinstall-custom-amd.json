@@ -221,7 +221,8 @@
         "wireplumber",
         "smartmontools",
         "nvme-cli",
-        "btrfs-progs"
+        "btrfs-progs",
+        "lm_sensors"
     ],
     "parallel_downloads": 10,
     "profile_config": {
