@@ -486,7 +486,8 @@ brave-bin \
 vscodium-bin \
 ttf-ms-fonts \
 onlyoffice-bin \
-brave-origin-beta-bin
+brave-origin-beta-bin \
+onlyoffice-bin
 ------------------------------------------------------------------------------
 20) Firewall
 sudo pacman -S --needed firewalld python-pyqt6 firewall-applet
