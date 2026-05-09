@@ -210,7 +210,8 @@
         "sof-firmware",
         "wireplumber",
         "smartmontools",
-        "btrfs-progs"
+        "btrfs-progs",
+        "virt-what"
     ],
     "parallel_downloads": 10,
     "profile_config": {
