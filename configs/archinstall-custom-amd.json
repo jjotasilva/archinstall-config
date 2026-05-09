@@ -222,7 +222,8 @@
         "smartmontools",
         "nvme-cli",
         "btrfs-progs",
-        "lm_sensors"
+        "lm_sensors",
+        "kclock"
     ],
     "parallel_downloads": 10,
     "profile_config": {
