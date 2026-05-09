@@ -212,7 +212,8 @@
         "wireplumber",
         "smartmontools",
         "btrfs-progs",
-        "virt-what"
+        "virt-what",
+        "kclock"
     ],
     "parallel_downloads": 10,
     "profile_config": {
