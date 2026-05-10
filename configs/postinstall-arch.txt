@@ -813,7 +813,7 @@ vlc -> editar aplicacativo > variavél de ambiente > QT_SCALE_FACTOR=0.9
 onlyoffice -> terminal > onlyoffice-desktopeditors --force-scale=1.5
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 :: # Instalar TuneD + camada compatível com power-profiles-daemon
-sudo pacman -S --needed tuned tuned-ppd
+sudo pacman -S --needed tuned tuned-ppd virt-what
 
 # Habilitar e iniciar os serviços
 sudo systemctl enable --now tuned tuned-ppd
