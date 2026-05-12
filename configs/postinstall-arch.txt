@@ -490,7 +490,7 @@ brave-origin-beta-bin \
 onlyoffice-bin
 ------------------------------------------------------------------------------
 20) Firewall
-sudo pacman -S --needed firewalld python-pyqt6 firewall-applet
+sudo pacman -S --needed firewalld plasma-firewall python-pyqt6 firewall-applet
 sudo systemctl enable --now firewalld
 sudo firewall-cmd --reload
 
