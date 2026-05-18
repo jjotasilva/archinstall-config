@@ -93,8 +93,17 @@
                                 "name": "@srv"
                             },
                             {
-                                "mountpoint": "/var/lib/libvirt/images",
-                                "name": "@images"
+                                "mountpoint": "/var/lib/libvirt",
+                                "name": "@libvirt"
+                            },
+                            {
+                                "mountpoint": "/var/lib/containers",
+                                "name": "@containers"
+                            },
+                            {
+                                
+                                "mountpoint": "/var/lib/flatpak",
+                                "name": "@flatpak"
                             },
                             {
                                 "mountpoint": "/var/cache",
@@ -206,7 +215,6 @@
         "bash-completion",
         "dmidecode",
         "fastfetch",
-        "obs-studio",
         "kdegraphics-thumbnailers",
         "pavucontrol",
         "ark",
@@ -229,7 +237,7 @@
     "parallel_downloads": 10,
     "profile_config": {
         "gfx_driver": "AMD / ATI (open-source)",
-        "greeter": "plasma-login-manager",
+        "greeter": "sddm",
         "profile": {
             "custom_settings": {
                 "KDE Plasma": {}
