@@ -101,7 +101,6 @@
                                 "name": "@containers"
                             },
                             {
-                                
                                 "mountpoint": "/var/lib/flatpak",
                                 "name": "@flatpak"
                             },
