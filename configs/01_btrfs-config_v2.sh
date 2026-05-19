@@ -52,12 +52,13 @@ sudo pacman -S --needed --noconfirm \
   snapper \
   snap-pac \
   grub-btrfs \
+  compsize \
   inotify-tools
 
 echo
 echo "---------------------"
 echo "Instalando btrfs-assistant (AUR)..."
-paru -S --needed --noconfirm btrfs-assistant
+paru -S --needed --noconfirm btrfs-assistant btrfsmaintenance
 
 # -----------------------------
 # Configurar Snapper (idempotente)
