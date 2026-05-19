@@ -478,7 +478,12 @@ fwupd wireless-regdb \
 mesa vulkan-radeon lib32-mesa lib32-vulkan-radeon \
 curl firefox firefox-i18n-pt-br \
 linux-zen-headers base-devel plocate bash-completion \
-sof-firmware dmidecode nvme-cli smartmontools
+sof-firmware dmidecode nvme-cli smartmontools logrotate
+
+sudo systemctl enable --now smartd.service
+sudo systemctl enable --now plocate-updatedb.timer
+sudo systemctl enable --now fstrim.timer
+sudo systemctl enable --now logrotate.timer
 ------------------------------------------------------------------------------
 19) Apps UAR
 paru -S --needed \
