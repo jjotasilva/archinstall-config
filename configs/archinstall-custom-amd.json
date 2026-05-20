@@ -240,7 +240,9 @@
         "nvme-cli",
         "btrfs-progs",
         "lm_sensors",
-        "kclock"
+        "kclock",
+        "logrotate",
+        "irqbalance"
     ],
     "parallel_downloads": 10,
     "profile_config": {
