@@ -222,6 +222,7 @@
         "p7zip",
         "dnsmasq",
         "fwupd",
+        "fwupd-efi",
         "bash-completion",
         "dmidecode",
         "fastfetch",
@@ -241,13 +242,12 @@
         "btrfs-progs",
         "lm_sensors",
         "kclock",
-        "logrotate",
-        "irqbalance"
+        "logrotate"
     ],
     "parallel_downloads": 10,
     "profile_config": {
         "gfx_driver": "AMD / ATI (open-source)",
-        "greeter": "sddm",
+        "greeter": "plasma-login-manager",
         "profile": {
             "custom_settings": {
                 "KDE Plasma": {}
