@@ -1057,3 +1057,26 @@ Session=plasma
 https://dystroy.org/dysk/
 curl -Lo /tmp/dysk https://dystroy.org/dysk/download/x86_64-linux/dysk && chmod +x /tmp/dysk && sudo mv /tmp/dysk /usr/local/bin/dysk
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+:: criar cadeia checagem de update + firmware ::
+
+cat >> ~/.zshrc <<'EOF'
+
+updates() {
+  echo "==> Atualizando pacotes do Arch/AUR com paru..."
+  paru -Syu
+
+  echo
+  echo "==> Atualizando metadados do fwupd..."
+  fwupdmgr refresh --force
+
+  echo
+  echo "==> Verificando atualizações de firmware..."
+  fwupdmgr get-updates
+
+  echo
+  echo "==> Aplicando atualizações de firmware, se houver..."
+  fwupdmgr update
+}
+EOF
+
+source ~/.zshrc
