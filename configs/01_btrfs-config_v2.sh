@@ -52,13 +52,14 @@ sudo pacman -S --needed --noconfirm \
   snapper \
   snap-pac \
   grub-btrfs \
+  btrfsmaintenance \
   compsize \
   inotify-tools
 
 echo
 echo "---------------------"
 echo "Instalando btrfs-assistant (AUR)..."
-paru -S --needed --noconfirm btrfs-assistant btrfsmaintenance
+paru -S --needed --noconfirm btrfs-assistant 
 
 # -----------------------------
 # Configurar Snapper (idempotente)
@@ -79,7 +80,7 @@ sudo snapper -c root set-config "ALLOW_USERS=$USER" "SYNC_ACL=yes"
 sudo snapper -c home set-config "ALLOW_USERS=$USER" "SYNC_ACL=yes"
 
 # Desativar timeline no /home (se esse for seu padrao)
-#sudo snapper -c home set-config "TIMELINE_CREATE=no"
+"sudo snapper -c home set-config "TIMELINE_CREATE=no"
 
 # -----------------------------
 # updatedb.conf (plocate/mlocate)
