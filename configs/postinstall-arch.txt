@@ -484,7 +484,8 @@ sudo systemctl enable --now smartd.service
 sudo systemctl enable --now plocate-updatedb.timer
 sudo systemctl enable --now fstrim.timer
 sudo systemctl enable --now logrotate.timer
-sudo systemctl enable --now irqbalance.service
+sudo systemctl enable --now irqbalance.service (não usar junto com tuned)
+sudo systemctl enable --now fwupd-refresh.timer
 ------------------------------------------------------------------------------
 19) Apps UAR
 paru -S --needed \
