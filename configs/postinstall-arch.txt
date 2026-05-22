@@ -613,6 +613,7 @@ sudo pacman -S --needed libreoffice-fresh libreoffice-fresh-pt-br
 ----------------------------------------------------------------------------------------------------------------
 ::Archinstall usando GitHub
 loadkeys br-abnt2 #comando para alterar layout do teclado
+setfont ter-124b #aumentar tamanho da fonte
 curl -LO https://raw.githubusercontent.com/jjotasilva/archinstall-config/main/configs/archinstall-custom.json    <========= <=========
 
 archinstall --config arch-postinstall.json
