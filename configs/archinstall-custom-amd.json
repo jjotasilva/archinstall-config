@@ -242,8 +242,6 @@
         "skanpage",
         "logrotate",
         "avahi",
-        "hplip",
-        "python-pyqt5",
         "cups-pdf"
     ],
     "parallel_downloads": 10,
