@@ -924,7 +924,7 @@ Verification succeeded, current system settings match the preset profile.
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 :: Instalando impressora HP 2774
-sudo pacman -S --needed cups cups-pdf ghostscript gsfonts libcups hplip system-config-printer avai skanpage
+sudo pacman -S --needed cups cups-pdf ghostscript  libcups system-config-printer avai skanpage  #hplip e gsfonts não funcionais no wayland
 sudo systemctl enable --now cups.service
 sudo systemctl enable --now avahi-daemon.service #faz descoberta da impressora via rede (DNS)
 system-config-printer #inicia o wizard de configuração, clique em adicionar e caso use firewall clica no ajustar firewall para adicionar na exceção
