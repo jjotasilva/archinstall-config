@@ -239,6 +239,7 @@
         "btrfs-progs",
         "lm_sensors",
         "kclock",
+        "skanpage",
         "logrotate"
     ],
     "parallel_downloads": 10,
