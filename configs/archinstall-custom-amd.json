@@ -240,7 +240,10 @@
         "lm_sensors",
         "kclock",
         "skanpage",
-        "logrotate"
+        "logrotate",
+        "hplip",
+        "avahi",
+        "gsfonts"
     ],
     "parallel_downloads": 10,
     "profile_config": {
