@@ -241,7 +241,9 @@
         "kclock",
         "skanpage",
         "logrotate",
-        "avahi"
+        "avahi",
+        "hplip",
+        "python-pyqt5"
     ],
     "parallel_downloads": 10,
     "profile_config": {
