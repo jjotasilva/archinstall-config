@@ -478,7 +478,7 @@ fwupd wireless-regdb \
 mesa vulkan-radeon lib32-mesa lib32-vulkan-radeon \
 curl firefox firefox-i18n-pt-br \
 linux-zen-headers base-devel plocate bash-completion \
-sof-firmware dmidecode nvme-cli smartmontools logrotate fwupd-efi avahi hplip python-pyqt5
+sof-firmware dmidecode nvme-cli smartmontools logrotate fwupd-efi avahi hplip python-pyqt5 kwalletmanager ksystemlog
 
 sudo pacman -S sddm-kcm #Para SDDM apenas, configura opção de trocar tela SDDM na inicialização
 sudo systemctl enable --now smartd.service
@@ -922,10 +922,10 @@ Verification succeeded, current system settings match the preset profile.
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 :: Instalando impressora HP 2774
-sudo pacman -S --needed cups cups-pdf system-config-printer avahi skanpage hplip python-pyqt5 
+sudo pacman -S --needed cups cups-pdf system-config-printer avahi skanpage # instalar hplip python-pyqt5 que é o HP Manager mais é opcional 
 sudo systemctl enable --now cups.service
 sudo systemctl enable --now avahi-daemon.service #faz descoberta da impressora via rede (DNS)
-system-config-printer #inicia o wizard de configuração, clique em adicionar e caso use firewall clica no ajustar firewall para adicionar na exceção
+recomendado adicionar via kde em impressao ou system-config-printer #inicia o wizard de configuração, clique em adicionar e caso use firewall clica no ajustar firewall para adicionar na exceção
 ou
 :liberar porta Firewall:
 sudo firewall-cmd --zone=public --add-port=5353/udp --permanent
