@@ -243,6 +243,8 @@
         "logrotate",
         "avahi",
         "cups-pdf"
+        "kwalletmanager",
+        "ksystemlog"
     ],
     "parallel_downloads": 10,
     "profile_config": {
