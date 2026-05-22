@@ -241,9 +241,7 @@
         "kclock",
         "skanpage",
         "logrotate",
-        "hplip",
-        "avahi",
-        "gsfonts"
+        "avahi"
     ],
     "parallel_downloads": 10,
     "profile_config": {
