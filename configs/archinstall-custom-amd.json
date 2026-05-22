@@ -243,7 +243,8 @@
         "logrotate",
         "avahi",
         "hplip",
-        "python-pyqt5"
+        "python-pyqt5",
+        "cups-pdf"
     ],
     "parallel_downloads": 10,
     "profile_config": {
