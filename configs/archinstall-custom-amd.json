@@ -242,7 +242,7 @@
         "skanpage",
         "logrotate",
         "avahi",
-        "cups-pdf"
+        "cups-pdf",
         "kwalletmanager",
         "ksystemlog"
     ],
