@@ -478,7 +478,7 @@ fwupd wireless-regdb \
 mesa vulkan-radeon lib32-mesa lib32-vulkan-radeon \
 curl firefox firefox-i18n-pt-br \
 linux-zen-headers base-devel plocate bash-completion \
-sof-firmware dmidecode nvme-cli smartmontools logrotate irqbalance fwupd-efi avahi
+sof-firmware dmidecode nvme-cli smartmontools logrotate irqbalance fwupd-efi avahi hplip gsfonts
 
 sudo pacman -S sddm-kcm #Para SDDM apenas, configura opção de trocar tela SDDM na inicialização
 sudo systemctl enable --now smartd.service
@@ -922,9 +922,14 @@ Verification succeeded, current system settings match the preset profile.
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 :: Instalando impressora HP 2774
-sudo pacman -S --needed cups cups-pdf ghostscript gsfonts libcups hplip system-config-printer skanpage
+sudo pacman -S --needed cups cups-pdf ghostscript gsfonts libcups hplip system-config-printer avai skanpage
 sudo systemctl enable --now cups.service
+sudo systemctl enable --now avahi-daemon.service #faz descoberta da impressora via rede (DNS)
 system-config-printer #inicia o wizard de configuração, clique em adicionar e caso use firewall clica no ajustar firewall para adicionar na exceção
+ou
+:liberar porta Firewall:
+sudo firewall-cmd --zone=public --add-port=5353/udp --permanent
+sudo firewall-cmd --reload
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 :: Synergy
