@@ -53,23 +53,6 @@ navegar > navegar até: /usr/share/pixmaps/ > selecione: "archlinux-logo.svg" > 
 
 Configurações > cores e temas > tela de apresentação > baixar novos > baixe e aplique: Arch Simple Blue KDE 6
 ----------------------------------------------------------------------------------------------------------------
-:::Corrigir Time Syncronization no archinstall:::
-
-mkdir -p /etc/systemd/timesyncd.conf.d
-cat > /etc/systemd/timesyncd.conf.d/archinstall.conf <<'EOF'
-[Time]
-NTP=time.cloudflare.com time.google.com pool.ntp.org
-FallbackNTP=0.arch.pool.ntp.org 1.arch.pool.ntp.org
-EOF
-
-systemctl restart systemd-timesyncd
-
-Validar com:
-
-timedatectl status
-
-NTP Service = active
-----------------------------------------------------------------------------------------------------------------
 :: Corrigir escala de resolução tela inicial SDDM e NUNLOCK ativo
 
 #Criar o diretório de configuração do SDDM (se não existir)
