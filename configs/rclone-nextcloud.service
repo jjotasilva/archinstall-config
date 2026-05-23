@@ -46,7 +46,8 @@ RestartSec=5
 WantedBy=default.target
 
 # mkdir -p ~/nextcloud ~/.config/systemd/user ~/.cache/rclone-nextcloud 
-# nano ~/.config/systemd/user/rclone-nextcloud.service 
+# nano ~/.config/systemd/user/rclone-nextcloud.service
+#terminal > rclone config
 # systemctl --user daemon-reload && systemctl --user enable --now rclone-nextcloud.service 
 # https://nextcloud.virttech.com.br/remote.php/dav/files/jota/
 
