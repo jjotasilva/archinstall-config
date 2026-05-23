@@ -1142,4 +1142,46 @@ conferir mudança:
 
 sudo nano /home/james/.zshrc
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+:: Habilitar NTSYNC no Arch Linux
+
+# 1) Validar se o kernel tem suporte ao módulo ntsync
+modinfo ntsync
+
+# Resultado esperado:
+# filename: /lib/modules/.../kernel/drivers/misc/ntsync.ko.zst
+# description: Kernel driver for NT synchronization primitives
+
+# 2) Carregar o módulo manualmente na sessão atual
+sudo modprobe ntsync
+
+# 3) Validar se o device foi criado
+ls -l /dev/ntsync
+
+# Resultado esperado:
+# crw-rw-rw- 1 root root ... /dev/ntsync
+
+# 4) Habilitar carregamento automático no boot
+echo ntsync | sudo tee /etc/modules-load.d/ntsync.conf
+
+# 5) Validar o arquivo de carregamento automático
+cat /etc/modules-load.d/ntsync.conf
+
+# Resultado esperado:
+# ntsync
+
+# 6) Após reiniciar, validar novamente se o ntsync subiu sozinho
+ls -l /dev/ntsync
+
+# Observação:
+# ntsync não é um comando de terminal.
+# Por isso, rodar "ntsync" retorna:
+# zsh: command not found: ntsync
+#
+# O correto é validar pela existência do device:
+# /dev/ntsync
+
+# 7) Para usar NTSYNC no Proton/Steam
+# Em Propriedades do jogo > Geral > Opções de inicialização, usar:
+
+PROTON_USE_NTSYNC=1 %command%
 
