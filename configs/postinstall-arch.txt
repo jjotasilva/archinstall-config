@@ -1184,4 +1184,353 @@ ls -l /dev/ntsync
 # Em Propriedades do jogo > Geral > Opções de inicialização, usar:
 
 PROTON_USE_NTSYNC=1 %command%
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+vorta backup
+
+CONFIGURAÇÃO VORTA BACKUP - ARCH LINUX -> UNRAID VIA NFS
+
+Objetivo:
+Backup dos arquivos pessoais do Arch Linux usando Vorta/Borg, salvando no Unraid via NFS.
+
+Pacotes instalados no Arch:
+- vorta
+- nfs-utils
+
+Comando de instalação:
+sudo pacman -S vorta nfs-utils
+
+------------------------------------------------------------
+1. Share no Unraid
+------------------------------------------------------------
+
+Servidor Unraid:
+192.168.15.200
+
+Share usado:
+backup
+
+Caminho real no Unraid:
+/mnt/user/backup
+
+Pasta criada para o Vorta:
+/mnt/user/backup/vorta-backup
+
+Configuração NFS no Unraid:
+Shares > backup > NFS Security Settings
+
+Export:
+Yes
+
+Security:
+Private
+
+Rule:
+*(rw,no_root_squash)
+
+------------------------------------------------------------
+2. Criar ponto de montagem no Arch
+------------------------------------------------------------
+
+Criar pasta local:
+
+sudo mkdir -p /mnt/unraid-backup
+
+Validar export NFS do Unraid:
+
+showmount -e 192.168.15.200
+
+Resultado esperado:
+Export list for 192.168.15.200:
+/mnt/user/backup *
+
+Montar manualmente para teste:
+
+sudo mount -t nfs -o vers=4 192.168.15.200:/mnt/user/backup /mnt/unraid-backup
+
+Validar montagem:
+
+findmnt /mnt/unraid-backup
+
+Resultado esperado:
+SOURCE:
+192.168.15.200:/mnt/user/backup
+
+FSTYPE:
+nfs4
+
+Listar conteúdo:
+
+ls -lah /mnt/unraid-backup
+
+Deve aparecer:
+vorta-backup
+
+------------------------------------------------------------
+3. Montagem automática no boot via /etc/fstab
+------------------------------------------------------------
+
+Editar fstab:
+
+sudo nano /etc/fstab
+
+Adicionar no final:
+
+#nfs unraid-backup
+192.168.15.200:/mnt/user/backup  /mnt/unraid-backup  nfs  defaults,_netdev,vers=4,nofail,x-systemd.automount  0  0
+
+Aplicar e testar:
+
+sudo systemctl daemon-reload
+sudo mount -a
+findmnt /mnt/unraid-backup
+
+Observação:
+Com x-systemd.automount, o NFS não precisa montar imediatamente no boot.
+Ele monta automaticamente quando algum processo acessar:
+
+/mnt/unraid-backup
+
+Isso evita travar o boot se o Unraid estiver desligado ou se a rede ainda não estiver pronta.
+
+------------------------------------------------------------
+4. Configuração do repositório no Vorta
+------------------------------------------------------------
+
+Abrir Vorta:
+
+vorta
+
+Criar novo profile:
+unraid-backup
+
+Criar novo repositório local, usando o caminho:
+
+/mnt/unraid-backup/vorta-backup
+
+Observação:
+Não usar SSH neste cenário.
+
+Não usar:
+ssh://root@192.168.15.200/mnt/user/backup/vorta-backup
+
+Motivo:
+Via SSH o Borg precisaria estar instalado também no Unraid.
+Como estamos usando NFS, o Vorta/Borg trabalha como se fosse uma pasta local.
+
+------------------------------------------------------------
+5. Fontes do backup
+------------------------------------------------------------
+
+Ideia:
+Backup somente dos arquivos pessoais, não das configurações do sistema.
+
+Não usar como fonte:
+/home/james
+
+Usar apenas pastas pessoais:
+
+/home/james/Área de trabalho
+/home/james/Documentos
+/home/james/Downloads
+/home/james/Imagens
+/home/james/Modelos
+/home/james/Músicas
+/home/james/Projetos
+/home/james/Público
+/home/james/Vídeos
+
+Observação:
+Downloads e Vídeos devem ser revisados, porque podem ter arquivos grandes ou temporários.
+
+------------------------------------------------------------
+6. Exclusões configuradas
+------------------------------------------------------------
+
+Manter exclusões simples para lixo, cache e arquivos temporários:
+
+# spotify
+fm:*/.cache/spotify
+fm:*/.config/spotify
+fm:*/.var/app/com.spotify.Client/cache
+fm:*/.var/app/com.spotify.Client/config/spotify
+
+# log-files
+fm:*.log
+fm:*/logs/*
+
+# temp-files
+fm:*/.tmp
+fm:*/temp
+fm:*.swp
+fm:*.bak
+fm:*.part
+
+# cache-files
+fm:*/.cache
+fm:*/Caches
+fm:*/.var/app/*/cache
+fm:*/.var/app/*/Cache
+fm:*/.var/app/*/Code Cache
+fm:*/.var/app/*/DawnCache
+fm:*/.var/app/*/GPUCache
+fm:*/.var/app/*/CacheStorage
+fm:*/.var/app/*/ScriptCache
+fm:*/.var/app/*/.ld.so
+fm:*/.var/app/*/tmp/*
+
+# recycle-bin-trash
+fm:*/.local/share/Trash/*
+fm:*/.Trash/*
+fm:*/.Trash-*/*
+
+------------------------------------------------------------
+7. Agendamento do backup
+------------------------------------------------------------
+
+Aba Schedule:
+
+Backup schedule:
+Backup periodically
+
+Interval:
+1 Days
+
+Missed backups:
+Run missed backups on startup or wakeup
+Marcado
+
+Validation:
+Validate repository data
+Marcado
+
+Validation interval:
+1 week
+
+Autopruning:
+Prune after each backup
+Marcado depois de configurar a retenção
+
+Compaction:
+Compact repository
+Desmarcado por enquanto
+
+------------------------------------------------------------
+8. Retenção dos backups
+------------------------------------------------------------
+
+Aba Archives > Prune Options and Archive Naming
+
+Configurar para manter somente os últimos 10 backups diários:
+
+Hourly:
+0
+
+Daily:
+10
+
+Weekly:
+0
+
+Monthly:
+0
+
+Annual:
+0
+
+No matter what, keep all archives of the last:
+10H ou 1D
+
+Prune Prefix:
+{hostname}-
+
+Archive Name:
+{hostname}-{now:%Y-%m-%d-%H%M%S}
+
+Resultado:
+1 backup por dia.
+Mantém aproximadamente os últimos 10 backups diários.
+Archives mais antigos são removidos quando o prune rodar.
+
+------------------------------------------------------------
+9. Sobre como o Borg/Vorta salva os backups
+------------------------------------------------------------
+
+O Borg/Vorta não cria uma pasta separada para cada backup.
+
+Ele cria um repositório Borg com estrutura própria dentro de:
+
+/mnt/unraid-backup/vorta-backup
+
+Exemplo de arquivos internos:
+config
+data/
+index.*
+hints.*
+integrity.*
+nonce
+
+Não mexer manualmente dentro dessa pasta.
+
+Os backups por data aparecem na aba:
+Archives
+
+O Borg usa deduplicação.
+Primeiro backup copia tudo.
+Próximos backups salvam somente diferenças/blocos alterados.
+
+------------------------------------------------------------
+10. Inicialização junto com o Arch/KDE
+------------------------------------------------------------
+
+No Vorta:
+
+Settings / About > Settings
+
+Marcar:
+Automatically start Vorta at login
+
+Desmarcar:
+Show main window of Vorta on launch
+
+Resultado:
+O Vorta inicia junto com o KDE e fica na bandeja do sistema, sem abrir a janela principal.
+
+------------------------------------------------------------
+11. Comandos úteis de validação
+------------------------------------------------------------
+
+Ver se o NFS está montado:
+
+findmnt /mnt/unraid-backup
+
+Listar conteúdo do share:
+
+ls -lah /mnt/unraid-backup
+
+Ver se a pasta do Vorta existe:
+
+ls -lah /mnt/unraid-backup/vorta-backup
+
+Testar montagem do fstab:
+
+sudo systemctl daemon-reload
+sudo mount -a
+
+Abrir Vorta pelo terminal:
+
+vorta
+
+------------------------------------------------------------
+12. Restauração
+------------------------------------------------------------
+
+Para restaurar arquivos:
+Abrir Vorta > Archives
+
+Selecionar o archive desejado.
+
+Opções:
+Mount
+ou
+Extract
 
