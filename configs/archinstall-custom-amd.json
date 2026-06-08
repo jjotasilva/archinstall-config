@@ -244,7 +244,9 @@
         "avahi",
         "cups-pdf",
         "kwalletmanager",
-        "ksystemlog"
+        "ksystemlog",
+        "vorta",
+        "nfs-utils"
     ],
     "parallel_downloads": 10,
     "profile_config": {
