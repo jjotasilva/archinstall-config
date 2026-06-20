@@ -246,7 +246,9 @@
         "kwalletmanager",
         "ksystemlog",
         "vorta",
-        "nfs-utils"
+        "nfs-utils",
+        "fuse2",
+        "speech-dispatcher"
     ],
     "parallel_downloads": 10,
     "profile_config": {
