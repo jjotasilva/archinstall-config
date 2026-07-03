@@ -690,7 +690,9 @@ lsblk -f | grep sda
 Smart VideoWallpaper Reborn - KDE Slide Wallpaper animado
 ---------------------------------------------------------------------------------------------------------------
 :: Corrigir escala de resolução do Onlyoffice
-onlyoffice-desktopeditors --force-scale=1
+onlyoffice-desktopeditors --force-scale=1,5
+ou
+flatpak run org.onlyoffice.desktopeditors --force-scale=1,5
 ---------------------------------------------------------------------------------------------------------------
 # ============================================================
 # PASSO A PASSO MANUAL (equivalente ao script 01_btrfs-config.sh)
