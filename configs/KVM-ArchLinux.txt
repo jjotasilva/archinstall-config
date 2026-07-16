@@ -1,12 +1,22 @@
 ############################################################
-# Instalação KVM / Libvirt no Arch Linux (Boas Práticas)
+# Instalação KVM / Libvirt no Arch Linux
 ############################################################
 
 ############################################################
-# 1) Instalar pacotes necessários
+# 1) Confirmar suporte de virtualização
+############################################################
+lscpu | grep -i virtualization
+
+# Resultado esperado:
+# AMD: AMD-V
+# Intel: VT-x
+
+
+############################################################
+# 2) Instalar os pacotes
 ############################################################
 sudo pacman -S --needed \
-  qemu-full \
+  qemu-desktop \
   libvirt \
   virt-install \
   virt-manager \
@@ -14,124 +24,108 @@ sudo pacman -S --needed \
   edk2-ovmf \
   swtpm \
   libosinfo \
-  libguestfs \
   virtiofsd \
   dnsmasq \
   iptables-nft
 
-# Observações:
-# - qemu-img já vem no qemu-full
-# - libguestfs já inclui as ferramentas (guestfs-tools é opcional)
+# Opcionais para manipulação e inspeção de imagens:
+# sudo pacman -S --needed libguestfs guestfs-tools
+
+# Use qemu-full somente quando precisar emular
+# outras arquiteturas além de x86/x86_64.
 
 
 ############################################################
-# 2) Habilitar libvirt (modo recomendado: socket)
+# 3) Habilitar os daemons modulares por socket
 ############################################################
-# No Arch Linux moderno, o libvirt usa socket activation.
-# NÃO habilite serviços diretamente.
+# Este roteiro usa a topologia modular do libvirt.
+# Não habilitar libvirtd.socket ao mesmo tempo.
 
 sudo systemctl enable --now \
   virtqemud.socket \
   virtnetworkd.socket \
   virtlogd.socket \
+  virtstoraged.socket
+
+systemctl status \
+  virtqemud.socket \
+  virtnetworkd.socket \
+  virtlogd.socket \
   virtstoraged.socket \
-  virtnodedevd.socket \
-  virtproxyd.socket
-
-# Validar:
-systemctl status virtqemud.socket virtnetworkd.socket virtlogd.socket virtstoraged.socket virtnodedevd.socket virtproxyd.socket --no-pager
-
-# Observações:
-# - NÃO habilite libvirtd.service
-# - NÃO habilite virtqemud.service
-# - Os serviços sobem automaticamente quando necessários
+  --no-pager
 
 
 ############################################################
-# 3) Rede padrão do libvirt (NAT)
+# 4) Adicionar o usuário ao grupo libvirt
 ############################################################
-# A maioria das instalações já cria a rede "default".
+sudo usermod -aG libvirt "$USER"
 
-sudo virsh net-list --all
+# Efetuar logout/login ou reiniciar antes dos testes sem sudo.
 
-# Se estiver inativa:
-sudo virsh net-start default
+
+############################################################
+# 5) Configurar a rede NAT padrão
+############################################################
+if ! sudo virsh net-info default &>/dev/null; then
+  sudo virsh net-define /usr/share/libvirt/networks/default.xml
+fi
+
+sudo virsh net-start default 2>/dev/null || true
 sudo virsh net-autostart default
 
-# Observações:
-# - A bridge padrão será criada como virbr0
-# - virbr0 em state DOWN é NORMAL quando não há VMs ativas
-# - A rede sobe automaticamente ao ligar a primeira VM
+sudo virsh net-list --all
+sudo virsh net-info default
 
 
 ############################################################
-# 4) Ativar IOMMU no GRUB
+# 6) Verificações básicas após novo login
 ############################################################
+id
+ls -l /dev/kvm
+lsmod | grep -E '^kvm'
+
+virsh -c qemu:///system list --all
+virsh -c qemu:///system net-list --all
+
+
+############################################################
+# 7) Opcional: habilitar IOMMU para PCI/GPU passthrough
+############################################################
+# Antes, habilitar no BIOS/UEFI:
+# AMD: SVM e IOMMU
+# Intel: Virtualization Technology e VT-d
+
 sudo nano /etc/default/grub
 
-# Adicionar APENAS ao final da linha existente:
-
-# Intel:
-# GRUB_CMDLINE_LINUX_DEFAULT="... intel_iommu=on iommu=pt"
+# Acrescentar à linha GRUB_CMDLINE_LINUX_DEFAULT:
 
 # AMD:
-# GRUB_CMDLINE_LINUX_DEFAULT="... amd_iommu=on iommu=pt"
+# amd_iommu=on iommu=pt
 
-# Observações:
-# - Não remover parâmetros existentes
-# - Use GRUB_CMDLINE_LINUX_DEFAULT (boa prática Arch)
+# Intel:
+# intel_iommu=on iommu=pt
 
-
-############################################################
-# 5) Regerar configuração do GRUB
-############################################################
 sudo grub-mkconfig -o /boot/grub/grub.cfg
 
-# Reboot obrigatório após esse passo
+# Reiniciar o host.
 
 
 ############################################################
-# 6) Adicionar usuário ao grupo libvirt
+# 8) Validar IOMMU após o reboot
 ############################################################
-sudo usermod -aG libvirt $USER
+sudo dmesg | grep -Ei 'AMD-Vi|DMAR|IOMMU'
 
-# IMPORTANTE:
-# Logout/login ou reboot obrigatório para aplicar o grupo
-
-
-############################################################
-# 9) Verificações finais
-############################################################
-# Sockets:
-systemctl status virtqemud.socket virtnetworkd.socket --no-pager
-
-# Teste de permissão (SEM sudo):
-virsh -c qemu:///system list --all
-
-# Rede:
-virsh net-list --all
-
-
-############################################################
-# 10) Validar IOMMU
-############################################################
-# AMD:
-dmesg | grep -Ei "AMD-Vi|IOMMU"
-
-# Intel:
-dmesg | grep -Ei "DMAR|IOMMU"
-
-# Ver grupos IOMMU (essencial para passthrough):
-find /sys/kernel/iommu_groups/ -type l
+find /sys/kernel/iommu_groups/ -type l | sort -V
 
 
 ############################################################
 # Resultado esperado
 ############################################################
-# - virt-manager abre sem erro
-# - virsh funciona sem sudo
-# - Rede NAT ativa
-# - OVMF disponível (UEFI)
-# - TPM virtual funcional
-# - Host pronto para passthrough de GPU
+# - KVM carregado
+# - virt-manager conectando em qemu:///system
+# - virsh funcionando sem sudo
+# - rede NAT default ativa e em autostart
+# - firmware OVMF disponível
+# - TPM virtual disponível
+# - IOMMU disponível para análise de passthrough, se configurado
 ############################################################
