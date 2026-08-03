@@ -1,7 +1,6 @@
 ##Apos instalação usando "archinstall-custom.json":
 
-0) resise volume /;
-1) install btrfs/snapper/paru (AUR);
+1) resise volume / install btrfs/snapper/yay (AUR); # https://github.com/jjotasilva/archinstall-config/blob/main/configs/01_btrfs-config_sem-aur.sh
 2) ajustar dpi GRUB/dpi inicializaçao SDDM (TELA)/num lock ativo sddm #se for plasmaloginmanager não precisa
 4) alterar icone iniciar para logo do archlinux > desativar aceleração de mouse > mudar o tema tela de autenticação sddm para breeze > add teclado profile abnt brasil > 
 5) trocar tela de apresentação para logo do Archlinux > configurar sessão > sessão area de trabalho > iniciar com sessão vazia
@@ -15,36 +14,20 @@
 14) reflector;
 15) instalar apps UAR e CHAOTIC
 16) habilitar fstrim;
-17) habilitar profile power-profiles-daemon;
+17) habilitar profile tuned or power-profiles-daemon; #ARCHLINUX DESKTOP AMD USAR TUNED
 18) configurar bluetooth;
 19) configurar fimware;
 20) instalar apps pacman;
 21) instalar apps UAR;
 22) configurar opções dolphin;
 23) criar subvolume brave e firefox;
-24) configurar rclone;
-25) configurar games
-26) configurar lact / shader booster / desativar kernel.split_lock_mitigate / osprobe (detectar windows);
-27) configurar KVM - bridge com nmtui;
-28) apparmour
-29) configurar zsh;
+24) configurar rclone; #https://github.com/jjotasilva/archinstall-config/tree/main/configs
+25) configurar games;
+26) configurar lact / shader booster / desativar kernel.split_lock_mitigate / osprobe (detectar windows);  https://github.com/jjotasilva/archinstall-config/blob/main/configs/shader-booters-full-amd.sh
+27) configurar KVM - bridge com nmtui; #https://github.com/jjotasilva/archinstall-config/blob/main/configs/KVM-ArchLinux.txt
+28) apparmour;#OPCIONAL
+29) configurar zsh; # https://github.com/jjotasilva/archinstall-config/blob/main/configs/ZSH%20%2B%20Oh-My-Zsh%20%2B%20Powerlevel10k%20%2B%20Plugins%20(Arch%20Linux).txt
 ----------------------------------------------------------------------------------------------------------------
-
-:: Snapper (BTRFS) _ Assistante - Usar script
-https://github.com/jjotasilva/archinstall-config/blob/main/configs/01_btrfs-config.sh
-
-:: KVM - usar script
-https://github.com/jjotasilva/archinstall-config/blob/main/configs/KVM-ArchLinux.txt
-
-:: Shaderbooster - Usar script
-https://github.com/jjotasilva/archinstall-config/blob/main/configs/shader-booters-full-amd.sh
-
-:: ZSH + Oh-My-Zsh + Powerlevel10k + Plugins - Usar script
-https://github.com/jjotasilva/archinstall-config/blob/main/configs/ZSH%20%2B%20Oh-My-Zsh%20%2B%20Powerlevel10k%20%2B%20Plugins%20(Arch%20Linux).txt
-
-:: Rclone - usar scripts
-https://github.com/jjotasilva/archinstall-config/tree/main/configs
-
 :: LOGO Menu Iniciar Arch
 Clicar com o botão direito do mouse sobre o logo KDE iniciar > selecionar "Conf de lançador de aplicativos" > clicar no "icone" > 
 navegar > navegar até: /usr/share/pixmaps/ > selecione: "archlinux-logo.svg" > OK > Aplicar OK
