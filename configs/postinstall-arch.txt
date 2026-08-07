@@ -440,7 +440,12 @@ onlyoffice-bin \
 brave-origin-bin \
 onlyoffice-bin \
 openlinkhub \
-stacher7
+stacher7 \
+yay -S seafile-client
+
+adicionar sefile no iniciar sessão do kde, depois mudar para:
+hideMainWindowWhenStarted=true
+sed -i 's/hideMainWindowWhenStarted=false/hideMainWindowWhenStarted=true/' ~/.config/Seafile/Seafile\ Client.conf
 ------------------------------------------------------------------------------
 20) Firewall #Já sobe no .json de instalação
 sudo pacman -S --needed firewalld plasma-firewall python-pyqt6 firewall-applet
