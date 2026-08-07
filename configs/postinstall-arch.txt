@@ -1496,4 +1496,10 @@ habilitar NTP
 -----------------------------------------------------------
 sudo timedatectl set-ntp true  #Já habilitado no json de instalação
 timedatectl status
+---------------------------------------------------------------------
+EasyEffect #USar preset convolver em effect > add effect  (https://www.youtube.com/watch?v=lsfJYzygyj4)
+sudo pacman -S easyeffects lsp-plugins-lv2 calf mda.lv2
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/JackHack96/EasyEffects-Presets/master/install.sh)"
+systemctl --user restart pipewire pipewire-pulse wireplumber
+------------------------------------------------------------------------------
 
