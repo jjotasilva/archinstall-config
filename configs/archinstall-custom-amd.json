@@ -249,7 +249,6 @@
         "nfs-utils",
         "fuse2",
         "speech-dispatcher",
-        "ffmpeg",
         "gst-libav",
         "gst-plugins-good",
         "gst-plugins-bad",
