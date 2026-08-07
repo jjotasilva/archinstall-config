@@ -1497,6 +1497,6 @@ Extract
 -----------------------------------------------------------
 habilitar NTP
 -----------------------------------------------------------
-sudo timedatectl set-ntp true
+sudo timedatectl set-ntp true  #Já habilitado no json de instalação
 timedatectl status
 
