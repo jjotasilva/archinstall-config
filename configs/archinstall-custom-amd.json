@@ -239,7 +239,6 @@
         "btrfs-progs",
         "lm_sensors",
         "kclock",
-        "skanpage",
         "logrotate",
         "avahi",
         "cups-pdf",
