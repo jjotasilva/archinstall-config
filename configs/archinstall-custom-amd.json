@@ -42,7 +42,7 @@
         "config_type": "manual_partitioning",
         "device_modifications": [
             {
-                "device": "/dev/sda",
+                "device": "/dev/nvme0n1",
                 "partitions": [
                     {
                         "btrfs": [],
