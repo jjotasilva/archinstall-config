@@ -1494,4 +1494,9 @@ Opções:
 Mount
 ou
 Extract
+-----------------------------------------------------------
+habilitar NTP
+-----------------------------------------------------------
+sudo timedatectl set-ntp true
+timedatectl status
 
