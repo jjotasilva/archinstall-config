@@ -895,10 +895,7 @@ Verification succeeded, current system settings match the preset profile.
 # Instalando impressora HP DeskJet 2774 no Arch Linux
 
 # Pacotes
-sudo pacman -S --needed cups cups-pdf system-config-printer avahi skanpage #hplip python-pyqt5 instala o HP Manager mais é opcional 
-
-# hplip + python-pyqt5 instala o HP Device Manager (opcional)
-# sudo pacman -S --needed hplip python-pyqt5
+sudo pacman -S --needed cups cups-pdf hplip gutenprint foomatic-db foomatic-db-engine system-config-printer avahi python-pyqt5 skanpage sane sane-airscan #simple-scan é uma alternativa ao skanpage
 
 # Serviços
 sudo systemctl enable --now cups.service
