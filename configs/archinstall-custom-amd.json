@@ -218,7 +218,7 @@
         "tesseract-data-por",
         "partitionmanager",
         "unrar",
-        "p7zip",
+        "7zip",
         "dnsmasq",
         "fwupd",
         "fwupd-efi",
@@ -248,7 +248,13 @@
         "vorta",
         "nfs-utils",
         "fuse2",
-        "speech-dispatcher"
+        "speech-dispatcher",
+        "ffmpeg",
+        "gst-libav",
+        "gst-plugins-good",
+        "gst-plugins-bad",
+        "gst-plugins-ugly",
+        "ffmpegthumbs"
     ],
     "parallel_downloads": 10,
     "profile_config": {
