@@ -253,8 +253,7 @@
         "gst-libav",
         "gst-plugins-good",
         "gst-plugins-bad",
-        "gst-plugins-ugly",
-        "ffmpegthumbs"
+        "gst-plugins-ugly"
     ],
     "parallel_downloads": 10,
     "profile_config": {
