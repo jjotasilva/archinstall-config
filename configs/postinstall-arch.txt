@@ -1511,4 +1511,5 @@ systemctl --user restart pipewire pipewire-pulse wireplumber
 -> processador de fala;
 -> limitador;
 ------------------------------------------------------------------------------
-
+BASH Prompt 
+TITUS - curl -fsSL christitus.com/linux | sh
