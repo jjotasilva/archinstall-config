@@ -251,7 +251,8 @@
         "gst-libav",
         "gst-plugins-good",
         "gst-plugins-bad",
-        "gst-plugins-ugly"
+        "gst-plugins-ugly",
+        "ttf-meslo-nerd"
     ],
     "parallel_downloads": 10,
     "profile_config": {
