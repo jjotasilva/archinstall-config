@@ -1512,4 +1512,21 @@ systemctl --user restart pipewire pipewire-pulse wireplumber
 -> limitador;
 ------------------------------------------------------------------------------
 BASH Prompt 
-TITUS - curl -fsSL christitus.com/linux | sh
+TITUS - curl -fsSL christitus.com/linux | sh  > escolher Bash Prompt depois y
+
+sudo pacman -S --needed alacritty ttf-meslo-nerd
+
+mkdir -p ~/.config/alacritty
+
+cat > ~/.config/alacritty/alacritty.toml <<'EOF'
+[window]
+dimensions = { columns = 114, lines = 32 }
+padding = { x = 8, y = 8 }
+
+[font]
+normal = { family = "MesloLGS Nerd Font Mono", style = "Regular" }
+bold = { family = "MesloLGS Nerd Font Mono", style = "Bold" }
+italic = { family = "MesloLGS Nerd Font Mono", style = "Italic" }
+bold_italic = { family = "MesloLGS Nerd Font Mono", style = "Bold Italic" }
+EOF
+---------------------------------------------------------------------------------
