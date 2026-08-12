@@ -1530,3 +1530,48 @@ italic = { family = "MesloLGS Nerd Font Mono", style = "Italic" }
 bold_italic = { family = "MesloLGS Nerd Font Mono", style = "Bold Italic" }
 EOF
 ---------------------------------------------------------------------------------
+# ============================================================
+# KDE / Dolphin - Corrigir descoberta SMB bloqueada pelo firewalld
+# ============================================================
+
+# Ver zonas/interfaces atuais
+firewall-cmd --get-active-zones
+
+# Ver configuração da zona atual
+firewall-cmd --list-all
+
+# Teste temporário:
+# se os dispositivos aparecerem com o firewalld parado,
+# o problema é a zona/regras do firewall
+sudo systemctl stop firewalld
+kioclient ls smb://
+
+# Ligar novamente
+sudo systemctl start firewalld
+
+# Mover a interface física da LAN para a zona "home"
+# Ajustar enp5s0 caso o nome da interface seja diferente
+sudo firewall-cmd --permanent --zone=home --change-interface=enp5s0
+
+# Recarregar regras
+sudo firewall-cmd --reload
+
+# Confirmar a zona da interface
+firewall-cmd --get-active-zones
+
+# Conferir serviços liberados na zona home
+firewall-cmd --zone=home --list-services
+
+# Esperado:
+# dhcpv6-client mdns samba-client ssh
+
+# Caso mdns e samba-client não estejam presentes:
+sudo firewall-cmd --permanent --zone=home --add-service=mdns
+sudo firewall-cmd --permanent --zone=home --add-service=samba-client
+sudo firewall-cmd --reload
+
+# Testar descoberta SMB pelo KIO/KDE
+kioclient ls smb://
+--------------------------------------------------------------------------------
+
+
