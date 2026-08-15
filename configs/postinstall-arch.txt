@@ -435,6 +435,7 @@ sudo systemctl enable --now logrotate.timer
 sudo systemctl enable --now irqbalance.service #precisa instalar irqbalance (não usar junto com tuned)
 sudo systemctl enable --now fwupd-refresh.timer
 sudo systemctl enable --now avahi-daemon.service #descoberta dns na rede (impressora)
+sudo systemctl enable --now power-profiles-daemon.service #habilita serviço do PPD que precisa estar instalado
 ------------------------------------------------------------------------------
 19) Apps UAR
 paru -S --needed \
