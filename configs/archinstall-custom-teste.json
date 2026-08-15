@@ -1,0 +1,310 @@
+{
+    "app_config": {
+        "audio_config": {
+            "audio": "pipewire"
+        },
+        "bluetooth_config": {
+            "enabled": true
+        },
+        "firewall_config": {
+            "firewall": "firewalld"
+        },
+        "fonts_config": {
+            "fonts": [
+                "noto-fonts",
+                "noto-fonts-emoji",
+                "noto-fonts-cjk",
+                "ttf-liberation",
+                "ttf-dejavu"
+            ]
+        },
+        "print_service_config": {
+            "enabled": true
+        }
+    },
+    "archinstall_language": "English",
+    "bootloader_config": {
+        "bootloader": "Systemd-boot",
+        "removable": false,
+        "uki": false
+    },
+    "custom_commands": [
+        "mkdir -p /var/lib/libvirt/images && chattr -VR +C /var/lib/libvirt/images || true"
+    ],
+    "disk_config": {
+        "btrfs_options": {
+            "snapshot_config": null
+        },
+        "config_type": "manual_partitioning",
+        "device_modifications": [
+            {
+                "device": "/dev/sda",
+                "partitions": [
+                    {
+                        "btrfs": [],
+                        "dev_path": null,
+                        "flags": [
+                            "boot",
+                            "esp"
+                        ],
+                        "fs_type": "fat32",
+                        "mount_options": [],
+                        "mountpoint": "/boot",
+                        "obj_id": "a56d3e13-ea6f-4465-a2e8-351dd383a8cd",
+                        "size": {
+                            "sector_size": {
+                                "unit": "B",
+                                "value": 512
+                            },
+                            "unit": "GiB",
+                            "value": 2
+                        },
+                        "start": {
+                            "sector_size": {
+                                "unit": "B",
+                                "value": 512
+                            },
+                            "unit": "MiB",
+                            "value": 1
+                        },
+                        "status": "create",
+                        "type": "primary"
+                    },
+                    {
+                        "btrfs": [
+                            {
+                                "mountpoint": "/",
+                                "name": "@"
+                            },
+                            {
+                                "mountpoint": "/home",
+                                "name": "@home"
+                            },
+                            {
+                                "mountpoint": "/opt",
+                                "name": "@opt"
+                            },
+                            {
+                                "mountpoint": "/srv",
+                                "name": "@srv"
+                            },
+                            {
+                                "mountpoint": "/var/lib/libvirt",
+                                "name": "@libvirt"
+                            },
+                            {
+                                "mountpoint": "/var/lib/containers",
+                                "name": "@containers"
+                            },
+                            {
+                                "mountpoint": "/var/lib/flatpak",
+                                "name": "@flatpak"
+                            },
+                            {
+                                "mountpoint": "/var/cache",
+                                "name": "@cache"
+                            },
+                            {
+                                "mountpoint": "/var/log",
+                                "name": "@log"
+                            },
+                            {
+                                "mountpoint": "/var/spool",
+                                "name": "@spool"
+                            },
+                            {
+                                "mountpoint": "/var/tmp",
+                                "name": "@tmp"
+                            }
+                        ],
+                        "dev_path": null,
+                        "flags": [],
+                        "fs_type": "btrfs",
+                        "mount_options": [
+                            "compress=zstd"
+                        ],
+                        "mountpoint": null,
+                        "obj_id": "c4c0721c-8bf2-42d0-bc83-f4ef2f728641",
+                        "size": {
+                            "sector_size": {
+                                "unit": "B",
+                                "value": 512
+                            },
+                            "unit": "B",
+                            "value": 32210157568
+                        },
+                        "start": {
+                            "sector_size": {
+                                "unit": "B",
+                                "value": 512
+                            },
+                            "unit": "B",
+                            "value": 2148532224
+                        },
+                        "status": "create",
+                        "type": "primary"
+                    },
+                    {
+                        "btrfs": [],
+                        "dev_path": null,
+                        "flags": [
+                            "swap"
+                        ],
+                        "fs_type": "linux-swap",
+                        "mount_options": [],
+                        "mountpoint": null,
+                        "obj_id": "3061233e-7d20-45e2-ac91-b9f5d0f42b4d",
+                        "size": {
+                            "sector_size": {
+                                "unit": "B",
+                                "value": 512
+                            },
+                            "unit": "B",
+                            "value": 8589934592
+                        },
+                        "start": {
+                            "sector_size": {
+                                "unit": "B",
+                                "value": 512
+                            },
+                            "unit": "B",
+                            "value": 98783199232
+                        },
+                        "status": "create",
+                        "type": "primary"
+                    }
+                ],
+                "wipe": true
+            }
+        ]
+    },
+    "hostname": "archlinux",
+    "kernels": [
+        "linux-zen"
+    ],
+    "locale_config": {
+        "console_font": "default8x16",
+        "kb_layout": "br-abnt2",
+        "sys_enc": "UTF-8",
+        "sys_lang": "pt_BR.UTF-8"
+    },
+    "mirror_config": {
+        "custom_repositories": [],
+        "custom_servers": [],
+        "mirror_regions": {
+            "Brazil": [
+                "http://archlinux.c3sl.ufpr.br/$repo/os/$arch",
+                "https://archlinux.c3sl.ufpr.br/$repo/os/$arch",
+                "http://br.mirrors.cicku.me/archlinux/$repo/os/$arch",
+                "https://br.mirrors.cicku.me/archlinux/$repo/os/$arch",
+                "http://mirror.ufscar.br/archlinux/$repo/os/$arch",
+                "https://mirror.ufscar.br/archlinux/$repo/os/$arch",
+                "http://mirrors.ic.unicamp.br/archlinux/$repo/os/$arch",
+                "https://mirrors.ic.unicamp.br/archlinux/$repo/os/$arch"
+            ]
+        },
+        "optional_repositories": [
+            "multilib"
+        ]
+    },
+    "network_config": {
+        "type": "nm"
+    },
+    "ntp": true,
+    "packages": [
+        "man-db",
+        "man-pages",
+        "plocate",
+        "intel-ucode",
+        "linux-firmware",
+        "linux-zen-headers",
+        "dkms",
+        "firefox",
+        "firefox-i18n-pt-br",
+        "konsole",
+        "nano-syntax-highlighting",
+        "dolphin",
+        "dolphin-plugins",
+        "firewall-applet",
+        "plasma-firewall",
+        "filelight",
+        "vlc",
+        "vlc-plugins-all",
+        "zip",
+        "unzip",
+        "ffmpeg",
+        "ffmpegthumbs",
+        "discord",
+        "rclone",
+        "okular",
+        "gwenview",
+        "kcalc",
+        "spectacle",
+        "tesseract",
+        "tesseract-data-por",
+        "partitionmanager",
+        "unrar",
+        "7zip",
+        "dnsmasq",
+        "fwupd",
+        "fwupd-efi",
+        "bash-completion",
+        "dmidecode",
+        "fastfetch",
+        "kdegraphics-thumbnailers",
+        "pavucontrol",
+        "ark",
+        "kate",
+        "elisa",
+        "lib32-vulkan-radeon",
+        "lib32-mesa",
+        "sof-firmware",
+        "wireplumber",
+        "smartmontools",
+        "nvme-cli",
+        "btrfs-progs",
+        "lm_sensors",
+        "kclock",
+        "logrotate",
+        "avahi",
+        "cups-pdf",
+        "kwalletmanager",
+        "ksystemlog",
+        "vorta",
+        "nfs-utils",
+        "fuse2",
+        "speech-dispatcher",
+        "gst-libav",
+        "gst-plugins-good",
+        "gst-plugins-bad",
+        "gst-plugins-ugly",
+        "ttf-meslo-nerd"
+    ],
+    "pacman_config": {
+        "color": true,
+        "parallel_downloads": 10
+    },
+    "profile_config": {
+        "gfx_driver": "All open-source",
+        "greeter": "plasma-login-manager",
+        "profile": {
+            "custom_settings": {
+                "KDE Plasma": {
+                    "plasma_flavor": "plasma-meta"
+                }
+            },
+            "details": [
+                "KDE Plasma"
+            ],
+            "main": "Desktop"
+        }
+    },
+    "script": null,
+    "services": [],
+    "swap": {
+        "algorithm": "zstd",
+        "enabled": true
+    },
+    "timezone": "America/Sao_Paulo",
+    "version": "4.4"
+}
