@@ -277,7 +277,8 @@
         "gst-plugins-bad",
         "gst-plugins-ugly",
         "ttf-meslo-nerd",
-        "power-profiles-daemon"
+        "power-profiles-daemon",
+        "chromium"
     ],
     "pacman_config": {
         "color": true,
