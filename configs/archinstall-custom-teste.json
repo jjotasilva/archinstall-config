@@ -286,7 +286,8 @@
         "moonlight-qt",
         "wireplumber",
         "logrotate",
-        "gamemode"
+        "gamemode",
+        "lib32-gamemode"
     ],
     "pacman_config": {
         "color": true,
