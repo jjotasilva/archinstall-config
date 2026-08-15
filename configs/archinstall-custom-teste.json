@@ -38,7 +38,7 @@
         "config_type": "manual_partitioning",
         "device_modifications": [
             {
-                "device": "/dev/sda",
+                "device": "/dev/nvme0n1",
                 "partitions": [
                     {
                         "btrfs": [],
@@ -215,7 +215,7 @@
         "man-db",
         "man-pages",
         "plocate",
-        "intel-ucode",
+        "amd-ucode",
         "linux-firmware",
         "linux-zen-headers",
         "dkms",
@@ -278,14 +278,15 @@
         "gst-plugins-good",
         "gst-plugins-bad",
         "gst-plugins-ugly",
-        "ttf-meslo-nerd"
+        "ttf-meslo-nerd",
+        "power-profiles-daemon"
     ],
     "pacman_config": {
         "color": true,
         "parallel_downloads": 10
     },
     "profile_config": {
-        "gfx_driver": "All open-source",
+        "gfx_driver": "AMD / ATI (open-source)",
         "greeter": "plasma-login-manager",
         "profile": {
             "custom_settings": {
