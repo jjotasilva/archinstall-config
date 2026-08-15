@@ -442,7 +442,6 @@ paru -S --needed \
 ttf-ms-fonts \
 onlyoffice-bin \
 brave-origin-bin \
-onlyoffice-bin \
 openlinkhub \
 stacher7 \
 yay -S seafile-client
