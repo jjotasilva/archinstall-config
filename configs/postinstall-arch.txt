@@ -1588,8 +1588,14 @@ kioclient ls smb://
 --------------------------------------------------------------------------------
 # Fix suspend - Gigabyte B550M AORUS ELITE
 # Desabilita wake via PCIe Root Port e controlador USB PCIe problemático
-# GPP0  -> PCI Root Port
-# PTXH  -> USB xHCI Controller 0000:02:00.0
+#
+# GPP0 -> PCI Root Port
+# PTXH -> USB xHCI Controller 0000:02:00.0
+#
+# Solução para:
+# - wake imediato após suspend
+# - instabilidade ACPI resume
+# - xHCI USB resume problemático
 
 sudo nano /etc/systemd/system/disable-gpp0-wake.service
 
