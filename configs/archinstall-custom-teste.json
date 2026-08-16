@@ -160,7 +160,7 @@
                                 "value": 512
                             },
                             "unit": "B",
-                            "value": 8589934592
+                            "value": 34359738368
                         },
                         "start": {
                             "sector_size": {
