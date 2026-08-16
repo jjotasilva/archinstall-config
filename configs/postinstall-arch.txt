@@ -1598,6 +1598,7 @@ Description=Disable problematic PCI wake devices
 
 [Service]
 Type=oneshot
+RemainAfterExit=yes
 ExecStart=/bin/sh -c 'echo GPP0 > /proc/acpi/wakeup; echo PTXH > /proc/acpi/wakeup'
 
 [Install]
