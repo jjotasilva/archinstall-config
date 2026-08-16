@@ -1613,5 +1613,17 @@ WantedBy=multi-user.target
 sudo systemctl daemon-reload
 sudo systemctl enable disable-gpp0-wake.service
 sudo systemctl restart disable-gpp0-wake.service
+
+
+KDE Gerenciamento de energia:
+
+Quando inativo:
+Suspender após 30 minutos
+
+Botão de energia:
+Suspender
+
+Quando dormir, entrar:
+Standby
 --------------------------------------------------------------------------------
 
