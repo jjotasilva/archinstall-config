@@ -1587,4 +1587,21 @@ sudo firewall-cmd --reload
 kioclient ls smb://
 --------------------------------------------------------------------------------
 
+# Fix suspend imediato - Gigabyte B550M AORUS ELITE
+# Desabilita wake via PCIe Root Port GPP0
 
+sudo tee /etc/systemd/system/disable-gpp0-wake.service > /dev/null <<'EOF'
+[Unit]
+Description=Disable GPP0 wakeup
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh -c 'echo GPP0 > /proc/acpi/wakeup'
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+sudo systemctl daemon-reload
+sudo systemctl enable disable-gpp0-wake.service
+-----------------------------------------------------------------------
