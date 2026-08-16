@@ -24,7 +24,7 @@
     },
     "archinstall_language": "English",
     "bootloader_config": {
-        "bootloader": "Systemd-boot",
+        "bootloader": "Grub",
         "removable": false,
         "uki": false
     },
