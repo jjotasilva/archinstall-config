@@ -28,9 +28,12 @@
         "removable": false,
         "uki": false
     },
-    "custom_commands": [
-        "mkdir -p /var/lib/libvirt/images && chattr -VR +C /var/lib/libvirt/images || true"
-    ],
+"custom_commands": [
+    "mountpoint -q /efi && test -d /efi/grub && rm -rf /efi/grub || true",
+    "grub-install --target=x86_64-efi --efi-directory=/efi --boot-directory=/boot --bootloader-id=arch",
+    "grub-mkconfig -o /boot/grub/grub.cfg",
+    "mkdir -p /var/lib/libvirt/images && chattr -VR +C /var/lib/libvirt/images || true"
+],
     "disk_config": {
         "btrfs_options": {
             "snapshot_config": null
@@ -140,35 +143,6 @@
                             },
                             "unit": "B",
                             "value": 2148532224
-                        },
-                        "status": "create",
-                        "type": "primary"
-                    },
-                    {
-                        "btrfs": [],
-                        "dev_path": null,
-                        "flags": [
-                            "swap"
-                        ],
-                        "fs_type": "linux-swap",
-                        "mount_options": [],
-                        "mountpoint": null,
-                        "obj_id": "3061233e-7d20-45e2-ac91-b9f5d0f42b4d",
-                        "size": {
-                            "sector_size": {
-                                "unit": "B",
-                                "value": 512
-                            },
-                            "unit": "B",
-                            "value": 34359738368
-                        },
-                        "start": {
-                            "sector_size": {
-                                "unit": "B",
-                                "value": 512
-                            },
-                            "unit": "B",
-                            "value": 98783199232
                         },
                         "status": "create",
                         "type": "primary"
