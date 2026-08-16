@@ -1627,3 +1627,16 @@ Quando dormir, entrar:
 Standby
 --------------------------------------------------------------------------------
 
+CONFIG BOOTLOADER
+
+GRUB:
+sudo nano /etc/default/grub
+GRUB_CMDLINE_LINUX_DEFAULT="quiet amd_iommu=on iommu=pt"
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+
+SYSTEMD:
+/boot/loader/entries/linux.conf
+Não precisa dar comando upgrade como no grub (sudo grub-mkconfig -o /boot/grub/grub.cfg)
+----------------------------------------------------------------------------------
+
+
