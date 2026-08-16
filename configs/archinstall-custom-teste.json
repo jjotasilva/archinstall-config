@@ -52,7 +52,7 @@
                         ],
                         "fs_type": "fat32",
                         "mount_options": [],
-                        "mountpoint": "/boot",
+                        "mountpoint": "/efi",
                         "obj_id": "a56d3e13-ea6f-4465-a2e8-351dd383a8cd",
                         "size": {
                             "sector_size": {
