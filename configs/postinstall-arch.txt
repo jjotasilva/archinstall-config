@@ -1586,22 +1586,21 @@ sudo firewall-cmd --reload
 # Testar descoberta SMB pelo KIO/KDE
 kioclient ls smb://
 --------------------------------------------------------------------------------
-
-# Fix suspend imediato - Gigabyte B550M AORUS ELITE
+# Fix suspend - Gigabyte B550M AORUS ELITE
 # Desabilita wake via PCIe Root Port GPP0
 
-sudo tee /etc/systemd/system/disable-gpp0-wake.service > /dev/null <<'EOF'
+sudo nano /etc/systemd/system/disable-gpp0-wake.service
+
 [Unit]
-Description=Disable GPP0 wakeup
+Description=Disable problematic PCI wake devices
 
 [Service]
 Type=oneshot
-ExecStart=/bin/sh -c 'echo GPP0 > /proc/acpi/wakeup'
+ExecStart=/bin/sh -c 'echo GPP0 > /proc/acpi/wakeup; echo PTXH > /proc/acpi/wakeup'
 
 [Install]
 WantedBy=multi-user.target
-EOF
 
 sudo systemctl daemon-reload
-sudo systemctl enable disable-gpp0-wake.service
+sudo systemctl restart disable-gpp0-wake.service
 -----------------------------------------------------------------------
