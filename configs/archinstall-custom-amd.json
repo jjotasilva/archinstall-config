@@ -250,6 +250,7 @@
         "chromium",
         "lact",
         "goverlay",
+        "mangohud",
         "lib32-mangohud",
         "steam",
         "remmina",
