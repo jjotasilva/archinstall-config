@@ -424,7 +424,7 @@ sudo systemctl enable --now irqbalance.service #precisa instalar irqbalance (nã
 sudo systemctl enable --now fwupd-refresh.timer
 sudo systemctl enable --now avahi-daemon.service #descoberta dns na rede (impressora)
 sudo systemctl enable --now power-profiles-daemon.service #habilita serviço do PPD que precisa estar instalado
-
+systemctl --user enable --now gamemoded.service #requer instalação do gamemode
 ------------------------------------------------------------------------------
 19) Apps UAR
 paru -S --needed \
