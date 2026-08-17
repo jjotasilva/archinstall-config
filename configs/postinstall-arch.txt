@@ -1627,5 +1627,15 @@ SYSTEMD:
 /boot/loader/entries/linux.conf
 Não precisa dar comando upgrade como no grub (sudo grub-mkconfig -o /boot/grub/grub.cfg)
 ----------------------------------------------------------------------------------
+# SUNSHINE - 2 monitores / AMD RX 7900 XT
 
+nano ~/.config/sunshine/sunshine.conf
 
+csrf_allowed_origins = https://192.168.15.100:47990  # permite acesso à Web UI a partir dessa origem/IP
+max_bitrate = 0                                     # sem limite de bitrate imposto pelo Sunshine
+output_name = 1                                     # captura o monitor ID 1
+encoder = vaapi                                     # força VA-API na AMD RX 7900 XT
+
+# Aplicar:
+systemctl --user restart app-dev.lizardbyte.app.Sunshine.service
+-------------------------------------------------------------------------------------
