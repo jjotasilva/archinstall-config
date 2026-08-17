@@ -413,19 +413,7 @@ ip a | grep -i inet6
 16) KDE Connect
 sudo pacman -S --needed kdeconnect
 ------------------------------------------------------------------------------
-Meus Apps
-
-sudo pacman -S --needed \
-fastfetch zip unzip ffmpeg ffmpegthumbs \
-discord rclone obs-studio \
-dolphin dolphin-plugins okular gwenview kcalc filelight spectacle tesseract tesseract-data-por gnome-disk-utility kdegraphics-thumbnailers \
-unrar p7zip noto-fonts-cjk rsync \
-cpu-x dnsutils dnsmasq mission-center pavucontrol vlc vlc-plugins-all alsa-utils \
-fwupd wireless-regdb \
-lib32-mesa lib32-vulkan-radeon \
-curl firefox firefox-i18n-pt-br \
-linux-zen-headers base-devel plocate bash-completion \
-sof-firmware dmidecode nvme-cli smartmontools logrotate fwupd-efi avahi hplip python-pyqt5 kwalletmanager ksystemlog
+Serviços 
 
 sudo pacman -S sddm-kcm #Para SDDM apenas, configura opção de trocar tela SDDM na inicialização
 sudo systemctl enable --now smartd.service
@@ -436,6 +424,7 @@ sudo systemctl enable --now irqbalance.service #precisa instalar irqbalance (nã
 sudo systemctl enable --now fwupd-refresh.timer
 sudo systemctl enable --now avahi-daemon.service #descoberta dns na rede (impressora)
 sudo systemctl enable --now power-profiles-daemon.service #habilita serviço do PPD que precisa estar instalado
+
 ------------------------------------------------------------------------------
 19) Apps UAR
 paru -S --needed \
