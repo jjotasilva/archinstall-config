@@ -1,0 +1,63 @@
+
+------------------------------------------------------------------------------
+Serviços 
+
+sudo systemctl enable --now smartd.service
+sudo systemctl enable --now fstrim.timer
+sudo systemctl enable --now logrotate.timer
+sudo systemctl enable --now fwupd-refresh.timer
+sudo systemctl enable --now avahi-daemon.service
+sudo systemctl enable --now power-profiles-daemon.service
+systemctl --user enable --now gamemoded.service
+------------------------------------------------------------------------------
+
+# Fix suspend - Gigabyte B550M AORUS ELITE
+# Desabilita wake via PCIe Root Port e controlador USB PCIe problemático
+#
+# GPP0 -> PCI Root Port
+# PTXH -> USB xHCI Controller 0000:02:00.0
+#
+# Solução para:
+# - wake imediato após suspend
+# - instabilidade ACPI resume
+# - xHCI USB resume problemático
+#
+# ----------------------------------------------------------------------
+# VALIDAR ANTES
+#
+# Verificar se GPP0 e PTXH existem e estão "enabled":
+#
+cat /proc/acpi/wakeup | grep -E 'GPP0|PTXH'
+#
+# Caso estejam "enabled", prosseguir com o procedimento abaixo.
+# ----------------------------------------------------------------------
+
+sudo nano /etc/systemd/system/disable-gpp0-wake.service
+
+# Conteúdo do arquivo:
+
+[Unit]
+Description=Disable problematic PCI wake devices
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/bin/sh -c 'echo GPP0 > /proc/acpi/wakeup; echo PTXH > /proc/acpi/wakeup'
+
+[Install]
+WantedBy=multi-user.target
+
+--
+sudo systemctl daemon-reload
+sudo systemctl enable disable-gpp0-wake.service
+sudo systemctl restart disable-gpp0-wake.service
+
+# ----------------------------------------------------------------------
+# VALIDAR DEPOIS
+#
+# GPP0 e PTXH devem aparecer como "disabled":
+#
+cat /proc/acpi/wakeup | grep -E 'GPP0|PTXH'
+# ----------------------------------------------------------------------
+
+
