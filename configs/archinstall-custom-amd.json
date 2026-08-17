@@ -29,12 +29,12 @@
         "removable": false,
         "uki": false
     },
-    "custom_commands": [
-        "test -d /efi/grub && rm -rf /efi/grub || true",
-        "grub-install --target=x86_64-efi --efi-directory=/efi --boot-directory=/boot --bootloader-id=arch",
-        "grub-mkconfig -o /boot/grub/grub.cfg",
-        "mkdir -p /var/lib/libvirt/images && chattr -VR +C /var/lib/libvirt/images || true"
-    ],
+"custom_commands": [
+    "mountpoint -q /efi && test -d /efi/grub && rm -rf /efi/grub || true",
+    "grub-install --target=x86_64-efi --efi-directory=/efi --boot-directory=/boot --bootloader-id=arch",
+    "grub-mkconfig -o /boot/grub/grub.cfg",
+    "mkdir -p /var/lib/libvirt/images && chattr -VR +C /var/lib/libvirt/images || true"
+],
     "disk_config": {
         "btrfs_options": {
             "snapshot_config": null
@@ -193,17 +193,13 @@
         "linux-firmware",
         "linux-zen-headers",
         "dkms",
-        "firefox",
-        "firefox-i18n-pt-br",
         "konsole",
         "nano-syntax-highlighting",
         "dolphin",
         "dolphin-plugins",
         "firewall-applet",
-        "plasma-firewall",
         "filelight",
-        "vlc",
-        "vlc-plugins-all",
+        "haruna",
         "zip",
         "unzip",
         "ffmpeg",
@@ -213,7 +209,6 @@
         "okular",
         "gwenview",
         "kcalc",
-        "spectacle",
         "tesseract",
         "tesseract-data-por",
         "partitionmanager",
@@ -233,13 +228,11 @@
         "lib32-vulkan-radeon",
         "lib32-mesa",
         "sof-firmware",
-        "wireplumber",
         "smartmontools",
         "nvme-cli",
         "btrfs-progs",
         "lm_sensors",
         "kclock",
-        "logrotate",
         "avahi",
         "cups-pdf",
         "kwalletmanager",
@@ -252,7 +245,20 @@
         "gst-plugins-good",
         "gst-plugins-bad",
         "gst-plugins-ugly",
-        "ttf-meslo-nerd"
+        "ttf-meslo-nerd",
+        "power-profiles-daemon",
+        "chromium",
+        "lact",
+        "goverlay",
+        "lib32-mangohud",
+        "steam",
+        "remmina",
+        "filezilla",
+        "moonlight-qt",
+        "wireplumber",
+        "logrotate",
+        "gamemode",
+        "lib32-gamemode"
     ],
     "parallel_downloads": 10,
     "profile_config": {
