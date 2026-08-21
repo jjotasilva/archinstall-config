@@ -5,11 +5,11 @@
 ############################################################
 # 1) Confirmar suporte de virtualização
 ############################################################
-lscpu | grep -i virtualization
+grep -Ewo 'vmx|svm' /proc/cpuinfo | sort -u
 
-# Resultado esperado:
-# AMD: AMD-V
-# Intel: VT-x
+# Resultado:
+# svm = AMD-V
+# vmx = Intel VT-x
 
 
 ############################################################
