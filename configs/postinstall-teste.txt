@@ -60,4 +60,39 @@ sudo systemctl restart disable-gpp0-wake.service
 cat /proc/acpi/wakeup | grep -E 'GPP0|PTXH'
 # ----------------------------------------------------------------------
 
+# ------------------------------------------------------------
+# mDNS / SMB discovery - Dolphin
+# Permite resolver hosts .local, ex.: jarvis.local
+# ------------------------------------------------------------
 
+echo "[INFO] Configurando mDNS/Avahi para acesso SMB..."
+
+sudo pacman -S --needed --noconfirm \
+    avahi \
+    nss-mdns \
+    openbsd-netcat \
+    smbclient \
+    kio-extras
+
+# Habilita e inicia o Avahi
+sudo systemctl enable --now avahi-daemon.service
+
+# Adiciona suporte a mDNS no NSS
+if ! grep -qE '^hosts:.*mdns_minimal' /etc/nsswitch.conf; then
+    echo "[INFO] Adicionando mdns_minimal ao /etc/nsswitch.conf..."
+
+    sudo sed -i \
+        's/^hosts:.*/hosts: mymachines mdns_minimal [NOTFOUND=return] resolve [!UNAVAIL=return] files myhostname dns/' \
+        /etc/nsswitch.conf
+else
+    echo "[OK] mdns_minimal já configurado no nsswitch.conf."
+fi
+
+# Reinicia os serviços envolvidos
+sudo systemctl restart avahi-daemon.service
+
+if systemctl is-active --quiet systemd-resolved.service; then
+    sudo systemctl restart systemd-resolved.service
+fi
+
+echo "[OK] Configuração mDNS/SMB concluída."
